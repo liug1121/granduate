@@ -1,0 +1,374 @@
+<template>
+  <div class="body">
+    <transition name="fade">
+    <div v-if="show" class="opt">
+      <div class="slider"><slider /></div>
+      <table class="btns">
+        <tr>
+          <td>
+            <div class="btn-school btn-box">
+              <table class="btn-text">
+                <tr @click="onSchoolSel">
+                  <td><div class="selected-text">{{selectedSchool.length > 2 ? (selectedSchool.substring(0,2) + '..') : selectedSchool}}</div></td>
+                  <td><div class="triangle"></div></td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td>
+            <div class="btn-pro btn-box">
+              <table class="btn-text">
+                <tr @click="onSpecialtySel">
+                  <td><div class="selected-text">{{selectedMajor.length > 2 ? (selectedMajor.substring(0,2) + '..') : selectedMajor}}</div></td>
+                  <td><div class="triangle"></div></td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td>
+            <div v-bind:class="change('btn')">
+              <p v-bind:class="change('text')" @click="myLooked">浏览记录</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </transition>
+
+    <table>
+      <tr>
+        <td><div class="list-title-split" /></td>
+        <td class="list-title">最新审核通过</td>
+      </tr>
+    </table>
+
+    <div :class="getListClass" ref="listcontainer">
+      <item :isFromCookie = "isFromCookie" @onSelectedRandom = "onSelectedRandom($event)"/>
+    </div>
+    <textscroller/>
+    <div class="submit-container">
+      <div class="submit-vertical-split"></div>
+      <table class="submit">
+        <tr>
+          <td class="submit-horizontal-split"></td>
+          <td class="submit-left">提交需求，我想被辅导</td>
+          <td class="submit-right">
+            <router-link to="/register" class = "submit-right-text"><p>我是研究生,提交表单做兼职</p></router-link>
+            </td>
+          <td class="submit-horizontal-split"></td>
+        </tr>
+      </table>
+    </div>
+    <SchoolSelDlg v-show="isSchoolSelVisible" @close="closeSchoolSel" @onSelectedSchool="onSelectedSchool($event)"/>
+    <SpecialtySelDlg
+      v-show="isSpecialtySelDlgVisible"
+      @close="closeSpecialtySelDlgModal" @onSelectedMajor="onSelectedMajor($event)"
+    />
+    <MsgDlg v-show="isModalVisible" @close="closeModal" />
+  </div>
+</template>
+
+<script>
+import Slider from "../../components/Slider.vue";
+import ListItem from "./ListItem.vue";
+import TextScroller from "../../components/TextScroller.vue";
+import SchoolSelDlg from "../../components/SchoolSelDlg.vue";
+import SpecialtySelDlg from "../../components/SpecialtySelDlg.vue";
+import MsgDlg from "../../components/MsgDlg.vue";
+
+export default {
+  name: "Home",
+  components: {
+    slider: Slider,
+    item: ListItem,
+    textscroller: TextScroller,
+    SchoolSelDlg,
+    SpecialtySelDlg,
+    MsgDlg
+
+  },
+  beforeCreate(){
+    this.isFromCookie = 'false'
+  },
+  computed:{
+    getListClass(){
+      return this.listClass
+    }
+  },
+
+  methods:{
+    hideTop(){
+      console.log('hideTop')
+    },
+    onSchoolSel(){
+        this.isSchoolSelVisible = true
+    },
+
+    closeSchoolSel() {
+      this.isSchoolSelVisible = false;
+    },
+
+    showModal() {
+      this.isModalVisible = true;
+    },
+
+    closeModal() {
+      this.isModalVisible = false;
+    },
+
+    onSpecialtySel(){
+        this.isSpecialtySelDlgVisible = true
+    },
+    closeSpecialtySelDlgModal(){
+        this.isSpecialtySelDlgVisible = false
+    },
+
+    onSelectedSchool(schoolName){
+        this.selectedSchool = schoolName
+        this.searchStudents()
+    },
+    onSelectedRandom(isRandom){
+      if(isRandom)
+        this.showModal()
+      else
+        this.closeModal()
+    },
+
+    onChangeOptDisplay(show){
+      console.log(show)
+    },
+
+    onSelectedMajor(major){
+        this.selectedMajor = major
+        this.searchStudents()
+    },
+
+    searchStudents(){
+        this.isFromCookie = 'false'
+        let params = {
+            page_no:1, page_size:50
+        }
+        if(this.selectedSchool != '学校')
+            params.school = this.selectedSchool
+        if(this.selectedMajor != '专业')
+            params.major = this.selectedMajor
+        this.$store.dispatch('student/getStudents', params)
+    },
+    myLooked(){
+        this.isFromCookie = 'true'
+        this.selectedSchool = '学校'
+        this.selectedMajor = '专业'
+    },
+    change(type){
+      if(type=='btn'){
+        return this.isFromCookie == 'true' ? 'btn-record-selected' : 'btn-record'
+      }
+
+      if(type == 'text'){
+        return this.isFromCookie == 'true' ? 'btn-text-right-selected' : 'btn-text-right'
+      }
+    },
+
+    setScrollPosition() {
+      if(this.$refs.listcontainer.scrollTop > 300){
+        this.show = false
+        this.listClass = 'list-container-long'
+      }else{
+        this.show = true
+        this.listClass ='list-container'
+      }
+    },
+  },
+
+  data(){
+      return {
+          isSchoolSelVisible: false,
+          isSpecialtySelDlgVisible:false,
+          selectedSchool:'学校',
+          selectedMajor:'专业',
+          isFromCookie:'false',
+          show: true,
+          isModalVisible: false,
+          listClass: 'list-container'
+      }
+  },
+
+  mounted() {
+    let listcontainer = this.$refs.listcontainer
+    if(listcontainer == undefined)
+      return
+    listcontainer.addEventListener("scroll", this.setScrollPosition)
+  },
+  destroyed(){
+    let listcontainer = this.$refs.listcontainer
+    if(listcontainer == undefined)
+      return
+    listcontainer.removeEventListener("scroll", this.setScrollPosition)
+  }
+};
+</script>
+
+<style scoped lang="stylus">
+.body
+  width 750px;
+  height 1205px;
+  background rgba(246,245,245,1);
+
+.slider
+  width 690px;
+  height 290px;  
+  margin-bottom 50px
+
+.opt
+  width 748px;
+  height 455px;
+  background rgba(255,255,255,1);
+  border-radius 0px 0px 30px 30px;
+
+.carousel
+    width 690px;
+    height 290px;
+
+.btns
+    margin-bottom 30px;
+    top: 476px;
+
+.btn-school
+    margin-right 10px;
+    margin-left 15px;
+
+.btn-pro
+    margin-left 10px;
+    margin-right 10px;
+
+.btn-record
+    margin-left 10px;
+    width 170px;
+    height 72px;
+    background:rgba(255,255,255,1);
+    border:2px solid rgba(51,143,255,1);
+    border-radius 6px;
+
+.btn-record-selected
+    margin-left 10px;
+    width:170px;
+    height:72px;
+    background:rgba(51,143,255,1);
+    border-radius:6px;
+
+.btn-box
+    width 240px;
+    height 72px;
+    background rgba(255,255,255,1);
+    border 2px solid rgba(51,143,255,1);
+    border-radius 6px;
+
+.btn-text
+    margin-left 84px;
+    margin-top 10px;
+    font-size 28px;
+
+.selected-text
+    width 80px;
+    height 28px; 
+
+.btn-text-right
+    margin-left 30px;
+    padding-top 12px;
+    font-size 28px;
+    color:rgba(51,143,255,1);
+
+.btn-text-right-selected
+    margin-left 30px;
+    padding-top 12px;
+    font-size 28px;
+    color:rgba(255,255,255,1);
+
+ .triangle
+    width 0px;
+    height 0px;
+    border-width 10px;
+    border-style solid;
+    border-color rgba(130,130,141,1) transparent transparent transparent;
+    margin-left 5px;
+    margin-top 12px;
+
+.list-container
+  -webkit-overflow-scrolling touch;
+  overflow-scrolling touch;
+  overflow scroll;
+  height 500px;
+
+.list-container-long
+  -webkit-overflow-scrolling touch;
+  overflow-scrolling touch;
+  overflow scroll;
+  height 945px;  
+
+.list-title
+    font-size 36px;
+
+.list-title-split
+    width 8px;
+    height 32px;
+    background rgba(51,143,255,1);
+
+.submit-container
+    width 750px;
+    height 119px;
+    background rgba(255,255,255,1);
+    box-shadow 0px -4px 15px 0px rgba(51,143,255,0.05);
+
+.submit
+    border-collapse collapse;
+
+.submit-left
+    width 302px;
+    height 70px;
+    background linear-gradient(90deg,rgba(255,195,88,1),rgba(253,179,45,1));
+    border-radius 35px 0px 0px 35px;
+    font-size 26px;
+    color rgba(255,255,255,1);
+    padding-left 22px;
+
+.submit-right
+    width 382px;
+    height 70px;
+    background linear-gradient(90deg,rgba(140,186,255,1),rgba(51,143,255,1));
+    border-radius 0px 35px 35px 0px;
+    padding-left 32px;
+
+.submit-right-text
+    font-size 26px;
+    color rgba(255,255,255,1);
+    text-decoration: none;
+
+.submit-horizontal-split
+    width 32px;
+
+.submit-vertical-split
+    height 25px;
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+{
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  transform translateY(-70px)
+}
+</style>

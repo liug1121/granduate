@@ -19,12 +19,7 @@
         <tr class="form-tr">
           <td class="label">*性别：</td>
           <td>
-            <select v-model.number="sex" type="number" v-bind:class="checkInput('sex')" >
-              <option disabled value=-1>请选择性别</option>
-              <option value=0>男</option>
-              <option value=1>女</option>
-              <option value=2>保密</option>
-            </select>
+            <div v-bind:class="checkInput('sex')" @click="onSexSel">{{sex==0? '男' : '女'}}</div>
           </td>
           <td><p v-if="sexError" class = "error">请选择性别</p></td>
         </tr>
@@ -144,6 +139,7 @@
       @close="closeSpecialtySelDlgModal" @onSelectedMajor="onSelectedMajor($event)"
     />
     <YearSelDlg v-show="isYearSelDlgVisible" @close="closeYearSelDlgModal" @onSelectYear="onSelectYear($event)"/>
+    <SexSelDlg v-show="isSexSelDlgVisible" @close="closeSexSelDlgModal" @onSelectSex="onSelectSex($event)"></SexSelDlg>
   </div>
 </template>
 
@@ -152,6 +148,7 @@ import {mapState} from 'vuex'
 import SchoolSelDlg from "../../components/SchoolSelDlg.vue";
 import SpecialtySelDlg from "../../components/SpecialtySelDlg.vue";
 import YearSelDlg from "../../components/YearSelDlg.vue";
+import SexSelDlg from "../../components/SexSelDlg.vue"
 import common from "../../utils/common"
 export default {
   name: "Register",
@@ -159,7 +156,8 @@ export default {
   components: {
     SchoolSelDlg,
     SpecialtySelDlg,
-    YearSelDlg
+    YearSelDlg,
+    SexSelDlg
   },
 
   computed:{
@@ -194,6 +192,22 @@ export default {
     closeSpecialtySelDlgModal(){
         this.isSpecialtySelDlgVisible = false
         common.unfixedPage()
+    },
+
+    onSexSel(){
+        this.isSexSelDlgVisible = true
+        common.fixedPage()
+    },
+    closeSexSelDlgModal(){
+        this.isSexSelDlgVisible = false
+        common.unfixedPage()
+    },
+
+    onSelectSex(sex){
+      if(sex == '男')
+        this.sex = 0
+      else
+        this.sex = 1
     },
 
     onSelectedMajor(major){
@@ -334,7 +348,7 @@ export default {
   data(){
     return {
       name:"",
-      sex:-1,
+      sex:0,
       school:"",
       major:"",
       year:1900,
@@ -365,7 +379,8 @@ export default {
 
       isSchoolSelVisible: false,
       isSpecialtySelDlgVisible:false,
-      isYearSelDlgVisible :false
+      isYearSelDlgVisible :false,
+      isSexSelDlgVisible:false
     }
   },
 

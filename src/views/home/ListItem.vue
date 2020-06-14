@@ -108,7 +108,7 @@ export default {
                 students[i].nickName = 'XXX'
             }
             let createDate = students[i].createTime.substring(0, 10).split('-')
-            let createDateStr = createDate[0] + '年' + createDate[1] + '月' + createDate[2] + '日'
+            let createDateStr = createDate[0] + '-' + createDate[1] + '-' + createDate[2] 
             students[i].createDateStr = createDateStr
 
             let rank = students[i].rank

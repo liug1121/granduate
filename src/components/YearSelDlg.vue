@@ -1,14 +1,19 @@
 <script>
+import common from '../utils/common'
 export default {
   name: "YearSelDlg",
   methods: {
     close() {
+      if(this.year != '')
+        this.$emit('onSelectYear', this.year)
       this.$emit("close");
     },
-    selectYear(index, year){
-          this.yearSelectedIndex = index
-        //   console.log(year)
-          this.$emit('onSelectYear', year)
+
+      yearScoller(){
+        this.yearSelectedIndex = common.getScrollPosition(this.$refs.items, this.years.length)
+        if(this.yearSelectedIndex >= 5)
+          return 
+        this.year = this.years[this.yearSelectedIndex]
       }
   },
   computed:{
@@ -21,12 +26,16 @@ export default {
               year = year - 1
               years.push(year)
           }
+          years.push('')
+          years.push('')
+          years.push('')
           return years
       }
   },
   data(){
     return {
-        yearSelectedIndex:0
+        yearSelectedIndex:0,
+        year:''
     }
   }
 };
@@ -55,15 +64,11 @@ export default {
         <section class="modal-body" id="modalDescription">
           <slot name="body">
             <div class="split"></div>
-            <div class="items">
-              <div v-for="(year, index) in years" :key="year"  @click="selectYear(index, year)"
+            <div class="items" @scroll="yearScoller" ref="items">
+              <div v-for="(year, index) in years" :key="index"  
               v-bind:class="[index == yearSelectedIndex ? 'item item-selected' : 'item']">
               {{year}}
               </div>
-              <!-- <div class="item item-selected">2021</div>
-              <div class="item">2020</div>
-              <div class="item">2019</div>
-              <div class="item">{{years}}</div> -->
             </div>
             <div class="split split-bottom"></div>
           </slot>

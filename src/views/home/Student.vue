@@ -4,7 +4,7 @@
       <tr>
         <td class="name-text">{{name}}</td>
         <td class="sys-number">编号：{{number}}</td>
-        <td class="sys-date">{{indate}}加入</td>
+        <td class="sys-date">{{indate}} 加入</td>
       </tr>
     </table>
 

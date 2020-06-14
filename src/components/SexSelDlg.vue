@@ -1,18 +1,38 @@
 <script>
+import common from "../utils/common"
 export default {
   name: "SexSelDlg",
+  computed:{
+    getAllSex(){
+      let allSex = []
+      allSex.push('男')
+      allSex.push('女')
+      allSex.push('')
+      allSex.push('')
+      return allSex
+    }
+  },
+
   methods: {
     close() {
+      if(this.sex != '')
+        this.$emit('onSelectSex', this.sex)
       this.$emit("close");
     },
-    select(index, sex){
-      this.selectedIndex = index
-      this.$emit('onSelectSex', sex)
+
+    sexScroller(){
+      this.selectedIndex = common.getScrollPosition(this.$refs.items, this.getAllSex.length)
+      if(this.selectedIndex >=2)
+        return
+      this.sex = this.getAllSex[this.selectedIndex]
     }
   },
 
   data(){
-    return {selectedIndex:0}
+    return {
+      selectedIndex:0,
+      sex:''
+    }
   }
 };
 </script>
@@ -40,10 +60,10 @@ export default {
         <section class="modal-body" id="modalDescription">
           <slot name="body">
             <div class="split"></div>
-            <div class="items">
+            <div class="items" @scroll="sexScroller" ref="items">
               
-              <div v-bind:class="[0 == selectedIndex ? 'item item-selected' : 'item']" @click="select(0, '男')">男</div>
-              <div v-bind:class="[1 == selectedIndex ? 'item item-selected' : 'item']" @click="select(1, '女')">女</div>
+              <div v-bind:class="[index == selectedIndex ? 'item item-selected' : 'item']" 
+              v-for="(sex, index) in getAllSex" :key="index">{{sex}}</div>
             </div>
             <div class="split split-bottom"></div>
           </slot>
@@ -129,6 +149,8 @@ export default {
 .items{
     font-size:36px;
     text-align: center;
+    overflow scroll;
+    height 200px;
 }
 
 .item-selected{

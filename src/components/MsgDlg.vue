@@ -10,7 +10,7 @@ export default {
 </script>
 <template>
   <transition name="modal-fade">
-    <div class="modal-backdrop">
+    <div class="modal-backdrop" @touchmove.prevent>
       <div
         class="modal"
         role="dialog"
@@ -70,7 +70,7 @@ export default {
   display: flex;
   flex-direction: column;
   width:500px;
-  height:400px;
+  height:440px;
   border-radius:12px 12px 0px 0px;
 }
 

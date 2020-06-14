@@ -1,5 +1,5 @@
 <template>
-  <div class="body" @click="hideTwoCodeDlg">
+  <div class="body" @click="hideTwoCodeDlg" >
     <transition name="fade">
     <div v-if="show" class="opt">
       <div class="slider"><slider /></div>
@@ -78,6 +78,7 @@ import SchoolSelDlg from "../../components/SchoolSelDlg.vue";
 import SpecialtySelDlg from "../../components/SpecialtySelDlg.vue";
 import MsgDlg from "../../components/MsgDlg.vue";
 import TwoCodeDlg from "../../components/TwoCodeDlg.vue";
+import common from "../../utils/common"
 
 export default {
   name: "Home",
@@ -114,10 +115,12 @@ export default {
     },
     onSchoolSel(){
         this.isSchoolSelVisible = true
+        common.fixedPage()
     },
 
     closeSchoolSel() {
       this.isSchoolSelVisible = false;
+      common.unfixedPage()
     },
 
     showModal() {
@@ -136,9 +139,12 @@ export default {
 
     onSpecialtySel(){
         this.isSpecialtySelDlgVisible = true
+        // this.fixedPage()
+        common.fixedPage()
     },
     closeSpecialtySelDlgModal(){
         this.isSpecialtySelDlgVisible = false
+        common.unfixedPage()
     },
     closeTwoCodeDlgModal() {
       this.isTwoCodeDlgVisible = false;
@@ -203,6 +209,17 @@ export default {
         this.listClass ='list-container'
       }
     },
+    // fixedPage(){
+    //   let scrollTop = document.body.scrollTop || document.documentElement.scrollTop
+    //   document.body.style.cssText += 'position:fixed;width:100%;top:-' + scrollTop + 'px;'
+    // },
+    // unfixedPage(){
+    //   let body = document.body
+    //   body.style.position = ''
+    //   let top = body.style.top
+    //   document.body.scrollTop = document.documentElement.scrollTop = -parseInt(top)
+    //   body.style.top = ''
+    // }
   },
 
   data(){
@@ -231,7 +248,8 @@ export default {
     if(listcontainer == undefined)
       return
     listcontainer.removeEventListener("scroll", this.setScrollPosition)
-  }
+  },
+
 };
 </script>
 

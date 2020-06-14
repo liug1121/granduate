@@ -79,13 +79,13 @@
         <tr>
           <td class="label label">*专业课程一：</td>
           <td><input v-model="course1" v-bind:class="checkInput('course1')" /></td>
-          <td>分值：</td>
+          <td>*分值：</td>
           <td><input v-model.number="course1Score" v-bind:class="checkInput('course1Score')" type="number"/></td>
         </tr>
         <tr>
           <td class="label label">专业课程二：</td>
           <td><input v-model="course2" class="input-small" /></td>
-          <td>*分值：</td>
+          <td>分值：</td>
           <td><input v-model.number="course2Score" class="input-small" type="number"/></td>
         </tr>
       </table>
@@ -152,6 +152,7 @@ import {mapState} from 'vuex'
 import SchoolSelDlg from "../../components/SchoolSelDlg.vue";
 import SpecialtySelDlg from "../../components/SpecialtySelDlg.vue";
 import YearSelDlg from "../../components/YearSelDlg.vue";
+import common from "../../utils/common"
 export default {
   name: "Register",
 
@@ -170,23 +171,29 @@ export default {
   methods:{
     onYearSel(){
       this.isYearSelDlgVisible =true
+      common.fixedPage()
     },
     closeYearSelDlgModal(){
       this.isYearSelDlgVisible = false
+      common.unfixedPage()
     },
     onSchoolSel(){
       this.isSchoolSelVisible = true
+      common.fixedPage()
     },
 
     closeSchoolSel() {
       this.isSchoolSelVisible = false;
+      common.unfixedPage()
     },
 
     onSpecialtySel(){
       this.isSpecialtySelDlgVisible = true
+      common.fixedPage()
     },
     closeSpecialtySelDlgModal(){
         this.isSpecialtySelDlgVisible = false
+        common.unfixedPage()
     },
 
     onSelectedMajor(major){

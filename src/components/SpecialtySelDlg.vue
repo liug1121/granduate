@@ -1,9 +1,12 @@
 <script>
 import { mapGetters} from 'vuex'
+import common from '../utils/common'
 export default {
   name: "SpecialtySelDlg",
   methods: {
     close() {
+      if(this.major != '')
+        this.$emit('onSelectedMajor', this.major)
       this.$emit("close");
     },
     selectMajor(index, major){
@@ -17,9 +20,13 @@ export default {
         }else{
             this.$store.dispatch('majors/getByMajorName', majorName)
         }
-        this.majorSelectIndex = 0
-
-        
+        this.majorSelectIndex = 0 
+    },
+    majorScroller(){
+      this.majorSelectIndex = common.getScrollPosition(this.$refs.items, this.getMajorsForList.length)
+      if(this.majorSelectIndex >= this.majors.length)
+        return
+      this.major = this.majors[this.majorSelectIndex]
     }
   },
   beforeCreate() {
@@ -28,11 +35,24 @@ export default {
   computed:{
     ...mapGetters('majors',{
         majors:'getNames'
-    }) 
+    }) ,
+    getMajorsForList(){
+      let majors = []
+      for(let i = 0; i < this.majors.length; i++){
+        let major = {
+          name:this.majors[i],
+          valid:true
+        }
+        majors.push(major)
+      }
+      majors.push({name:'', valid:false})
+      return majors
+    },
   },
   data(){
       return {
-          majorSelectIndex:0
+          majorSelectIndex:0,
+          major:''
       }
   }
 };
@@ -74,10 +94,10 @@ export default {
               </table>
             </div>
             <div class="split"></div>
-            <div class="items">
-              <div v-for="(major, index) in majors" :key="major"  @click="selectMajor(index, major)"
+            <div class="items" @scroll="majorScroller" ref="items">
+              <div v-for="(major, index) in getMajorsForList" :key="index" 
               v-bind:class="[index == majorSelectIndex ? 'item item-selected' : 'item']">
-              {{major}}
+              {{major.name}}
               </div>
             </div>
             <div class="split split-bottom"></div>

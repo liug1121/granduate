@@ -10,7 +10,7 @@ export default {
 </script>
 <template>
   <transition name="modal-fade">
-    <div class="modal-backdrop">
+    <div class="modal-backdrop" @touchmove.prevent>
       <div
         class="modal"
         role="dialog"

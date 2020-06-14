@@ -9,11 +9,8 @@ export default {
     selectMajor(index, major){
         this.majorSelectIndex = index
         this.$emit('onSelectedMajor', major)
-        // console.log(major)
-        
     },
     search(){
-        // console.log(this.$refs["searchtext"].value)
         let majorName = this.$refs["searchtext"].value
         if(majorName == ""){
             this.$store.dispatch('majors/getAll')
@@ -82,8 +79,6 @@ export default {
               v-bind:class="[index == majorSelectIndex ? 'item item-selected' : 'item']">
               {{major}}
               </div>
-              <!-- <div class="item item-selected">马克思主义理论</div>
-              <div class="item">政治学</div> -->
             </div>
             <div class="split split-bottom"></div>
           </slot>

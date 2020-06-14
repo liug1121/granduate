@@ -1,15 +1,17 @@
 <template>
-  <div class="body">
+  <div class="body" @click="hideTwoCodeDlg">
     <transition name="fade">
     <div v-if="show" class="opt">
       <div class="slider"><slider /></div>
-      <table class="btns">
+    </div>
+    </transition>
+    <table class="btns">
         <tr>
           <td>
             <div class="btn-school btn-box">
               <table class="btn-text">
                 <tr @click="onSchoolSel">
-                  <td><div class="selected-text">{{selectedSchool.length > 2 ? (selectedSchool.substring(0,2) + '..') : selectedSchool}}</div></td>
+                  <td><div class="selected-text">{{selectedSchool.length > 2 ? (selectedSchool.substring(0,2)) : selectedSchool}}</div></td>
                   <td><div class="triangle"></div></td>
                 </tr>
               </table>
@@ -19,7 +21,7 @@
             <div class="btn-pro btn-box">
               <table class="btn-text">
                 <tr @click="onSpecialtySel">
-                  <td><div class="selected-text">{{selectedMajor.length > 2 ? (selectedMajor.substring(0,2) + '..') : selectedMajor}}</div></td>
+                  <td><div class="selected-text">{{selectedMajor.length > 2 ? (selectedMajor.substring(0,2)) : selectedMajor}}</div></td>
                   <td><div class="triangle"></div></td>
                 </tr>
               </table>
@@ -32,10 +34,8 @@
           </td>
         </tr>
       </table>
-    </div>
-    </transition>
 
-    <table>
+    <table v-if="isListTitleShow">
       <tr>
         <td><div class="list-title-split" /></td>
         <td class="list-title">最新审核通过</td>
@@ -43,9 +43,10 @@
     </table>
 
     <div :class="getListClass" ref="listcontainer">
-      <item :isFromCookie = "isFromCookie" @onSelectedRandom = "onSelectedRandom($event)"/>
+      <item :isFromCookie = "isFromCookie" :selectedSchool="selectedSchool" :selectedMajor="selectedMajor" @onSelectedRandom = "onSelectedRandom($event)"/>
     </div>
-    <textscroller/>
+    <div class="textscroller"><textscroller/></div>
+    
     <div class="submit-container">
       <div class="submit-vertical-split"></div>
       <table class="submit">
@@ -65,6 +66,7 @@
       @close="closeSpecialtySelDlgModal" @onSelectedMajor="onSelectedMajor($event)"
     />
     <MsgDlg v-show="isModalVisible" @close="closeModal" />
+    <TwoCodeDlg id = 'twoCodeDlg' v-show="isTwoCodeDlgVisible" @close="closeTwoCodeDlgModal" />
   </div>
 </template>
 
@@ -75,6 +77,7 @@ import TextScroller from "../../components/TextScroller.vue";
 import SchoolSelDlg from "../../components/SchoolSelDlg.vue";
 import SpecialtySelDlg from "../../components/SpecialtySelDlg.vue";
 import MsgDlg from "../../components/MsgDlg.vue";
+import TwoCodeDlg from "../../components/TwoCodeDlg.vue";
 
 export default {
   name: "Home",
@@ -84,7 +87,8 @@ export default {
     textscroller: TextScroller,
     SchoolSelDlg,
     SpecialtySelDlg,
-    MsgDlg
+    MsgDlg,
+    TwoCodeDlg
 
   },
   beforeCreate(){
@@ -97,6 +101,14 @@ export default {
   },
 
   methods:{
+    hideTwoCodeDlg(event){
+      let twoCodeDlg = document.getElementById("twoCodeDlg");
+      if(twoCodeDlg){
+        if(twoCodeDlg.contains(event.target)){
+          this.closeTwoCodeDlgModal()
+        }
+      }
+    },
     hideTop(){
       console.log('hideTop')
     },
@@ -114,6 +126,12 @@ export default {
 
     closeModal() {
       this.isModalVisible = false;
+      this.isTwoCodeDlgVisible = true
+      this.$copyText('学姐您好，我想找学长，可以帮我对接一下吗？').then(function (e) {
+          console.log(e)
+        }, function (e) {
+          console.log(e)
+        })
     },
 
     onSpecialtySel(){
@@ -122,8 +140,12 @@ export default {
     closeSpecialtySelDlgModal(){
         this.isSpecialtySelDlgVisible = false
     },
+    closeTwoCodeDlgModal() {
+      this.isTwoCodeDlgVisible = false;
+    },
 
     onSelectedSchool(schoolName){
+        this.isListTitleShow = true
         this.selectedSchool = schoolName
         this.searchStudents()
     },
@@ -139,6 +161,7 @@ export default {
     },
 
     onSelectedMajor(major){
+        this.isListTitleShow = true
         this.selectedMajor = major
         this.searchStudents()
     },
@@ -158,6 +181,7 @@ export default {
         this.isFromCookie = 'true'
         this.selectedSchool = '学校'
         this.selectedMajor = '专业'
+        this.isListTitleShow = false
     },
     change(type){
       if(type=='btn'){
@@ -170,7 +194,8 @@ export default {
     },
 
     setScrollPosition() {
-      if(this.$refs.listcontainer.scrollTop > 300){
+ 
+      if(this.$refs.listcontainer.scrollTop > 150){
         this.show = false
         this.listClass = 'list-container-long'
       }else{
@@ -189,7 +214,9 @@ export default {
           isFromCookie:'false',
           show: true,
           isModalVisible: false,
-          listClass: 'list-container'
+          listClass: 'list-container',
+          isListTitleShow:true,
+          isTwoCodeDlgVisible: false
       }
   },
 
@@ -214,35 +241,42 @@ export default {
   height 1205px;
   background rgba(246,245,245,1);
 
+
 .slider
   width 690px;
   height 290px;  
   margin-bottom 50px
+  
 
 .opt
   width 748px;
-  height 455px;
+  height 290px; 
   background rgba(255,255,255,1);
-  border-radius 0px 0px 30px 30px;
+
 
 .carousel
     width 690px;
     height 290px;
 
 .btns
-    margin-bottom 30px;
-    top: 476px;
+    width 748px;
+    height 180px;
+
+    background rgba(255,255,255,1);
+    border-radius 0px 0px 30px 30px;
+    padding-top 55px
+
 
 .btn-school
-    margin-right 10px;
-    margin-left 15px;
+    margin-right 5px;
+    margin-left 27px;
 
 .btn-pro
-    margin-left 10px;
-    margin-right 10px;
+    margin-left 5px;
+    margin-right 5px;
 
 .btn-record
-    margin-left 10px;
+    margin-left 5px;
     width 170px;
     height 72px;
     background:rgba(255,255,255,1);
@@ -257,19 +291,26 @@ export default {
     border-radius:6px;
 
 .btn-box
-    width 240px;
+    width 208px;
+    height 72px;
+    background rgba(255,255,255,1);
+    border 2px solid rgba(51,143,255,1);
+    border-radius 6px;
+
+.btn-record-box
+    width 170px;
     height 72px;
     background rgba(255,255,255,1);
     border 2px solid rgba(51,143,255,1);
     border-radius 6px;
 
 .btn-text
-    margin-left 84px;
+    margin-left 60px;
     margin-top 10px;
     font-size 28px;
 
 .selected-text
-    width 80px;
+    width 56px;
     height 28px; 
 
 .btn-text-right
@@ -290,8 +331,9 @@ export default {
     border-width 10px;
     border-style solid;
     border-color rgba(130,130,141,1) transparent transparent transparent;
-    margin-left 5px;
-    margin-top 12px;
+
+    margin-top 14px
+    margin-left 9px
 
 .list-container
   -webkit-overflow-scrolling touch;
@@ -303,21 +345,29 @@ export default {
   -webkit-overflow-scrolling touch;
   overflow-scrolling touch;
   overflow scroll;
-  height 945px;  
+  height 745px;  
 
 .list-title
     font-size 36px;
+    padding-top 22px
+    padding-left 16px
+    padding-bottom 22px
 
 .list-title-split
     width 8px;
     height 32px;
     background rgba(51,143,255,1);
+    margin-top 22px
+    margin-left 30px
+    margin-bottom 22px
 
 .submit-container
     width 750px;
     height 119px;
     background rgba(255,255,255,1);
     box-shadow 0px -4px 15px 0px rgba(51,143,255,0.05);
+    position absolute
+    bottom 0
 
 .submit
     border-collapse collapse;
@@ -371,4 +421,9 @@ export default {
   opacity: 0;
   transform translateY(-70px)
 }
+.textscroller
+  position absolute
+
+  bottom 119px
+
 </style>

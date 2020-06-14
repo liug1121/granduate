@@ -6,7 +6,7 @@
           <table>
             <tr>
               <td><img class="img-ranking" src="../../assets/zycspm.png" /></td>
-              <td class="ranking-text">专业初试排名：第{{rank}}名</td>
+              <td class="ranking-text">专业初试排名：{{rank}}</td>
             </tr>
           </table>
         </div>
@@ -17,7 +17,7 @@
           <table>
             <tr>
               <td><img class="img-ranking" src="../../assets/zyzpm.png" /></td>
-              <td class="ranking-text">专业总排名：第{{allrank}}名</td>
+              <td class="ranking-text">专业总排名：{{allrank}}</td>
             </tr>
           </table>
         </div>

@@ -57,10 +57,69 @@ const actions = {
         }, queryParams)
     },
 
-    getStudentByRandom({commit}){
-        api.getStudentByRandom(resp =>{
-            commit('setRandomStudents', resp)
-        })
+    getStudentByRandom({commit}, params){
+        let index = Math.floor(Math.random() * 6) 
+        let nowDate=new Date();
+        let year = nowDate.getFullYear()
+        let month = nowDate.getMonth() + 1
+        let day = nowDate.getDate() - index
+        let createDate = year + '-' + month + '-' + day
+        let student = {
+            id:'-1',
+            name:"XXX学长",
+            sex:2 , //0 male， 1 female
+            school:params.school,
+            major:params.major,
+            year:'****', //yyyy
+            score:"保密",
+            rank:"",
+            allRank:"",
+            professionOne:"保密",
+            professionTwo:"保密",
+            professionTwoScore:"保密",
+            phone:"保密",
+            wechat:"保密",
+            introduction:"保密",
+            eductionInfo:"保密",
+            createTime:createDate,
+            isRandom:true,
+            type:-1
+        }
+        let students = []
+        students.push(student)
+        index = Math.floor(Math.random() * 6) 
+        day = nowDate.getDate() - index
+        createDate = year + '-' + month + '-' + day
+        student = {
+            id:'-2',
+            name:"XXX学长",
+            sex:2 , //0 male， 1 female
+            school:params.school,
+            major:params.major,
+            year:'****', //yyyy
+            score:"保密",
+            rank:"",
+            allRank:"",
+            professionOne:"保密",
+            professionTwo:"保密",
+            professionTwoScore:"保密",
+            phone:"保密",
+            wechat:"保密",
+            introduction:"保密",
+            eductionInfo:"保密",
+            createTime:createDate,
+            isRandom:true,
+            type:-1
+        }
+        students.push(student)
+        let resp = {}
+        resp.data = {}
+        resp.data.data = students
+        commit('setRandomStudents', resp)
+
+        // api.getStudentByRandom(resp =>{
+        //     commit('setRandomStudents', resp)
+        // })
     },
 
     addStudent({commit}, student){

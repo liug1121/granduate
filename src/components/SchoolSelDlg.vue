@@ -17,6 +17,9 @@ export default {
         // console.log(schoolName)
         this.schoolSelectedIndex = index
         this.$emit('onSelectedSchool', schoolName)
+    },
+    setScrollPosition(){
+      console.log('setScrollPosition')
     }
   },
 
@@ -35,6 +38,22 @@ export default {
     this.$store.dispatch('provinces/getAll')
   },
 
+  mounted() {
+    // console.log('addEvent')
+    let provinceItem = this.$refs.provinceItem
+    // if(provinceItem == undefined)
+    //   return
+    // console.log('addEvent')
+    provinceItem.addEventListener("scroll", this.setScrollPosition)
+    // provinceItem.addEventListener("DOMSubtreeModified", this.setScrollPosition)
+  },
+  // destroyed(){
+  //   let provinceItem = this.$refs.provinceItem
+  //   if(provinceItem == undefined)
+  //     return
+  //   provinceItem.removeEventListener("scroll", this.setScrollPosition)
+  // },
+
   data(){
       return {
           isSchoolSelVisible: false,
@@ -48,7 +67,7 @@ export default {
 <template>
   <transition name="modal-fade">
          
-    <div class="modal-backdrop">
+    <div class="modal-backdrop" >
       <div
         class="modal"
         role="dialog"
@@ -75,8 +94,8 @@ export default {
             <table class="items">
               <tr>
                 <td>
-                  <div class="province-items" >
-                    <div v-for="(province, index) in provinces" :key="province"  @click="getSchools(index, province)" class="items-infos">
+                  <div class="province-items" ref="provinceItem">
+                    <div v-for="(province, index) in provinces" :key="province"   @click="getSchools(index, province)"  class="items-infos">
                         <div v-bind:class="[index == proviceSelectedIndex ? 'items-selected' : 'items-unselected']">{{province}}</div>
                         <div class="items-split"></div> 
                     </div>
@@ -163,7 +182,6 @@ export default {
 .province-items{
   width:343px;
   background:rgba(255,255,255,1);
-  margin-left:49px;
   font-size:28px;
   color:rgba(114,112,114,1);
   overflow scroll;
@@ -171,7 +189,7 @@ export default {
 }
 
 .school-items{
-  width:343px;
+  width:100%;
   background:rgba(246,245,245,1);
   font-size:28px;
   color:rgba(114,112,114,1);
@@ -181,6 +199,7 @@ export default {
 
 .items-infos
   height 82px
+  margin-left:49px;
 
 .items{
     border-collapse:collapse;
@@ -190,7 +209,7 @@ export default {
 }
 
 .items-split{
-  width:343px;
+  width:274px;
   height:2px;
   background:rgba(232,232,232,1);
 }

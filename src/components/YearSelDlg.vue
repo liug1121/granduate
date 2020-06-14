@@ -201,4 +201,5 @@ export default {
 .modal-fade-leave-active {
   transition: opacity .5s ease
 }
+
 </style>

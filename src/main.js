@@ -5,6 +5,11 @@ import "lib-flexible";
 import store from "./store";
 import VueClipboard from 'vue-clipboard2'
 
+import pdSelect from 'pd-select'
+
+
+Vue.use(pdSelect)
+
 Vue.use(VueClipboard)
 
 Vue.config.productionTip = false;

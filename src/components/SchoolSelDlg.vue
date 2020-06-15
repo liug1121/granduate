@@ -1,23 +1,34 @@
 <script>
 import { mapGetters} from 'vuex'
-
+import commom from '../utils/common'
 export default {
   name: "SchoolSelDlg",
   methods: {
     close() {
+      if(this.schoolSelectedName != '')
+        this.$emit('onSelectedSchool', this.schoolSelectedName)
       this.$emit("close");
     },
 
-    getSchools(index, province){
+    getSchools(province){
         this.$store.dispatch('schools/getByProvinceName', province)
-        this.proviceSelectedIndex = index
     },
 
     selectedSchool(index, schoolName){
-        // console.log(schoolName)
         this.schoolSelectedIndex = index
         this.$emit('onSelectedSchool', schoolName)
-    }
+    },
+    provinceScroller(){
+      this.proviceSelectedIndex = commom.getScrollPosition(this.$refs.provinceItem, this.getProvinceForList.length)
+      this.provinceSelectedName = this.provinces[this.proviceSelectedIndex]
+      this.getSchools(this.provinceSelectedName)
+    },
+    schoolScroller(){
+      this.schoolSelectedIndex = commom.getScrollPosition(this.$refs.schoolItems, this.getSchoolsForList.length)
+      this.schoolSelectedName = this.schools[this.schoolSelectedIndex]
+      
+    },
+
   },
 
    computed:{
@@ -26,7 +37,41 @@ export default {
     }),
     ...mapGetters('provinces',{
         provinces: 'getNames'
-    })
+    }),
+
+    getSchoolsForList(){
+      let schools = []
+      for(let i = 0; i < this.schools.length; i++){
+        let school = {
+          name:this.schools[i],
+          valid:true
+        }
+        schools.push(school)
+      }
+      schools.push({name:'', valid:false})
+      schools.push({name:'', valid:false})
+      schools.push({name:'', valid:false})
+      schools.push({name:'', valid:false})
+      schools.push({name:'', valid:false})
+      return schools
+    },
+
+    getProvinceForList(){
+      let provinces = []
+      for(let i = 0; i < this.provinces.length; i++){
+        let province = {
+          name:this.provinces[i],
+          valid:true
+        }
+        provinces.push(province)
+      }
+      provinces.push({name:'', valid:false})
+      provinces.push({name:'', valid:false})
+      provinces.push({name:'', valid:false})
+      provinces.push({name:'', valid:false})
+      provinces.push({name:'', valid:false})
+      return provinces
+    }
 
    },
    
@@ -39,16 +84,18 @@ export default {
       return {
           isSchoolSelVisible: false,
           proviceSelectedIndex:0,
-          schoolSelectedIndex:0
+          provinceSelectedName : '',
+          schoolSelectedIndex:0,
+          schoolSelectedName:''
       }
-  }
+  },
 };
 </script>
 
 <template>
   <transition name="modal-fade">
          
-    <div class="modal-backdrop">
+    <div class="modal-backdrop" >
       <div
         class="modal"
         role="dialog"
@@ -75,22 +122,19 @@ export default {
             <table class="items">
               <tr>
                 <td>
-                  <div class="province-items" >
-                    <div v-for="(province, index) in provinces" :key="province"  @click="getSchools(index, province)" class="items-infos">
-                        <div v-bind:class="[index == proviceSelectedIndex ? 'items-selected' : 'items-unselected']">{{province}}</div>
-                        <div class="items-split"></div> 
+                  <div class="province-items" ref="provinceItem" @scroll="provinceScroller">
+                    <div v-for="(province, index) in getProvinceForList" :key="index"  class="items-infos">
+                        <div v-bind:class="[index == proviceSelectedIndex ? 'items-selected' : 'items-unselected']">{{province.name}}</div>
+                        <div class="items-split"  v-if="province.valid"></div> 
                     </div>
                   </div>
                 </td>
                 <td>
-                  <div class="school-items">
-                    <div v-for="(school, index) in schools" :key="school"  @click="selectedSchool(index, school)" class="items-infos">
-                        <div v-bind:class="[index == schoolSelectedIndex ? 'items-selected' : 'items-unselected']">{{school}}</div>
-                        <div class="items-split"></div>
+                  <div class="school-items" ref="schoolItems" @scroll="schoolScroller">
+                    <div v-for="(school, index) in getSchoolsForList" :key="index"  class="items-infos">
+                        <div v-bind:class="[index == schoolSelectedIndex ? 'items-selected' : 'items-unselected']">{{school.name}}</div>
+                        <div class="items-split" v-if="school.valid"></div>
                     </div>
-                    
-                    <!-- <div>北京大学</div>
-                    <div class="items-split"></div> -->
                   </div>
                 </td>
               </tr>
@@ -163,7 +207,6 @@ export default {
 .province-items{
   width:343px;
   background:rgba(255,255,255,1);
-  margin-left:49px;
   font-size:28px;
   color:rgba(114,112,114,1);
   overflow scroll;
@@ -171,7 +214,7 @@ export default {
 }
 
 .school-items{
-  width:343px;
+  width:100%;
   background:rgba(246,245,245,1);
   font-size:28px;
   color:rgba(114,112,114,1);
@@ -181,6 +224,7 @@ export default {
 
 .items-infos
   height 82px
+  margin-left:49px;
 
 .items{
     border-collapse:collapse;
@@ -190,7 +234,7 @@ export default {
 }
 
 .items-split{
-  width:343px;
+  width:274px;
   height:2px;
   background:rgba(232,232,232,1);
 }

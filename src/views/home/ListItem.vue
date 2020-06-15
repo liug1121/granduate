@@ -8,7 +8,7 @@
                     <table>
                     <tr>
                         <td><img class="img-tc" src="../../assets/tc51.png" /></td>
-                        <td><Student :name ='student.name' :number='student.id' :indate='student.year' :school='student.school' 
+                        <td><Student :name ='student.nickName' :number="student.id < 0 ? '****' : student.id" :indate='student.createDateStr' :school='student.school' 
                                     :major='student.major' :grade='student.year' :gradeinfo='type2Name(student.type)' /></td>
                     </tr>
                     </table>
@@ -16,7 +16,7 @@
                 </tr>
                 <tr>
                 <td>
-                    <Ranking :rank = 'student.rank' :allrank = 'student.allRank'/>
+                    <Ranking :rank = 'student.rankDisplay' :allrank = 'student.allRankDisplay'/>
                 </td>
                 </tr>
                 <tr>
@@ -34,7 +34,7 @@
                     <table>
                     <tr>
                         <td><img class="img-tc" src="../../assets/tc51.png" /></td>
-                        <td><Student :name ='student.name' :number='student.id' :indate='student.year' :school='student.school' 
+                        <td><Student :name ='student.nickName' :number="student.id < 0 ? '****' : student.id" :indate='student.createDateStr' :school='student.school' 
                                     :major='student.major' :grade='student.year' :gradeinfo='type2Name(student.type)' /></td>
                     </tr>
                     </table>
@@ -42,7 +42,7 @@
                 </tr>
                 <tr>
                 <td>
-                    <Ranking :rank = 'student.rank' :allrank = 'student.allRank'/>
+                    <Ranking :rank = 'student.rankDisplay' :allrank = 'student.allRankDisplay'/>
                 </td>
                 </tr>
                 <tr>
@@ -61,7 +61,7 @@ import Ranking from "./Ranking.vue";
 import { mapGetters} from 'vuex' 
 export default {
   name: "ListItem",
-  props:['isFromCookie'],
+  props:['isFromCookie', 'selectedSchool', 'selectedMajor'],
   components: {
     Student,
     Ranking,
@@ -90,11 +90,39 @@ export default {
     },
 
     type2Name(type){
+        if(type == '-1')
+            return '****'
         return type == 0 ? '学硕' : '专硕'
     },
 
     date2Year(date){
         return date.substring(0, 10)
+    },
+    convert2Display(students){
+        for(let i = 0; i < students.length; i++){
+            if(students[i].sex == 0){
+                students[i].nickName = 'XXX学长'
+            }else if(students[i].sex == 1){
+                students[i].nickName = 'XXX学姐'
+            }else{
+                students[i].nickName = 'XXX'
+            }
+            let createDate = students[i].createTime.substring(0, 10).split('-')
+            let createDateStr = createDate[0] + '-' + createDate[1] + '-' + createDate[2] 
+            students[i].createDateStr = createDateStr
+
+            let rank = students[i].rank
+            if(rank == 0 || rank == '' || rank == undefined)
+                students[i].rankDisplay = '保密'
+            else
+                students[i].rankDisplay = '第' + rank + '名'
+            let allRank = students[i].allRank
+            if(allRank == 0 || allRank == '' || allRank == undefined)
+                students[i].allRankDisplay = '保密'
+            else
+                students[i].allRankDisplay = '第' + allRank + '名'
+        }
+        return students
     }
   },
 
@@ -106,11 +134,14 @@ export default {
       }) ,
       studentForDisplay(){
           if(this.students.length == 0){
-              if(this.randomStudents.length == 0)
-                this.$store.dispatch('student/getStudentByRandom')
-              return this.randomStudents
+            let params = {
+                school:this.selectedSchool == '学校' ? '****' : this.selectedSchool,
+                major:this.selectedMajor == '专业' ? '****' : this.selectedMajor
+            }
+            this.$store.dispatch('student/getStudentByRandom',params)
+            return this.convert2Display(this.randomStudents)
           }else{
-              return this.students
+              return this.convert2Display(this.students)
           }
       }
   },

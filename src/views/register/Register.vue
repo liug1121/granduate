@@ -19,11 +19,7 @@
         <tr class="form-tr">
           <td class="label">*性别：</td>
           <td>
-            <select v-model.number="sex" type="number" v-bind:class="checkInput('sex')" >
-              <option disabled value=-1>请选择性别</option>
-              <option value=0>男</option>
-              <option value=1>女</option>
-            </select>
+            <div v-bind:class="checkInput('sex')" @click="onSexSel">{{sex==0? '男' : '女'}}</div>
           </td>
           <td><p v-if="sexError" class = "error">请选择性别</p></td>
         </tr>
@@ -51,9 +47,9 @@
         <tr>
           <td class="label">类型：</td>
           <td>
-            <input type="radio"  value=1 v-model="type"><label>志愿上岸</label>
-            <input type="radio"  value=2 v-model="type"><label>调剂</label>
-            <input type="radio"  value=3 v-model="type"><label>保研</label>
+            <input type="radio"  value=1 v-model="type" ><label class="type-radio">志愿上岸</label>
+            <input type="radio"  value=2 v-model="type"><label class="type-radio">调剂</label>
+            <input type="radio"  value=3 v-model="type"><label class="type-radio">保研</label>
           </td>
           <td></td>
         </tr>
@@ -76,10 +72,10 @@
 
       <table>
         <tr>
-          <td class="label label">专业课程一：</td>
-          <td><input v-model="course1" class="input-small" /></td>
-          <td>分值：</td>
-          <td><input v-model.number="course1Score" class="input-small" type="number"/></td>
+          <td class="label label">*专业课程一：</td>
+          <td><input v-model="course1" v-bind:class="checkInput('course1')" /></td>
+          <td>*分值：</td>
+          <td><input v-model.number="course1Score" v-bind:class="checkInput('course1Score')" type="number"/></td>
         </tr>
         <tr>
           <td class="label label">专业课程二：</td>
@@ -91,19 +87,21 @@
 
       <table>
         <tr>
-          <td class="label">手机：</td>
-          <td><input v-model="phone" class="input" /></td>
+          <td class="label">*手机：</td>
+          <td><input v-model="phone" v-bind:class="checkInput('phone')"  /></td>
+          <td><p v-if="phoneError" class = "error">请输入手机</p></td>
         </tr>
         <tr>
           <td class="label">微信：</td>
           <td><input v-model="weChart" class="input" /></td>
+          <td></td>
         </tr>
       </table>
 
       <table>
         <tr>
           <td class="label">自我介绍：</td>
-          <td><textarea v-model="comment" class="textarea">内容</textarea></td>
+          <td><textarea v-model="comment" class="textarea" placeholder="可以谈一谈自己擅长的方面和优势，或者简单介绍一下专业课参考书目以及自己的备考经验。">内容</textarea></td>
         </tr>
       </table>
 
@@ -120,6 +118,7 @@
         <div>
           <div v-if="hasNoImg" class = "upload">
             <img class="icon" src="../../assets/addfile.png">
+            <p class="upload-btn-text">上传照片</p>
             <input class="input-select" @change='add_img'  type="file">
           </div>
           <div v-else class = "upload">
@@ -140,6 +139,7 @@
       @close="closeSpecialtySelDlgModal" @onSelectedMajor="onSelectedMajor($event)"
     />
     <YearSelDlg v-show="isYearSelDlgVisible" @close="closeYearSelDlgModal" @onSelectYear="onSelectYear($event)"/>
+    <SexSelDlg v-show="isSexSelDlgVisible" @close="closeSexSelDlgModal" @onSelectSex="onSelectSex($event)"></SexSelDlg>
   </div>
 </template>
 
@@ -148,13 +148,16 @@ import {mapState} from 'vuex'
 import SchoolSelDlg from "../../components/SchoolSelDlg.vue";
 import SpecialtySelDlg from "../../components/SpecialtySelDlg.vue";
 import YearSelDlg from "../../components/YearSelDlg.vue";
+import SexSelDlg from "../../components/SexSelDlg.vue"
+import common from "../../utils/common"
 export default {
   name: "Register",
 
   components: {
     SchoolSelDlg,
     SpecialtySelDlg,
-    YearSelDlg
+    YearSelDlg,
+    SexSelDlg
   },
 
   computed:{
@@ -166,23 +169,45 @@ export default {
   methods:{
     onYearSel(){
       this.isYearSelDlgVisible =true
+      common.fixedPage()
     },
     closeYearSelDlgModal(){
       this.isYearSelDlgVisible = false
+      common.unfixedPage()
     },
     onSchoolSel(){
       this.isSchoolSelVisible = true
+      common.fixedPage()
     },
 
     closeSchoolSel() {
       this.isSchoolSelVisible = false;
+      common.unfixedPage()
     },
 
     onSpecialtySel(){
       this.isSpecialtySelDlgVisible = true
+      common.fixedPage()
     },
     closeSpecialtySelDlgModal(){
         this.isSpecialtySelDlgVisible = false
+        common.unfixedPage()
+    },
+
+    onSexSel(){
+        this.isSexSelDlgVisible = true
+        common.fixedPage()
+    },
+    closeSexSelDlgModal(){
+        this.isSexSelDlgVisible = false
+        common.unfixedPage()
+    },
+
+    onSelectSex(sex){
+      if(sex == '男')
+        this.sex = 0
+      else
+        this.sex = 1
     },
 
     onSelectedMajor(major){
@@ -240,8 +265,15 @@ export default {
       if(this.year == 1900){
         this.yearError = true
       }
+      if(this.phone == "")
+        this.phoneError = true
+      if(this.course1 == "")
+        this.course1Error = true
+      if(this.course1Score == 0)
+        this.course1ScoreError = true
 
-      if(this.nameError || this.sexError || this.schoolError || this.majorError){
+      if(this.nameError || this.sexError || this.schoolError || 
+          this.majorError || this.phoneError || this.course1Error || this.course1ScoreError){
         return
       }
 
@@ -279,6 +311,9 @@ export default {
       this.schoolError = false
       this.majorError = false
       this.yearError = false
+      this.phoneError = false
+      this.course1Error = false
+      this.course1ScoreError = false
     },
     
     checkInput(type){
@@ -292,6 +327,12 @@ export default {
         return !this.majorError ? 'input' : 'input-error'
       if(type == 'year')
         return !this.yearError ? 'input' : 'input-error'
+      if(type == 'phone')
+        return !this.phoneError ? 'input' : 'input-error'
+      if(type == 'course1')
+        return !this.course1Error ? 'input-small' : 'input-small-error' 
+      if(type == 'course1Score')
+        return !this.course1ScoreError ? 'input-small' : 'input-small-error' 
     },
 
     toast(str) {
@@ -307,7 +348,7 @@ export default {
   data(){
     return {
       name:"",
-      sex:-1,
+      sex:0,
       school:"",
       major:"",
       year:1900,
@@ -328,6 +369,9 @@ export default {
       schoolError:false,
       majorError:false,
       yearError:false,
+      phoneError :false,
+      course1Error : false,
+      course1ScoreError:false,
       hasNoImg:true,
       imgs:[],
       toastShow: false,
@@ -335,7 +379,8 @@ export default {
 
       isSchoolSelVisible: false,
       isSpecialtySelDlgVisible:false,
-      isYearSelDlgVisible :false
+      isYearSelDlgVisible :false,
+      isSexSelDlgVisible:false
     }
   },
 
@@ -346,6 +391,7 @@ export default {
 .register
     width 750px;
     height 1721px;
+    background:rgba(246,245,245,1);
 .title
     width 750px;
     height 160px;
@@ -372,7 +418,10 @@ export default {
     color rgba(51,51,51,1);
     text-align right;
     width 180px;
-    padding-bottom 30px
+
+tr{
+  height 60px
+}
 
 .input
     width 300px;
@@ -395,6 +444,13 @@ export default {
     border 1px solid rgba(160,160,160,1);
     border-radius 6px;
 
+.input-small-error
+    width 160px;
+    height 46px;
+    background rgba(255,255,255,1);
+    border 1px solid rgba(249,93,67,1);
+    border-radius 6px;
+
 .textarea
     width 452px;
     height 208px;
@@ -402,10 +458,12 @@ export default {
     border 1px solid rgba(160,160,160,1);
     border-radius 6px;
     margin-top 15px
+    font-size:18px;
 
 .notice
     font-size 18px;
     color rgba(86,86,86,1);
+    width:458px
 
 .addfile
     width 220px;
@@ -457,8 +515,16 @@ export default {
   }
 
 .icon{
-    margin-left: 72px;
+    margin-left: 88px;
     margin-top: 42px;
+    width:43px
+    height:43px
+}
+
+.upload-btn-text{
+  margin-left:63px
+  font-size:18px;
+  color:rgba(43,42,44,1);
 }
 
 .input-select{
@@ -509,5 +575,10 @@ export default {
   line-height: 45px;
   padding: 0 15px;
   max-width: 150px;
+}
+
+.type-radio{
+  margin-left 7px
+  margin-right 7px
 }
 </style>

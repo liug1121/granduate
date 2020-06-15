@@ -1,39 +1,55 @@
 <template>
-  <div class="body" @click="hideTwoCodeDlg" >
+  <div class="body" @click="hideTwoCodeDlg">
     <transition name="fade">
-    <div v-if="show" class="opt">
-      <div class="slider"><slider /></div>
-    </div>
+      <div v-if="show" class="opt">
+        <div class="slider"><slider /></div>
+      </div>
     </transition>
     <table class="btns">
-        <tr>
-          <td>
-            <div class="btn-school btn-box">
-              <table class="btn-text">
-                <tr @click="onSchoolSel">
-                  <td><div class="selected-text">{{selectedSchool.length > 2 ? (selectedSchool.substring(0,2)) : selectedSchool}}</div></td>
-                  <td><div class="triangle"></div></td>
-                </tr>
-              </table>
-            </div>
-          </td>
-          <td>
-            <div class="btn-pro btn-box">
-              <table class="btn-text">
-                <tr @click="onSpecialtySel">
-                  <td><div class="selected-text">{{selectedMajor.length > 2 ? (selectedMajor.substring(0,2)) : selectedMajor}}</div></td>
-                  <td><div class="triangle"></div></td>
-                </tr>
-              </table>
-            </div>
-          </td>
-          <td>
-            <div v-bind:class="change('btn')">
-              <p v-bind:class="change('text')" @click="myLooked">浏览记录</p>
-            </div>
-          </td>
-        </tr>
-      </table>
+      <tr>
+        <td>
+          <div class="btn-school btn-box">
+            <table class="btn-text">
+              <tr @click="onSchoolSel">
+                <td>
+                  <div class="selected-text">
+                    {{
+                      selectedSchool.length > 2
+                        ? selectedSchool.substring(0, 2)
+                        : selectedSchool
+                    }}
+                  </div>
+                </td>
+                <td><div class="triangle"></div></td>
+              </tr>
+            </table>
+          </div>
+        </td>
+        <td>
+          <div class="btn-pro btn-box">
+            <table class="btn-text">
+              <tr @click="onSpecialtySel">
+                <td>
+                  <div class="selected-text">
+                    {{
+                      selectedMajor.length > 2
+                        ? selectedMajor.substring(0, 2)
+                        : selectedMajor
+                    }}
+                  </div>
+                </td>
+                <td><div class="triangle"></div></td>
+              </tr>
+            </table>
+          </div>
+        </td>
+        <td>
+          <div v-bind:class="change('btn')">
+            <p v-bind:class="change('text')" @click="myLooked">浏览记录</p>
+          </div>
+        </td>
+      </tr>
+    </table>
 
     <table v-if="isListTitleShow">
       <tr>
@@ -43,10 +59,15 @@
     </table>
 
     <div :class="getListClass" ref="listcontainer">
-      <item :isFromCookie = "isFromCookie" :selectedSchool="selectedSchool" :selectedMajor="selectedMajor" @onSelectedRandom = "onSelectedRandom($event)"/>
+      <item
+        :isFromCookie="isFromCookie"
+        :selectedSchool="selectedSchool"
+        :selectedMajor="selectedMajor"
+        @onSelectedRandom="onSelectedRandom($event)"
+      />
     </div>
-    <div class="textscroller"><textscroller/></div>
-    
+    <div class="textscroller"><textscroller /></div>
+
     <div class="submit-container">
       <div class="submit-vertical-split"></div>
       <table class="submit">
@@ -54,19 +75,30 @@
           <td class="submit-horizontal-split"></td>
           <td class="submit-left">提交需求，我想被辅导</td>
           <td class="submit-right">
-            <router-link to="/register" class = "submit-right-text"><p>我是研究生,提交表单做兼职</p></router-link>
-            </td>
+            <router-link to="/register" class="submit-right-text"
+              ><p>我是研究生,提交表单做兼职</p></router-link
+            >
+          </td>
           <td class="submit-horizontal-split"></td>
         </tr>
       </table>
     </div>
-    <SchoolSelDlg v-show="isSchoolSelVisible" @close="closeSchoolSel" @onSelectedSchool="onSelectedSchool($event)"/>
+    <SchoolSelDlg
+      v-show="isSchoolSelVisible"
+      @close="closeSchoolSel"
+      @onSelectedSchool="onSelectedSchool($event)"
+    />
     <SpecialtySelDlg
       v-show="isSpecialtySelDlgVisible"
-      @close="closeSpecialtySelDlgModal" @onSelectedMajor="onSelectedMajor($event)"
+      @close="closeSpecialtySelDlgModal"
+      @onSelectedMajor="onSelectedMajor($event)"
     />
     <MsgDlg v-show="isModalVisible" @close="closeModal" />
-    <TwoCodeDlg id = 'twoCodeDlg' v-show="isTwoCodeDlgVisible" @close="closeTwoCodeDlgModal" />
+    <TwoCodeDlg
+      id="twoCodeDlg"
+      v-show="isTwoCodeDlgVisible"
+      @close="closeTwoCodeDlgModal"
+    />
   </div>
 </template>
 
@@ -78,7 +110,7 @@ import SchoolSelDlg from "../../components/SchoolSelDlg.vue";
 import SpecialtySelDlg from "../../components/SpecialtySelDlg.vue";
 import MsgDlg from "../../components/MsgDlg.vue";
 import TwoCodeDlg from "../../components/TwoCodeDlg.vue";
-import common from "../../utils/common"
+import common from "../../utils/common";
 
 export default {
   name: "Home",
@@ -90,37 +122,36 @@ export default {
     SpecialtySelDlg,
     MsgDlg,
     TwoCodeDlg
-
   },
-  beforeCreate(){
-    this.isFromCookie = 'false'
+  beforeCreate() {
+    this.isFromCookie = "false";
   },
-  computed:{
-    getListClass(){
-      return this.listClass
+  computed: {
+    getListClass() {
+      return this.listClass;
     }
   },
 
-  methods:{
-    hideTwoCodeDlg(event){
+  methods: {
+    hideTwoCodeDlg(event) {
       let twoCodeDlg = document.getElementById("twoCodeDlg");
-      if(twoCodeDlg){
-        if(twoCodeDlg.contains(event.target)){
-          this.closeTwoCodeDlgModal()
+      if (twoCodeDlg) {
+        if (twoCodeDlg.contains(event.target)) {
+          this.closeTwoCodeDlgModal();
         }
       }
     },
-    hideTop(){
-      console.log('hideTop')
+    hideTop() {
+      console.log("hideTop");
     },
-    onSchoolSel(){
-        this.isSchoolSelVisible = true
-        common.fixedPage()
+    onSchoolSel() {
+      this.isSchoolSelVisible = true;
+      common.fixedPage();
     },
 
     closeSchoolSel() {
       this.isSchoolSelVisible = false;
-      common.unfixedPage()
+      common.unfixedPage();
     },
 
     showModal() {
@@ -129,86 +160,89 @@ export default {
 
     closeModal() {
       this.isModalVisible = false;
-      this.isTwoCodeDlgVisible = true
-      this.$copyText('学姐您好，我想找学长，可以帮我对接一下吗？').then(function (e) {
-          console.log(e)
-        }, function (e) {
-          console.log(e)
-        })
+      this.isTwoCodeDlgVisible = true;
+      this.$copyText("学姐您好，我想找学长，可以帮我对接一下吗？").then(
+        function(e) {
+          console.log(e);
+        },
+        function(e) {
+          console.log(e);
+        }
+      );
     },
 
-    onSpecialtySel(){
-        this.isSpecialtySelDlgVisible = true
-        // this.fixedPage()
-        common.fixedPage()
+    onSpecialtySel() {
+      this.isSpecialtySelDlgVisible = true;
+      // this.fixedPage()
+      common.fixedPage();
     },
-    closeSpecialtySelDlgModal(){
-        this.isSpecialtySelDlgVisible = false
-        common.unfixedPage()
+    closeSpecialtySelDlgModal() {
+      this.isSpecialtySelDlgVisible = false;
+      common.unfixedPage();
     },
     closeTwoCodeDlgModal() {
       this.isTwoCodeDlgVisible = false;
     },
 
-    onSelectedSchool(schoolName){
-        this.isListTitleShow = true
-        this.selectedSchool = schoolName
-        this.searchStudents()
+    onSelectedSchool(schoolName) {
+      this.isListTitleShow = true;
+      this.selectedSchool = schoolName;
+      this.searchStudents();
     },
-    onSelectedRandom(isRandom){
-      if(isRandom)
-        this.showModal()
-      else
-        this.closeModal()
+    onSelectedRandom(isRandom) {
+      if (isRandom) this.showModal();
+      else this.closeModal();
     },
 
-    onChangeOptDisplay(show){
-      console.log(show)
+    onChangeOptDisplay(show) {
+      console.log(show);
     },
 
-    onSelectedMajor(major){
-        this.isListTitleShow = true
-        this.selectedMajor = major
-        this.searchStudents()
+    onSelectedMajor(major) {
+      this.isListTitleShow = true;
+      this.selectedMajor = major;
+      this.searchStudents();
     },
 
-    searchStudents(){
-        this.isFromCookie = 'false'
-        let params = {
-            page_no:1, page_size:50
-        }
-        if(this.selectedSchool != '学校')
-            params.school = this.selectedSchool
-        if(this.selectedMajor != '专业')
-            params.major = this.selectedMajor
-        this.$store.dispatch('student/getStudents', params)
+    searchStudents() {
+      this.isFromCookie = "false";
+      let params = {
+        page_no: 1,
+        page_size: 50
+      };
+      if (this.selectedSchool != "学校") params.school = this.selectedSchool;
+      if (this.selectedMajor != "专业") params.major = this.selectedMajor;
+      this.$store.dispatch("student/getStudents", params);
     },
-    myLooked(){
-        this.isFromCookie = 'true'
-        this.selectedSchool = '学校'
-        this.selectedMajor = '专业'
-        this.isListTitleShow = false
+    myLooked() {
+      this.isFromCookie = "true";
+      this.selectedSchool = "学校";
+      this.selectedMajor = "专业";
+      this.isListTitleShow = false;
     },
-    change(type){
-      if(type=='btn'){
-        return this.isFromCookie == 'true' ? 'btn-record-selected' : 'btn-record'
+    change(type) {
+      if (type == "btn") {
+        return this.isFromCookie == "true"
+          ? "btn-record-selected"
+          : "btn-record";
       }
 
-      if(type == 'text'){
-        return this.isFromCookie == 'true' ? 'btn-text-right-selected' : 'btn-text-right'
+      if (type == "text") {
+        return this.isFromCookie == "true"
+          ? "btn-text-right-selected"
+          : "btn-text-right";
       }
     },
 
     setScrollPosition() {
- 
-      if(this.$refs.listcontainer.scrollTop > 150){
-        this.show = false
-        this.listClass = 'list-container-long'
-      }else{
-        this.show = true
-        this.listClass ='list-container'
+      if (this.$refs.listcontainer.scrollTop > 150) {
+        this.show = false;
+        this.listClass = "list-container-long";
+      } else {
+        this.show = true;
+        this.listClass = "list-container";
       }
-    },
+    }
     // fixedPage(){
     //   let scrollTop = document.body.scrollTop || document.documentElement.scrollTop
     //   document.body.style.cssText += 'position:fixed;width:100%;top:-' + scrollTop + 'px;'
@@ -222,34 +256,31 @@ export default {
     // }
   },
 
-  data(){
-      return {
-          isSchoolSelVisible: false,
-          isSpecialtySelDlgVisible:false,
-          selectedSchool:'学校',
-          selectedMajor:'专业',
-          isFromCookie:'false',
-          show: true,
-          isModalVisible: false,
-          listClass: 'list-container',
-          isListTitleShow:true,
-          isTwoCodeDlgVisible: false
-      }
+  data() {
+    return {
+      isSchoolSelVisible: false,
+      isSpecialtySelDlgVisible: false,
+      selectedSchool: "学校",
+      selectedMajor: "专业",
+      isFromCookie: "false",
+      show: true,
+      isModalVisible: false,
+      listClass: "list-container",
+      isListTitleShow: true,
+      isTwoCodeDlgVisible: false
+    };
   },
 
   mounted() {
-    let listcontainer = this.$refs.listcontainer
-    if(listcontainer == undefined)
-      return
-    listcontainer.addEventListener("scroll", this.setScrollPosition)
+    let listcontainer = this.$refs.listcontainer;
+    if (listcontainer == undefined) return;
+    listcontainer.addEventListener("scroll", this.setScrollPosition);
   },
-  destroyed(){
-    let listcontainer = this.$refs.listcontainer
-    if(listcontainer == undefined)
-      return
-    listcontainer.removeEventListener("scroll", this.setScrollPosition)
-  },
-
+  destroyed() {
+    let listcontainer = this.$refs.listcontainer;
+    if (listcontainer == undefined) return;
+    listcontainer.removeEventListener("scroll", this.setScrollPosition);
+  }
 };
 </script>
 
@@ -262,13 +293,13 @@ export default {
 
 .slider
   width 690px;
-  height 290px;  
+  height 290px;
   margin-bottom 50px
-  
+
 
 .opt
   width 748px;
-  height 290px; 
+  height 290px;
   background rgba(255,255,255,1);
 
 
@@ -329,7 +360,7 @@ export default {
 
 .selected-text
     width 56px;
-    height 28px; 
+    height 28px;
 
 .btn-text-right
     margin-left 30px;
@@ -363,7 +394,7 @@ export default {
   -webkit-overflow-scrolling touch;
   overflow-scrolling touch;
   overflow scroll;
-  height 745px;  
+  height 745px;
 
 .list-title
     font-size 36px;
@@ -443,5 +474,4 @@ export default {
   position absolute
 
   bottom 119px
-
 </style>

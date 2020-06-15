@@ -7,18 +7,20 @@
         <td>
           <table class="student-info">
             <tr>
-              <td class = "student-info-name">{{student.name}}学长</td>
+              <td class="student-info-name">{{ student.name }}学长</td>
             </tr>
             <tr>
-              <td class = "student-info-id">编号：{{student.id}}（点击复制）</td>
+              <td class="student-info-id">
+                编号：{{ student.id }}（点击复制）
+              </td>
             </tr>
           </table>
 
           <table class="student-grade">
             <tr>
-              <td class="student-grade-level">{{student.year}}级</td>
+              <td class="student-grade-level">{{ student.year }}级</td>
               <td><img class="icon-img" src="../../assets/zs.png" /></td>
-              <td>{{student.type}}</td>
+              <td>{{ student.type }}</td>
             </tr>
           </table>
         </td>
@@ -30,16 +32,16 @@
 <script>
 export default {
   name: "BaseInfo",
-  data(){
-    return{
-      student:{}
-    }
+  data() {
+    return {
+      student: {}
+    };
   },
 
-  created(){
-    let student = this.$route.params
-    student.type = student.type == 0 ? '学硕' : '专硕'
-    this.student = student
+  created() {
+    let student = this.$route.params;
+    student.type = student.type == 0 ? "学硕" : "专硕";
+    this.student = student;
   }
 };
 </script>
@@ -49,7 +51,7 @@ export default {
     width 30px;
     height 20px;
     margin-top 10px;
-    
+
 
 .img-tc
     width 137px

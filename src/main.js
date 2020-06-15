@@ -3,14 +3,13 @@ import App from "./App.vue";
 import router from "./router";
 import "lib-flexible";
 import store from "./store";
-import VueClipboard from 'vue-clipboard2'
+import VueClipboard from "vue-clipboard2";
 
-import pdSelect from 'pd-select'
+import pdSelect from "pd-select";
 
+Vue.use(pdSelect);
 
-Vue.use(pdSelect)
-
-Vue.use(VueClipboard)
+Vue.use(VueClipboard);
 
 Vue.config.productionTip = false;
 

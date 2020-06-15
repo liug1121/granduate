@@ -2,21 +2,21 @@
   <div class="card">
     <div class="title">自我介绍</div>
     <div class="split-line"></div>
-    <div class="content">{{student.introduction}}</div>
+    <div class="content">{{ student.introduction }}</div>
   </div>
 </template>
 
 <script>
 export default {
   name: "Mine",
-  data(){
-    return{
-      student:{}
-    }
+  data() {
+    return {
+      student: {}
+    };
   },
-  created(){
-    let student = this.$route.params
-    this.student = student
+  created() {
+    let student = this.$route.params;
+    this.student = student;
   }
 };
 </script>

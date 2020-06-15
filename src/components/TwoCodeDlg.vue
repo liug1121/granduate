@@ -24,14 +24,18 @@ export default {
         </header>
         <section class="modal-body" id="modalDescription">
           <slot name="body">
-            <div ></div>
-            <div class="tow-code"><img class="tow-code-img" src="https://customer.okaoyan.com/api/v1/wechat_nos/random_qr?channer_id=1"></div>
+            <div></div>
+            <div class="tow-code">
+              <img
+                class="tow-code-img"
+                src="https://customer.okaoyan.com/api/v1/wechat_nos/random_qr?channer_id=1"
+              />
+            </div>
             <div class="notice">学长编号已复制,快去粘贴给助教吧！</div>
           </slot>
         </section>
         <footer class="modal-footer">
-          <slot name="footer">
-          </slot>
+          <slot name="footer"> </slot>
         </footer>
       </div>
     </div>

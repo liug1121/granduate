@@ -14,58 +14,77 @@
         <tr>
           <td class="label">*姓名：</td>
           <td><input v-model="name" v-bind:class="checkInput('name')" /></td>
-          <td><p v-if="nameError" class = "error">请输入姓名</p></td>
+          <td><p v-if="nameError" class="error">请输入姓名</p></td>
         </tr>
         <tr class="form-tr">
           <td class="label">*性别：</td>
           <td>
-            <div v-bind:class="checkInput('sex')" @click="onSexSel">{{sex==0? '男' : '女'}}</div>
+            <div v-bind:class="checkInput('sex')" @click="onSexSel">
+              {{ sex == 0 ? "男" : "女" }}
+            </div>
           </td>
-          <td><p v-if="sexError" class = "error">请选择性别</p></td>
+          <td><p v-if="sexError" class="error">请选择性别</p></td>
         </tr>
         <tr>
           <td class="label">*研究生学校：</td>
           <td>
-            <div v-bind:class="checkInput('school')"  @click="onSchoolSel">{{school}}</div>
+            <div v-bind:class="checkInput('school')" @click="onSchoolSel">
+              {{ school }}
+            </div>
           </td>
-          <td><p v-if="schoolError" class = "error">请选择您的学校</p></td>
+          <td><p v-if="schoolError" class="error">请选择您的学校</p></td>
         </tr>
         <tr>
           <td class="label">*研究生专业：</td>
           <td>
-            <div v-bind:class="checkInput('major')"  @click="onSpecialtySel">{{major}}</div>
+            <div v-bind:class="checkInput('major')" @click="onSpecialtySel">
+              {{ major }}
+            </div>
           </td>
-          <td><p v-if="majorError" class = "error">请选择您的专业</p></td>
+          <td><p v-if="majorError" class="error">请选择您的专业</p></td>
         </tr>
         <tr>
           <td class="label">*入学年份：</td>
           <td>
-            <div v-bind:class="checkInput('year')"  @click="onYearSel">{{year}}</div>
+            <div v-bind:class="checkInput('year')" @click="onYearSel">
+              {{ year }}
+            </div>
           </td>
-          <td><p v-if="yearError" class = "error">请选择入学年份</p></td>
+          <td><p v-if="yearError" class="error">请选择入学年份</p></td>
         </tr>
         <tr>
           <td class="label">类型：</td>
           <td>
-            <input type="radio"  value=1 v-model="type" ><label class="type-radio">志愿上岸</label>
-            <input type="radio"  value=2 v-model="type"><label class="type-radio">调剂</label>
-            <input type="radio"  value=3 v-model="type"><label class="type-radio">保研</label>
+            <input type="radio" value="1" v-model="type" /><label
+              class="type-radio"
+              >志愿上岸</label
+            >
+            <input type="radio" value="2" v-model="type" /><label
+              class="type-radio"
+              >调剂</label
+            >
+            <input type="radio" value="3" v-model="type" /><label
+              class="type-radio"
+              >保研</label
+            >
           </td>
           <td></td>
         </tr>
         <tr>
           <td class="label">初试分数：</td>
-          <td><input v-model.number="score1" class="input" type="number"/></td>
+          <td><input v-model.number="score1" class="input" type="number" /></td>
           <td></td>
         </tr>
         <tr>
           <td class="label">初试排名：</td>
-          <td><input v-model.number="rank" class="input" type="number"/></td>
+          <td><input v-model.number="rank" class="input" type="number" /></td>
           <td></td>
         </tr>
         <tr>
           <td class="label">总排名：</td>
-          <td><input v-model.number="allRank" class="input" type="number"/></td>
+          <td>
+            <input v-model.number="allRank" class="input" type="number" />
+          </td>
           <td></td>
         </tr>
       </table>
@@ -73,23 +92,37 @@
       <table>
         <tr>
           <td class="label label">*专业课程一：</td>
-          <td><input v-model="course1" v-bind:class="checkInput('course1')" /></td>
+          <td>
+            <input v-model="course1" v-bind:class="checkInput('course1')" />
+          </td>
           <td>*分值：</td>
-          <td><input v-model.number="course1Score" v-bind:class="checkInput('course1Score')" type="number"/></td>
+          <td>
+            <input
+              v-model.number="course1Score"
+              v-bind:class="checkInput('course1Score')"
+              type="number"
+            />
+          </td>
         </tr>
         <tr>
           <td class="label label">专业课程二：</td>
           <td><input v-model="course2" class="input-small" /></td>
           <td>分值：</td>
-          <td><input v-model.number="course2Score" class="input-small" type="number"/></td>
+          <td>
+            <input
+              v-model.number="course2Score"
+              class="input-small"
+              type="number"
+            />
+          </td>
         </tr>
       </table>
 
       <table>
         <tr>
           <td class="label">*手机：</td>
-          <td><input v-model="phone" v-bind:class="checkInput('phone')"  /></td>
-          <td><p v-if="phoneError" class = "error">请输入手机</p></td>
+          <td><input v-model="phone" v-bind:class="checkInput('phone')" /></td>
+          <td><p v-if="phoneError" class="error">请输入手机</p></td>
         </tr>
         <tr>
           <td class="label">微信：</td>
@@ -101,7 +134,15 @@
       <table>
         <tr>
           <td class="label">自我介绍：</td>
-          <td><textarea v-model="comment" class="textarea" placeholder="可以谈一谈自己擅长的方面和优势，或者简单介绍一下专业课参考书目以及自己的备考经验。">内容</textarea></td>
+          <td>
+            <textarea
+              v-model="comment"
+              class="textarea"
+              placeholder="可以谈一谈自己擅长的方面和优势，或者简单介绍一下专业课参考书目以及自己的备考经验。"
+            >
+内容</textarea
+            >
+          </td>
         </tr>
       </table>
 
@@ -115,41 +156,61 @@
           </td>
         </tr>
       </table>
-        <div>
-          <div v-if="hasNoImg" class = "upload">
-            <img class="icon" src="../../assets/addfile.png">
-            <p class="upload-btn-text">上传照片</p>
-            <input class="input-select" @change='add_img'  type="file">
+
+      <div>
+        <div v-if="hasNoImg" class="upload">
+          <img class="icon" src="../../assets/addfile.png" />
+          <p class="upload-btn-text">上传照片</p>
+          <input class="input-select" @change="add_img" type="file" />
+        </div>
+        <div v-else class="upload">
+          <div v-for="(item, index) in imgs" :key="item">
+            <img :src="item" class="image" />
+            <span @click="delete_img(index)" class="image-delete"
+              ><img
+                src="../../assets/delete.png"
+                v-if="addImageResult.code == 0"
+            /></span>
           </div>
-          <div v-else class = "upload">
-              <div v-for='(item ,index ) in imgs'  :key="item">
-                  <img :src="item" class="image">
-                  <span @click='delete_img(index)' class="image-delete"><img src="../../assets/delete.png" v-if="addImageResult.code == 0"></span>
-              </div>
-          </div>
+        </div>
       </div>
-      <div class="submit" @click="addStudent()"><p class="submit-text">提交</p></div>
+      <div class="submit" @click="addStudent()">
+        <p class="submit-text">提交</p>
+      </div>
     </form>
-      <div class="toast" v-show="toastShow">
-        {{toastText}}
-			</div>
-    <SchoolSelDlg v-show="isSchoolSelVisible" @close="closeSchoolSel" @onSelectedSchool="onSelectedSchool($event)"/>
+    <div class="toast" v-show="toastShow">
+      {{ toastText }}
+    </div>
+    <SchoolSelDlg
+      v-show="isSchoolSelVisible"
+      @close="closeSchoolSel"
+      @onSelectedSchool="onSelectedSchool($event)"
+    />
     <SpecialtySelDlg
       v-show="isSpecialtySelDlgVisible"
-      @close="closeSpecialtySelDlgModal" @onSelectedMajor="onSelectedMajor($event)"
+      @close="closeSpecialtySelDlgModal"
+      @onSelectedMajor="onSelectedMajor($event)"
     />
-    <YearSelDlg v-show="isYearSelDlgVisible" @close="closeYearSelDlgModal" @onSelectYear="onSelectYear($event)"/>
-    <SexSelDlg v-show="isSexSelDlgVisible" @close="closeSexSelDlgModal" @onSelectSex="onSelectSex($event)"></SexSelDlg>
+    <YearSelDlg
+      v-show="isYearSelDlgVisible"
+      @close="closeYearSelDlgModal"
+      @onSelectYear="onSelectYear($event)"
+    />
+    <SexSelDlg
+      v-show="isSexSelDlgVisible"
+      @close="closeSexSelDlgModal"
+      @onSelectSex="onSelectSex($event)"
+    ></SexSelDlg>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 import SchoolSelDlg from "../../components/SchoolSelDlg.vue";
 import SpecialtySelDlg from "../../components/SpecialtySelDlg.vue";
 import YearSelDlg from "../../components/YearSelDlg.vue";
-import SexSelDlg from "../../components/SexSelDlg.vue"
-import common from "../../utils/common"
+import SexSelDlg from "../../components/SexSelDlg.vue";
+import common from "../../utils/common";
 export default {
   name: "Register",
 
@@ -160,230 +221,223 @@ export default {
     SexSelDlg
   },
 
-  computed:{
-    ...mapState('student', {
-      addImageResult:'addImageResult'
+  computed: {
+    ...mapState("student", {
+      addImageResult: "addImageResult"
     })
   },
 
-  methods:{
-    onYearSel(){
-      this.isYearSelDlgVisible =true
-      common.fixedPage()
+  methods: {
+    onYearSel() {
+      this.isYearSelDlgVisible = true;
+      common.fixedPage();
     },
-    closeYearSelDlgModal(){
-      this.isYearSelDlgVisible = false
-      common.unfixedPage()
+    closeYearSelDlgModal() {
+      this.isYearSelDlgVisible = false;
+      common.unfixedPage();
     },
-    onSchoolSel(){
-      this.isSchoolSelVisible = true
-      common.fixedPage()
+    onSchoolSel() {
+      this.isSchoolSelVisible = true;
+      common.fixedPage();
     },
 
     closeSchoolSel() {
       this.isSchoolSelVisible = false;
-      common.unfixedPage()
+      common.unfixedPage();
     },
 
-    onSpecialtySel(){
-      this.isSpecialtySelDlgVisible = true
-      common.fixedPage()
+    onSpecialtySel() {
+      this.isSpecialtySelDlgVisible = true;
+      common.fixedPage();
     },
-    closeSpecialtySelDlgModal(){
-        this.isSpecialtySelDlgVisible = false
-        common.unfixedPage()
-    },
-
-    onSexSel(){
-        this.isSexSelDlgVisible = true
-        common.fixedPage()
-    },
-    closeSexSelDlgModal(){
-        this.isSexSelDlgVisible = false
-        common.unfixedPage()
+    closeSpecialtySelDlgModal() {
+      this.isSpecialtySelDlgVisible = false;
+      common.unfixedPage();
     },
 
-    onSelectSex(sex){
-      if(sex == '男')
-        this.sex = 0
-      else
-        this.sex = 1
+    onSexSel() {
+      this.isSexSelDlgVisible = true;
+      common.fixedPage();
+    },
+    closeSexSelDlgModal() {
+      this.isSexSelDlgVisible = false;
+      common.unfixedPage();
     },
 
-    onSelectedMajor(major){
-      this.major = major
+    onSelectSex(sex) {
+      if (sex == "男") this.sex = 0;
+      else this.sex = 1;
     },
 
-    onSelectedSchool(schoolName){
-      this.school = schoolName
+    onSelectedMajor(major) {
+      this.major = major;
     },
 
-    onSelectYear(year){
-      this.year = year
+    onSelectedSchool(schoolName) {
+      this.school = schoolName;
     },
 
-    delete_img(item){
-      this.imgs.splice(item,1);
-      this.hasNoImg = true
-      this.$store.dispatch('student/deleteStudentImage')
-     },
-     
-    add_img(event){
-      var reader =new FileReader();
-      var img1=event.target.files[0];
-      this.file = img1
-  
+    onSelectYear(year) {
+      this.year = year;
+    },
+
+    delete_img(item) {
+      this.imgs.splice(item, 1);
+      this.hasNoImg = true;
+      this.$store.dispatch("student/deleteStudentImage");
+    },
+
+    add_img(event) {
+      var reader = new FileReader();
+      var img1 = event.target.files[0];
+      this.file = img1;
+
       reader.readAsDataURL(img1);
-      var that=this;
-      reader.onloadend=function(){
-            that.imgs.push(reader.result)
-            that.hasNoImg = false
-            that.uploadImage()
-      }
+      var that = this;
+      reader.onloadend = function() {
+        that.imgs.push(reader.result);
+        that.hasNoImg = false;
+        that.uploadImage();
+      };
     },
 
-    uploadImage(){
-        const formData = new FormData()
-        formData.append('file', this.file, 'test.jpg')
-        this.$store.dispatch('student/addStudentImage', formData)
+    uploadImage() {
+      const formData = new FormData();
+      formData.append("file", this.file, "test.jpg");
+      this.$store.dispatch("student/addStudentImage", formData);
     },
 
-    addStudent(){
-      this.initErrorStatus()
-      if(this.name == ""){
-        this.nameError = true
+    addStudent() {
+      this.initErrorStatus();
+      if (this.name == "") {
+        this.nameError = true;
       }
-      if(this.sex == -1){
-        this.sexError = true
+      if (this.sex == -1) {
+        this.sexError = true;
       }
-      if(this.school == ""){
-        this.schoolError = true
+      if (this.school == "") {
+        this.schoolError = true;
       }
-      if(this.major == ""){
-        this.majorError = true
+      if (this.major == "") {
+        this.majorError = true;
       }
-      if(this.year == 1900){
-        this.yearError = true
+      if (this.year == 1900) {
+        this.yearError = true;
       }
-      if(this.phone == "")
-        this.phoneError = true
-      if(this.course1 == "")
-        this.course1Error = true
-      if(this.course1Score == 0)
-        this.course1ScoreError = true
+      if (this.phone == "") this.phoneError = true;
+      if (this.course1 == "") this.course1Error = true;
+      if (this.course1Score == 0) this.course1ScoreError = true;
 
-      if(this.nameError || this.sexError || this.schoolError || 
-          this.majorError || this.phoneError || this.course1Error || this.course1ScoreError){
-        return
+      if (
+        this.nameError ||
+        this.sexError ||
+        this.schoolError ||
+        this.majorError ||
+        this.phoneError ||
+        this.course1Error ||
+        this.course1ScoreError
+      ) {
+        return;
       }
 
       let student = {
-            name:this.name,
-            sex:this.sex,
-            school:this.school,
-            major:this.major,
-            year:this.year,
-            score:this.score1,
-            rank:this.rank,
-            allRank:this.allRank,
-            professionOne:this.course1,
-            professionOneScore:this.course1Score,
-            professionTwo:this.course2,
-            professionTwoScore:this.course2Score,
-            phone:this.phone,
-            wechat:this.weChart,
-            introduction:this.comment,
-            eductionInfo:this.addImageResult.eductionInfo,
-            type: this.type
-      }
+        name: this.name,
+        sex: this.sex,
+        school: this.school,
+        major: this.major,
+        year: this.year,
+        score: this.score1,
+        rank: this.rank,
+        allRank: this.allRank,
+        professionOne: this.course1,
+        professionOneScore: this.course1Score,
+        professionTwo: this.course2,
+        professionTwoScore: this.course2Score,
+        phone: this.phone,
+        wechat: this.weChart,
+        introduction: this.comment,
+        eductionInfo: this.addImageResult.eductionInfo,
+        type: this.type
+      };
 
-      this.$store.dispatch('student/addStudent', student)
-      
-      this.toast('添加成功')
-      this.$router.push('/')
- 
-       
+      this.$store.dispatch("student/addStudent", student);
+
+      this.toast("添加成功");
+      this.$router.push("/");
     },
 
-    initErrorStatus(){
-      this.nameError = false
-      this.sexError = false
-      this.schoolError = false
-      this.majorError = false
-      this.yearError = false
-      this.phoneError = false
-      this.course1Error = false
-      this.course1ScoreError = false
+    initErrorStatus() {
+      this.nameError = false;
+      this.sexError = false;
+      this.schoolError = false;
+      this.majorError = false;
+      this.yearError = false;
+      this.phoneError = false;
+      this.course1Error = false;
+      this.course1ScoreError = false;
     },
-    
-    checkInput(type){
-      if(type == 'name')
-        return !this.nameError ? 'input' : 'input-error'  
-      if(type == 'sex')
-        return !this.sexError ? 'input' : 'input-error'  
-      if(type == 'school')
-        return !this.schoolError ? 'input' : 'input-error'
-      if(type == 'major')
-        return !this.majorError ? 'input' : 'input-error'
-      if(type == 'year')
-        return !this.yearError ? 'input' : 'input-error'
-      if(type == 'phone')
-        return !this.phoneError ? 'input' : 'input-error'
-      if(type == 'course1')
-        return !this.course1Error ? 'input-small' : 'input-small-error' 
-      if(type == 'course1Score')
-        return !this.course1ScoreError ? 'input-small' : 'input-small-error' 
+
+    checkInput(type) {
+      if (type == "name") return !this.nameError ? "input" : "input-error";
+      if (type == "sex") return !this.sexError ? "input" : "input-error";
+      if (type == "school") return !this.schoolError ? "input" : "input-error";
+      if (type == "major") return !this.majorError ? "input" : "input-error";
+      if (type == "year") return !this.yearError ? "input" : "input-error";
+      if (type == "phone") return !this.phoneError ? "input" : "input-error";
+      if (type == "course1")
+        return !this.course1Error ? "input-small" : "input-small-error";
+      if (type == "course1Score")
+        return !this.course1ScoreError ? "input-small" : "input-small-error";
     },
 
     toast(str) {
-      let v = this
-      v.toastText = str
-      v.toastShow = true
+      let v = this;
+      v.toastText = str;
+      v.toastShow = true;
       setTimeout(function() {
-        v.toastShow = false
-      }, 1500)
+        v.toastShow = false;
+      }, 1500);
     }
   },
 
-  data(){
+  data() {
     return {
-      name:"",
-      sex:0,
-      school:"",
-      major:"",
-      year:1900,
-      score1:0,
-      rank:0,
-      allRank:0,
-      course1:"",
-      course1Score:0,
-      course2:"",
-      course2Score:0,
-      phone:"",
-      weChart:"",
-      comment:"",
-      type:1,
+      name: "",
+      sex: 0,
+      school: "",
+      major: "",
+      year: 1900,
+      score1: 0,
+      rank: 0,
+      allRank: 0,
+      course1: "",
+      course1Score: 0,
+      course2: "",
+      course2Score: 0,
+      phone: "",
+      weChart: "",
+      comment: "",
+      type: 1,
 
-      nameError:false,
-      sexError:false,
-      schoolError:false,
-      majorError:false,
-      yearError:false,
-      phoneError :false,
-      course1Error : false,
-      course1ScoreError:false,
-      hasNoImg:true,
-      imgs:[],
+      nameError: false,
+      sexError: false,
+      schoolError: false,
+      majorError: false,
+      yearError: false,
+      phoneError: false,
+      course1Error: false,
+      course1ScoreError: false,
+      hasNoImg: true,
+      imgs: [],
       toastShow: false,
-      toastText:'',
+      toastText: "",
 
       isSchoolSelVisible: false,
-      isSpecialtySelDlgVisible:false,
-      isYearSelDlgVisible :false,
-      isSexSelDlgVisible:false
-    }
-  },
-
+      isSpecialtySelDlgVisible: false,
+      isYearSelDlgVisible: false,
+      isSexSelDlgVisible: false
+    };
+  }
 };
 </script>
 

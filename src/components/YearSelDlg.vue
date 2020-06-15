@@ -8,7 +8,6 @@ export default {
         this.$emit('onSelectYear', this.year)
       this.$emit("close");
     },
-
       yearScoller(){
         this.yearSelectedIndex = common.getScrollPosition(this.$refs.items, this.years.length)
         if(this.yearSelectedIndex >= 5)

@@ -1,38 +1,39 @@
 <script>
-import common from "../utils/common"
+import common from "../utils/common";
 export default {
   name: "SexSelDlg",
-  computed:{
-    getAllSex(){
-      let allSex = []
-      allSex.push('男')
-      allSex.push('女')
-      allSex.push('')
-      allSex.push('')
-      return allSex
+  computed: {
+    getAllSex() {
+      let allSex = [];
+      allSex.push("男");
+      allSex.push("女");
+      allSex.push("");
+      allSex.push("");
+      return allSex;
     }
   },
 
   methods: {
     close() {
-      if(this.sex != '')
-        this.$emit('onSelectSex', this.sex)
+      if (this.sex != "") this.$emit("onSelectSex", this.sex);
       this.$emit("close");
     },
 
-    sexScroller(){
-      this.selectedIndex = common.getScrollPosition(this.$refs.items, this.getAllSex.length)
-      if(this.selectedIndex >=2)
-        return
-      this.sex = this.getAllSex[this.selectedIndex]
+    sexScroller() {
+      this.selectedIndex = common.getScrollPosition(
+        this.$refs.items,
+        this.getAllSex.length
+      );
+      if (this.selectedIndex >= 2) return;
+      this.sex = this.getAllSex[this.selectedIndex];
     }
   },
 
-  data(){
+  data() {
     return {
-      selectedIndex:0,
-      sex:''
-    }
+      selectedIndex: 0,
+      sex: ""
+    };
   }
 };
 </script>
@@ -61,9 +62,15 @@ export default {
           <slot name="body">
             <div class="split"></div>
             <div class="items" @scroll="sexScroller" ref="items">
-              
-              <div v-bind:class="[index == selectedIndex ? 'item item-selected' : 'item']" 
-              v-for="(sex, index) in getAllSex" :key="index">{{sex}}</div>
+              <div
+                v-bind:class="[
+                  index == selectedIndex ? 'item item-selected' : 'item'
+                ]"
+                v-for="(sex, index) in getAllSex"
+                :key="index"
+              >
+                {{ sex }}
+              </div>
             </div>
             <div class="split split-bottom"></div>
           </slot>

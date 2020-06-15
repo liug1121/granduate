@@ -2,33 +2,34 @@
   <div class="student">
     <table>
       <tr>
-        <td class="name-text">{{name}}</td>
-        <td class="sys-number">编号：{{number}}</td>
-        <td class="sys-date">{{indate}} 加入</td>
+        <td class="name-text">{{ name }}</td>
+        <td class="sys-number">编号：{{ number }}</td>
+        <td class="sys-date">{{ indate }} 加入</td>
       </tr>
     </table>
 
     <table>
       <tr>
-        <td class="info-text">{{school}}</td>
+        <td class="info-text">{{ school }}</td>
         <td><div class="info-split"></div></td>
-        <td class="info-text">{{major}}</td>
+        <td class="info-text">{{ major }}</td>
       </tr>
     </table>
 
     <table>
       <tr>
-        <td class="grade-text">{{grade}}级</td>
+        <td class="grade-text">{{ grade }}级</td>
         <td><img class="icon-img" src="../../assets/zs.png" /></td>
-        <td class="grade-text">{{gradeinfo}}</td>
+        <td class="grade-text">{{ gradeinfo }}</td>
       </tr>
     </table>
-  </div> </template>
+  </div>
+</template>
 
 <script>
 export default {
   name: "Student",
-  props: ['name', 'number','indate', 'school', 'major', 'grade', 'gradeinfo']
+  props: ["name", "number", "indate", "school", "major", "grade", "gradeinfo"]
 };
 </script>
 

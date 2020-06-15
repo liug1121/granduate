@@ -4,59 +4,104 @@
     <div class="split-line"></div>
     <div class="base-item">
       <table>
-        <tr><td><p class="base-item-label">研究生院校：</p></td><td><p class = "base-item-text">{{student.school}}</p></td></tr>
-      </table>
-      
-    </div>
-    <div class="split-line"></div>
-    <div class="base-item">
-      <table>
-        <tr><td><p class="base-item-label">研究生专业：</p></td><td><p class = "base-item-text">{{student.major}}</p></td></tr>
+        <tr>
+          <td><p class="base-item-label">研究生院校：</p></td>
+          <td>
+            <p class="base-item-text">{{ student.school }}</p>
+          </td>
+        </tr>
       </table>
     </div>
     <div class="split-line"></div>
     <div class="base-item">
       <table>
-        <tr><td><p class="base-item-label">专业课程一（{{student.professionOne}}）：</p></td><td><p class = "base-item-text">{{student.professionOneScore}}分</p></td></tr>
+        <tr>
+          <td><p class="base-item-label">研究生专业：</p></td>
+          <td>
+            <p class="base-item-text">{{ student.major }}</p>
+          </td>
+        </tr>
       </table>
     </div>
     <div class="split-line"></div>
     <div class="base-item">
       <table>
-        <tr><td><p class="base-item-label">专业课程二（{{student.professionTwo}}）：</p></td><td><p class = "base-item-text">保密</p></td></tr>
+        <tr>
+          <td>
+            <p class="base-item-label">
+              专业课程一（{{ student.professionOne }}）：
+            </p>
+          </td>
+          <td>
+            <p class="base-item-text">{{ student.professionOneScore }}分</p>
+          </td>
+        </tr>
       </table>
     </div>
     <div class="split-line"></div>
     <div class="base-item">
       <table>
-        <tr><td><p class="base-item-label">初试排名：</p></td><td><p class = "base-item-text">保密</p></td></tr>
+        <tr>
+          <td>
+            <p class="base-item-label">
+              专业课程二（{{ student.professionTwo }}）：
+            </p>
+          </td>
+          <td><p class="base-item-text">保密</p></td>
+        </tr>
       </table>
     </div>
     <div class="split-line"></div>
     <div class="base-item">
       <table>
-        <tr><td><p class="base-item-label">总排名：</p></td><td><p class = "base-item-text">保密</p></td></tr>
+        <tr>
+          <td><p class="base-item-label">初试排名：</p></td>
+          <td><p class="base-item-text">保密</p></td>
+        </tr>
       </table>
     </div>
     <div class="split-line"></div>
     <div class="base-item">
       <table>
-        <tr><td><p class="base-item-label">专业课参考书目：</p></td><td><p class = "base-item-text">保密</p></td></tr>
+        <tr>
+          <td><p class="base-item-label">总排名：</p></td>
+          <td><p class="base-item-text">保密</p></td>
+        </tr>
+      </table>
+    </div>
+    <div class="split-line"></div>
+    <div class="base-item">
+      <table>
+        <tr>
+          <td><p class="base-item-label">专业课参考书目：</p></td>
+          <td><p class="base-item-text">保密</p></td>
+        </tr>
       </table>
     </div>
     <div class="split-line"></div>
     <div class="others">
-      <div class="others-card others-mine"><mine/></div>
-      <p class="others-notice">*以上信息为研究生自主填写，已经过考研派初审，但不能确保完全没有错漏之处， 在您和研究生学长对接时，考研派学姐会帮您确认信息真</p>
-      <div class="others-card others-comment"><comment/></div>
+      <div class="others-card others-mine"><mine /></div>
+      <p class="others-notice">
+        *以上信息为研究生自主填写，已经过考研派初审，但不能确保完全没有错漏之处，
+        在您和研究生学长对接时，考研派学姐会帮您确认信息真
+      </p>
+      <div class="others-card others-comment"><comment /></div>
     </div>
-    <div id = 'contact' class="contact" @click="showTwoCodeDlgModal"
-    v-clipboard:copy="notice"
+    <div
+      id="contact"
+      class="contact"
+      @click="showTwoCodeDlgModal"
+      v-clipboard:copy="notice"
       v-clipboard:success="handleCopyStatus(true)"
-      v-clipboard:error="handleCopyStatus(false)">
+      v-clipboard:error="handleCopyStatus(false)"
+    >
       <p id="contact-text" class="contact-text">立即联系学长/学姐</p>
     </div>
-    <TwoCodeDlg id = 'twoCodeDlg' v-show="isTwoCodeDlgVisible" @close="closeTwoCodeDlgModal" />
+    <TwoCodeDlg
+      id="twoCodeDlg"
+      v-show="isTwoCodeDlgVisible"
+      @close="closeTwoCodeDlgModal"
+    />
   </div>
 </template>
 
@@ -73,12 +118,12 @@ export default {
     comment: Comment,
     TwoCodeDlg
   },
-  methods:{
-    hideTwoCodeDlg(event){
+  methods: {
+    hideTwoCodeDlg(event) {
       let twoCodeDlg = document.getElementById("twoCodeDlg");
-      if(twoCodeDlg){
-        if(twoCodeDlg.contains(event.target)){
-          this.closeTwoCodeDlgModal()
+      if (twoCodeDlg) {
+        if (twoCodeDlg.contains(event.target)) {
+          this.closeTwoCodeDlgModal();
         }
       }
     },
@@ -89,23 +134,24 @@ export default {
       this.isTwoCodeDlgVisible = false;
     },
     handleCopyStatus(status) {
-      this.copySucceeded = status
+      this.copySucceeded = status;
     }
   },
-  data(){
-    return{
-      student:{},
+  data() {
+    return {
+      student: {},
       isTwoCodeDlgVisible: false,
       copySucceeded: null,
       notice: null
-    }
+    };
   },
-  created(){
-    let student = this.$route.params
-    this.student = student
-    let id = student.id
-    let sex = student.sex == 0 ? '学长' : '学姐'
-    this.notice =  '学姐您好，我想找编号'+ id + '的' + sex + '，可以帮我对接一下吗？'
+  created() {
+    let student = this.$route.params;
+    this.student = student;
+    let id = student.id;
+    let sex = student.sex == 0 ? "学长" : "学姐";
+    this.notice =
+      "学姐您好，我想找编号" + id + "的" + sex + "，可以帮我对接一下吗？";
   }
 };
 </script>

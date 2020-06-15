@@ -1,15 +1,17 @@
 <template>
   <div class="scroll-up" ref="scroll">
     <ul>
-      <li class="text">  
-        当前已有{{notice.counsel_nums}}位学长学姐加入，{{notice.senior_nums}}位学长正在辅导
+      <li class="text">
+        当前已有{{ notice.counsel_nums }}位学长学姐加入，{{
+          notice.senior_nums
+        }}位学长正在辅导
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 export default {
   name: "TextScroller",
   data() {
@@ -18,18 +20,18 @@ export default {
       speed: 20,
       timer: null,
       delay: 3000,
-      liHeight: "",
+      liHeight: ""
     };
   },
   mounted() {
     this.$nextTick(() => {
-    //   this.scrollArea = this.$refs.scroll;
-    //   let li = this.scrollArea.getElementsByTagName("li");
-    //   this.liHeight = li[0].offsetHeight;
-    //   this.scrollArea.scrollTop = 0;
-    //   this.scrollArea.innerHTML += this.scrollArea.innerHTML;
-    //   1 > 1 && setTimeout(this.startScroll, this.delay);
-    // //   this.scrollData.length > 1 && setTimeout(this.startScroll, this.delay);
+      //   this.scrollArea = this.$refs.scroll;
+      //   let li = this.scrollArea.getElementsByTagName("li");
+      //   this.liHeight = li[0].offsetHeight;
+      //   this.scrollArea.scrollTop = 0;
+      //   this.scrollArea.innerHTML += this.scrollArea.innerHTML;
+      //   1 > 1 && setTimeout(this.startScroll, this.delay);
+      // //   this.scrollData.length > 1 && setTimeout(this.startScroll, this.delay);
     });
   },
   methods: {
@@ -49,15 +51,14 @@ export default {
       }
     }
   },
-    computed:{
-        ...mapGetters('notices',{
-        notice : 'getNotices',
-        })
- 
-    },
-    beforeCreate(){
-        this.$store.dispatch('notices/getNotices')
-    },
+  computed: {
+    ...mapGetters("notices", {
+      notice: "getNotices"
+    })
+  },
+  beforeCreate() {
+    this.$store.dispatch("notices/getNotices");
+  }
 };
 </script>
 

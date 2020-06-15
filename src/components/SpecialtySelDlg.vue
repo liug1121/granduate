@@ -1,59 +1,60 @@
 <script>
-import { mapGetters} from 'vuex'
-import common from '../utils/common'
+import { mapGetters } from "vuex";
+import common from "../utils/common";
 export default {
   name: "SpecialtySelDlg",
   methods: {
     close() {
-      if(this.major != '')
-        this.$emit('onSelectedMajor', this.major)
+      if (this.major != "") this.$emit("onSelectedMajor", this.major);
       this.$emit("close");
     },
-    selectMajor(index, major){
-        this.majorSelectIndex = index
-        this.$emit('onSelectedMajor', major)
+    selectMajor(index, major) {
+      this.majorSelectIndex = index;
+      this.$emit("onSelectedMajor", major);
     },
-    search(){
-        let majorName = this.$refs["searchtext"].value
-        if(majorName == ""){
-            this.$store.dispatch('majors/getAll')
-        }else{
-            this.$store.dispatch('majors/getByMajorName', majorName)
-        }
-        this.majorSelectIndex = 0 
+    search() {
+      let majorName = this.$refs["searchtext"].value;
+      if (majorName == "") {
+        this.$store.dispatch("majors/getAll");
+      } else {
+        this.$store.dispatch("majors/getByMajorName", majorName);
+      }
+      this.majorSelectIndex = 0;
     },
-    majorScroller(){
-      this.majorSelectIndex = common.getScrollPosition(this.$refs.items, this.getMajorsForList.length)
-      if(this.majorSelectIndex >= this.majors.length)
-        return
-      this.major = this.majors[this.majorSelectIndex]
+    majorScroller() {
+      this.majorSelectIndex = common.getScrollPosition(
+        this.$refs.items,
+        this.getMajorsForList.length
+      );
+      if (this.majorSelectIndex >= this.majors.length) return;
+      this.major = this.majors[this.majorSelectIndex];
     }
   },
   beforeCreate() {
-    this.$store.dispatch('majors/getAll')
+    this.$store.dispatch("majors/getAll");
   },
-  computed:{
-    ...mapGetters('majors',{
-        majors:'getNames'
-    }) ,
-    getMajorsForList(){
-      let majors = []
-      for(let i = 0; i < this.majors.length; i++){
+  computed: {
+    ...mapGetters("majors", {
+      majors: "getNames"
+    }),
+    getMajorsForList() {
+      let majors = [];
+      for (let i = 0; i < this.majors.length; i++) {
         let major = {
-          name:this.majors[i],
-          valid:true
-        }
-        majors.push(major)
+          name: this.majors[i],
+          valid: true
+        };
+        majors.push(major);
       }
-      majors.push({name:'', valid:false})
-      return majors
-    },
+      majors.push({ name: "", valid: false });
+      return majors;
+    }
   },
-  data(){
-      return {
-          majorSelectIndex:0,
-          major:''
-      }
+  data() {
+    return {
+      majorSelectIndex: 0,
+      major: ""
+    };
   }
 };
 </script>
@@ -84,7 +85,7 @@ export default {
             <div class="search">
               <table>
                 <tr>
-                  <td><input class="search-input"  ref="searchtext"/></td>
+                  <td><input class="search-input" ref="searchtext" /></td>
                   <td>
                     <div class="search-btn">
                       <p class="search-btn-text" @click="search">搜索</p>
@@ -95,9 +96,14 @@ export default {
             </div>
             <div class="split"></div>
             <div class="items" @scroll="majorScroller" ref="items">
-              <div v-for="(major, index) in getMajorsForList" :key="index" 
-              v-bind:class="[index == majorSelectIndex ? 'item item-selected' : 'item']">
-              {{major.name}}
+              <div
+                v-for="(major, index) in getMajorsForList"
+                :key="index"
+                v-bind:class="[
+                  index == majorSelectIndex ? 'item item-selected' : 'item'
+                ]"
+              >
+                {{ major.name }}
               </div>
             </div>
             <div class="split split-bottom"></div>

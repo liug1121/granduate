@@ -1,4 +1,5 @@
 module.exports = {
+  publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
   configureWebpack: {
     devtool: "source-map"
   },
@@ -21,10 +22,10 @@ module.exports = {
       postcss: {
         plugins: [
           require("postcss-plugin-px2rem")({
-            rootValue: 75, 
-            exclude: /(node_module)/, 
-            mediaQuery: false, 
-            minPixelValue: 3 
+            rootValue: 75,
+            exclude: /(node_module)/,
+            mediaQuery: false,
+            minPixelValue: 3
           })
         ]
       }
@@ -33,13 +34,15 @@ module.exports = {
 
   devServer: {
     proxy: {
-      '/api/': {//业务类的接口请求地址，这里的api可以是后端的工程名
+      "/api/": {
+        //业务类的接口请求地址，这里的api可以是后端的工程名
         changeOrigin: true,
-        target: 'https://h5.okaoyan.com/'
+        target: "https://h5.okaoyan.com/"
       },
-      '/aliyun/': {//业务类的接口请求地址，这里的api可以是后端的工程名
+      "/aliyun/": {
+        //业务类的接口请求地址，这里的api可以是后端的工程名
         changeOrigin: true,
-        target: 'https://h5.okaoyan.com/'
+        target: "https://h5.okaoyan.com/"
       }
     }
   }

@@ -20,7 +20,7 @@
           <td class="label">*性别：</td>
           <td>
             <div v-bind:class="checkInput('sex')" @click="onSexSel">
-              {{ sex == 0 ? "男" : "女" }}
+              {{ sexNick }}
             </div>
           </td>
           <td><p v-if="sexError" class="error">请选择性别</p></td>
@@ -47,7 +47,7 @@
           <td class="label">*入学年份：</td>
           <td>
             <div v-bind:class="checkInput('year')" @click="onYearSel">
-              {{ year }}
+              {{ year == 1900 ? '' : year }}
             </div>
           </td>
           <td><p v-if="yearError" class="error">请选择入学年份</p></td>
@@ -57,7 +57,7 @@
           <td>
             <input type="radio" value="1" v-model="type" /><label
               class="type-radio"
-              >志愿上岸</label
+              >一志愿上岸</label
             >
             <input type="radio" value="2" v-model="type" /><label
               class="type-radio"
@@ -72,18 +72,18 @@
         </tr>
         <tr>
           <td class="label">初试分数：</td>
-          <td><input v-model.number="score1" class="input" type="number" /></td>
+          <td><input v-model.number="score1" class="input" type="number" oninput="if(value.length>3) value = value.slice(0,3)"/></td>
           <td></td>
         </tr>
         <tr>
           <td class="label">初试排名：</td>
-          <td><input v-model.number="rank" class="input" type="number" /></td>
+          <td><input v-model.number="rank" class="input" type="number" oninput="if(value.length>3) value = value.slice(0,3)"/></td>
           <td></td>
         </tr>
         <tr>
           <td class="label">总排名：</td>
           <td>
-            <input v-model.number="allRank" class="input" type="number" />
+            <input v-model.number="allRank" class="input" type="number" oninput="if(value.length>3) value = value.slice(0,3)"/>
           </td>
           <td></td>
         </tr>
@@ -100,7 +100,7 @@
             <input
               v-model.number="course1Score"
               v-bind:class="checkInput('course1Score')"
-              type="number"
+              type="number" oninput="if(value.length>3) value = value.slice(0,3)"
             />
           </td>
         </tr>
@@ -112,7 +112,7 @@
             <input
               v-model.number="course2Score"
               class="input-small"
-              type="number"
+              type="number" oninput="if(value.length>3) value = value.slice(0,3)"
             />
           </td>
         </tr>
@@ -265,8 +265,24 @@ export default {
     },
 
     onSelectSex(sex) {
-      if (sex == "男") this.sex = 0;
-      else this.sex = 1;
+      console.log(sex)
+
+      if (sex == "男") {
+        this.sex = 0; 
+        this.sexNick = '男';
+      }
+      else if(sex == '女'){
+        this.sex = 1; 
+        this.sexNick = '女'
+      }
+      else {
+        this.sex=2; 
+        this.sexNick = '保密'
+      }
+      console.log(this.sex)
+      console.log(this.sexNick)
+
+      
     },
 
     onSelectedMajor(major) {
@@ -404,16 +420,17 @@ export default {
     return {
       name: "",
       sex: 0,
+      sexNick:'男',
       school: "",
       major: "",
       year: 1900,
-      score1: 0,
-      rank: 0,
-      allRank: 0,
+      score1: null,
+      rank: null,
+      allRank: null,
       course1: "",
-      course1Score: 0,
+      course1Score: null,
       course2: "",
-      course2Score: 0,
+      course2Score: null,
       phone: "",
       weChart: "",
       comment: "",

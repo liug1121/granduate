@@ -8,6 +8,9 @@ export default {
       if (this.major != "") this.$emit("onSelectedMajor", this.major);
       this.$emit("close");
     },
+    cancel() {
+      this.$emit("close");
+    },
     selectMajor(index, major) {
       this.majorSelectIndex = index;
       this.$emit("onSelectedMajor", major);
@@ -71,7 +74,7 @@ export default {
           <slot name="header">
             <table class="model-header-btn">
               <tr>
-                <td @click="close">
+                <td @click="cancel">
                   <p class="model-header-btn-cancel">取消</p>
                 </td>
                 <td @click="close"><p class="model-header-btn-ok">确定</p></td>

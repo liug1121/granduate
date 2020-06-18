@@ -33,7 +33,7 @@
             </p>
           </td>
           <td>
-            <p class="base-item-text">{{ student.professionOneScore }}分</p>
+            <p class="base-item-text">{{ student.professionOneScore == 0|| student.professionOneScore == undefined ? '保密' : student.professionOneScore + '分' }}</p>
           </td>
         </tr>
       </table>
@@ -151,15 +151,15 @@ export default {
     let id = student.id;
     let sex = student.sex == 0 ? "学长" : "学姐";
     this.notice =
-      "学姐您好，我想找编号" + id + "的" + sex + "，可以帮我对接一下吗？";
+      "学姐您好，我想找编号" + id + "的" + sex + "研究生，可以帮我对接一下吗？";
   }
 };
 </script>
 
 <style scoped lang="stylus">
 .wrapper
-  margin-left 50px
-  height 1567px
+
+  width 750
 .header
     width 750px;
     height 200px;
@@ -173,6 +173,7 @@ export default {
     width 750px;
     height 98px;
     padding-top 38px
+    margin-left 50px
 
 .base-item-label
   font-size:32px;
@@ -218,8 +219,8 @@ base-item-text
     background linear-gradient(90deg,rgba(140,186,255,1),rgba(51,143,255,1));
     border-radius 35px 35px 35px 35px;
 
-    position absolute
-    top 1810px
+    position fixed
+    top 1310px
     left 20px
     margin-left 184px
 

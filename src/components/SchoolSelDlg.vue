@@ -10,6 +10,10 @@ export default {
       this.$emit("close");
     },
 
+    cancel() {
+      this.$emit("close");
+    },
+
     getSchools(province) {
       this.$store.dispatch("schools/getByProvinceName", province);
     },
@@ -108,7 +112,7 @@ export default {
           <slot name="header">
             <table class="model-header-btn">
               <tr>
-                <td @click="close">
+                <td @click="cancel">
                   <p class="model-header-btn-cancel">取消</p>
                 </td>
                 <td @click="close"><p class="model-header-btn-ok">确定</p></td>

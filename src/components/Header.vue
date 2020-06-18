@@ -10,6 +10,6 @@ export default {
 <style scoped lang="stylus">
 .header{
   width:750px;
-  height:128px;
+  height:0px;
 }
 </style>

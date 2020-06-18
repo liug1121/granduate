@@ -2,8 +2,8 @@
   <div class="scroll-up" ref="scroll">
     <ul>
       <li class="text">
-        当前已有{{ notice.counsel_nums }}位学长学姐加入，{{
-          notice.senior_nums
+        当前已有{{ notice.senior_nums }}位学长学姐加入，{{
+          notice.counsel_nums
         }}位学长正在辅导
       </li>
     </ul>

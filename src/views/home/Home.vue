@@ -14,8 +14,8 @@
                 <td>
                   <div class="selected-text">
                     {{
-                      selectedSchool.length > 2
-                        ? selectedSchool.substring(0, 2)
+                      selectedSchool.length > 4
+                        ? selectedSchool.substring(0, 4)
                         : selectedSchool
                     }}
                   </div>
@@ -32,8 +32,8 @@
                 <td>
                   <div class="selected-text">
                     {{
-                      selectedMajor.length > 2
-                        ? selectedMajor.substring(0, 2)
+                      selectedMajor.length > 4
+                        ? selectedMajor.substring(0, 4)
                         : selectedMajor
                     }}
                   </div>
@@ -161,7 +161,12 @@ export default {
     closeModal() {
       this.isModalVisible = false;
       this.isTwoCodeDlgVisible = true;
-      this.$copyText("学姐您好，我想找学长，可以帮我对接一下吗？").then(
+      let info = ""
+      if(this.selectedSchool != "学校")
+        info = this.selectedSchool + "学校";
+      if(this.selectedMajor != "专业")
+        info =  info + this.selectedMajor + "专业"
+      this.$copyText("学姐您好，我想找" + info + "的学长，可以帮我对接下吗？").then(
         function(e) {
           console.log(e);
         },
@@ -188,6 +193,7 @@ export default {
       this.isListTitleShow = true;
       this.selectedSchool = schoolName;
       this.searchStudents();
+      this.isListTitleShow = false;
     },
     onSelectedRandom(isRandom) {
       if (isRandom) this.showModal();
@@ -202,6 +208,7 @@ export default {
       this.isListTitleShow = true;
       this.selectedMajor = major;
       this.searchStudents();
+      this.isListTitleShow = false;
     },
 
     searchStudents() {
@@ -287,7 +294,7 @@ export default {
 <style scoped lang="stylus">
 .body
   width 750px;
-  height 1205px;
+  height 1313px;
   background rgba(246,245,245,1);
 
 
@@ -354,12 +361,12 @@ export default {
     border-radius 6px;
 
 .btn-text
-    margin-left 60px;
+    margin-left 30px;
     margin-top 10px;
     font-size 28px;
 
 .selected-text
-    width 56px;
+    width 115px;
     height 28px;
 
 .btn-text-right
@@ -382,19 +389,19 @@ export default {
     border-color rgba(130,130,141,1) transparent transparent transparent;
 
     margin-top 14px
-    margin-left 9px
+    margin-left 5px
 
 .list-container
   -webkit-overflow-scrolling touch;
   overflow-scrolling touch;
   overflow scroll;
-  height 500px;
+  height 728px;
 
 .list-container-long
   -webkit-overflow-scrolling touch;
   overflow-scrolling touch;
   overflow scroll;
-  height 745px;
+  height 978px;
 
 .list-title
     font-size 36px;
@@ -415,7 +422,7 @@ export default {
     height 119px;
     background rgba(255,255,255,1);
     box-shadow 0px -4px 15px 0px rgba(51,143,255,0.05);
-    position absolute
+    position fixed
     bottom 0
 
 .submit
@@ -471,7 +478,7 @@ export default {
   transform translateY(-70px)
 }
 .textscroller
-  position absolute
+  position fixed
 
   bottom 119px
 </style>

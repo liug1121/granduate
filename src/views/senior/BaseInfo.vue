@@ -7,7 +7,7 @@
         <td>
           <table class="student-info">
             <tr>
-              <td class="student-info-name">{{ student.name }}学长</td>
+              <td class="student-info-name">{{ student.name }}</td>
             </tr>
             <tr>
               <td class="student-info-id">
@@ -42,6 +42,15 @@ export default {
     let student = this.$route.params;
     student.type = student.type == 0 ? "学硕" : "专硕";
     this.student = student;
+    let name = ''
+    if(student.sex == 0){
+      name = "XXX学长"
+    }else if(student.sex == 1){
+       name = "XXX学姐"
+    }else{
+      name = "XXX"
+    }
+    this.student.name = name
   }
 };
 </script>

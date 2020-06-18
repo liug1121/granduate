@@ -122,9 +122,7 @@ export default {
       }
 
       this.$store.dispatch("student/addStudent2Cookie", student);
-    //   this.$router.push({ name: "Senior", params: student });
-        location.href = "https://www.okaoyan.com/parttime/${student.id}.html"
-        
+      this.$router.push({ name: "Senior", params: student });
     },
 
     type2Name(type) {

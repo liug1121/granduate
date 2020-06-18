@@ -7,7 +7,7 @@ export default {
       let allSex = [];
       allSex.push("男");
       allSex.push("女");
-      allSex.push("");
+      allSex.push("保密")
       allSex.push("");
       return allSex;
     }
@@ -24,7 +24,7 @@ export default {
         this.$refs.items,
         this.getAllSex.length
       );
-      if (this.selectedIndex >= 2) return;
+      if (this.selectedIndex >= 3) return;
       this.sex = this.getAllSex[this.selectedIndex];
     }
   },

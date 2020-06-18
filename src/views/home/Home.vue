@@ -226,6 +226,7 @@ export default {
       this.selectedSchool = "学校";
       this.selectedMajor = "专业";
       this.isListTitleShow = false;
+      this.$store.dispatch("student/getStudentForCookie");
     },
     change(type) {
       if (type == "btn") {

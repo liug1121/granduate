@@ -63,6 +63,10 @@ export default {
     post("/api/parttime/filter", mSetStudents, undefined, queryParams);
   },
 
+  getStudent(mSetStudents, queryParams){
+    get("GET", "/api/parttime/detail", mSetStudents, undefined, queryParams);
+  },
+
   addStudent(mSuccess, mError, student) {
     post("/api/parttime/add", mSuccess, mError, student);
   },

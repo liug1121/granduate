@@ -28,7 +28,8 @@ const state = () => ({
   students: [],
   randomStudents: [],
   addedSuccess: false,
-  addImageResult: {}
+  addImageResult: {},
+  studentsInCookie:[]
 });
 
 const getters = {
@@ -46,9 +47,8 @@ const getters = {
     return state.addedSuccess;
   },
 
-  getStudentFromCookie: () => {
-    let students = JSON.parse(cookies.get("students"));
-    return students;
+  getStudentFromCookie: state => {
+    return state.studentsInCookie;
   }
 };
 
@@ -57,6 +57,17 @@ const actions = {
     api.getStudents(resp => {
       commit("setStudents", resp);
     }, queryParams);
+  },
+
+  getStudentForCookie({commit}){
+    let studentIds = JSON.parse(cookies.get("students"));
+    commit("clearStudentInCookie")
+    for(let i = 0; i < studentIds.length; i++){
+        let param = {id: studentIds[i]}
+        api.getStudent(resp => {
+            commit("addStudentInCookie", resp);
+          }, param);
+    }
   },
 
   getStudentByRandom({ commit }, params) {
@@ -153,21 +164,38 @@ const actions = {
   },
 
   addStudent2Cookie({ commit }, student) {
+
     let studentsInCookie = cookies.get("students");
     if (studentsInCookie == undefined) studentsInCookie = "[]";
     studentsInCookie = JSON.parse(studentsInCookie);
     let id = student.id;
     for (let i = 0; i < studentsInCookie.length; i++) {
-      if (studentsInCookie[i].id == id) {
+      if (studentsInCookie[i] == id) {
         return;
       }
     }
-    if (studentsInCookie.length > 3) {
-      studentsInCookie.shift();
-    }
-    studentsInCookie.push(student);
+    studentsInCookie.push(student.id);
     commit("setStudent2Cookie", studentsInCookie);
     cookies.set("students", studentsInCookie);
+
+
+
+
+    // let studentsInCookie = cookies.get("students");
+    // if (studentsInCookie == undefined) studentsInCookie = "[]";
+    // studentsInCookie = JSON.parse(studentsInCookie);
+    // let id = student.id;
+    // for (let i = 0; i < studentsInCookie.length; i++) {
+    //   if (studentsInCookie[i].id == id) {
+    //     return;
+    //   }
+    // }
+    // if (studentsInCookie.length > 3) {
+    //   studentsInCookie.shift();
+    // }
+    // studentsInCookie.push(student);
+    // commit("setStudent2Cookie", studentsInCookie);
+    // cookies.set("students", studentsInCookie);
   }
 };
 
@@ -212,6 +240,13 @@ const mutations = {
 
   setStudent2Cookie(studentsInCookie) {
     console.log("setStudent2Cookie...." + studentsInCookie);
+  },
+  addStudentInCookie(state, resp){
+      let student = respUtils.toCommonResult(resp);
+      state.studentsInCookie.push(student.data)
+  },
+  clearStudentInCookie(){
+    this.studentsInCookie = []
   }
 };
 

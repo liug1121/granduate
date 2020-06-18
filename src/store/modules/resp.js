@@ -5,5 +5,5 @@ export default {
       message: respData.message,
       data: respData.data
     };
-  }
+  },
 };

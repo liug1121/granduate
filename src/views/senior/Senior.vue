@@ -220,7 +220,7 @@ base-item-text
     border-radius 35px 35px 35px 35px;
 
     position fixed
-    top 1310px
+    top 1010px
     left 20px
     margin-left 184px
 

@@ -47,13 +47,13 @@
     <!--从cookie中加载数据-->
     <div v-if="isFromCookie == 'true'">
       <div
-        v-for="student in myLookedStudents"
+        v-for="student in myLookedStudentsForDisplay"
         :key="student.id"
         class="list-item"
       >
         <table
           class="body"
-          @click="router2Detail(student.id, myLookedStudents)"
+          @click="router2Detail(student.id, myLookedStudentsForDisplay)"
         >
           <tr>
             <td>
@@ -142,6 +142,7 @@ export default {
         } else {
           students[i].nickName = "XXX";
         }
+
         let createDate = students[i].createTime.substring(0, 10).split("-");
         let createDateStr =
           createDate[0] + "-" + createDate[1] + "-" + createDate[2];
@@ -177,6 +178,11 @@ export default {
       } else {
         return this.convert2Display(this.students);
       }
+    },
+    myLookedStudentsForDisplay(){
+
+        return this.convert2Display(this.myLookedStudents); 
+
     }
   },
 

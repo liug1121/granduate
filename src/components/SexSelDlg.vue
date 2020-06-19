@@ -15,7 +15,9 @@ export default {
 
   methods: {
     close() {
-      if (this.sex != "") this.$emit("onSelectSex", this.sex);
+      if (this.sex == "") 
+        this.sex = this.getAllSex[this.selectedIndex];
+      this.$emit("onSelectSex", this.sex);
       this.$emit("close");
     },
 

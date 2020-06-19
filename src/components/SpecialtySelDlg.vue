@@ -5,7 +5,9 @@ export default {
   name: "SpecialtySelDlg",
   methods: {
     close() {
-      if (this.major != "") this.$emit("onSelectedMajor", this.major);
+      if (this.major == "") 
+        this.major = this.majors[this.majorSelectIndex];
+      this.$emit("onSelectedMajor", this.major);
       this.$emit("close");
     },
     cancel() {

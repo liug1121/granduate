@@ -4,8 +4,9 @@ export default {
   name: "YearSelDlg",
   methods: {
     close() {
-      if(this.year != '')
-        this.$emit('onSelectYear', this.year)
+      if(this.year == '')
+        this.year = this.years[this.yearSelectedIndex]
+      this.$emit('onSelectYear', this.year)
       this.$emit("close");
     },
       yearScoller(){

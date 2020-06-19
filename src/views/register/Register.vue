@@ -73,18 +73,18 @@
         </tr>
         <tr>
           <td class="label">初试分数：</td>
-          <td><input :value="score1" v-bind:class ="checkInput('score1')" @input="scoreInputChange($event, 'score1', 4)" @change="scoreInputChange($event, 'score1', 4)" /></td>
+          <td><input :value="score1" v-bind:class ="checkInput('score1')" @input="scoreInputCheck($event, 'score1', 4)" @blur="scoreInputCheck($event, 'score1', 4)" /></td>
           <td><p v-if="score1Error" class="error">初试分数请输入不大于3位的数字</p></td>
         </tr>
         <tr>
           <td class="label">初试排名：</td>
-          <td><input :value="rank" v-bind:class ="checkInput('rank')" @input="scoreInputChange($event, 'rank', 4)" @change="scoreInputChange($event, 'rank', 4)"/></td>
+          <td><input :value="rank" v-bind:class ="checkInput('rank')" @input="scoreInputCheck($event, 'rank', 4)" @blur="scoreInputCheck($event, 'rank', 4)"/></td>
           <td><p v-if="rankError" class="error">初试排名请输入不大于3位的数字</p></td>
         </tr>
         <tr>
           <td class="label">总排名：</td>
           <td>
-            <input :value="allRank" v-bind:class ="checkInput('allRank')" @input="scoreInputChange($event, 'allRank', 4)" @change="scoreInputChange($event, 'allRank', 4)"/>
+            <input :value="allRank" v-bind:class ="checkInput('allRank')" @input="scoreInputCheck($event, 'allRank', 4)" @blur="scoreInputCheck($event, 'allRank', 4)"/>
           </td>
           <td><p v-if="allRankError" class="error">总排名请输入不大于3位的数字</p></td>
         </tr>
@@ -101,7 +101,7 @@
             <input
               :value="course1Score"
               v-bind:class="checkInput('course1Score')"
-              @input="scoreInputChange($event, 'course1Score', 4)" @change="scoreInputChange($event, 'course1Score', 4)"
+              @input="scoreInputCheck($event, 'course1Score', 4)" @blur="scoreInputCheck($event, 'course1Score', 4)"
             />
           </td>
         </tr>
@@ -113,7 +113,7 @@
             <input
               :value="course2Score"
               :class="checkInput('course2Score')"
-              @input="scoreInputChange($event, 'course2Score', 4)" @change="scoreInputChange($event, 'course2Score', 4)"
+              @input="scoreInputCheck($event, 'course2Score', 4)" @blur="scoreInputCheck($event, 'course2Score', 4)"
             />
           </td>
         </tr>
@@ -123,7 +123,7 @@
         <tr>
           <td class="label">*手机：</td>
           <td><input :value="phone" v-bind:class="checkInput('phone')" 
-          @input="scoreInputChange($event, 'phone', 12)" @change="scoreInputChange($event, 'phone', 12)"/></td>
+          @input="phoneInputCheck" @blur="phoneChangeCheck"/></td>
           <td><p v-if="phoneError" class="error">请输入正确的手机号码</p></td>
         </tr>
         <tr>
@@ -417,7 +417,7 @@ export default {
       if (type == "course1Score")
         return !this.course1ScoreError ? "input-small" : "input-small-error";
       if (type == "course2Score")
-        return !this.course1ScoreError ? "input-small" : "input-small-error";
+        return !this.course2ScoreError ? "input-small" : "input-small-error";
     },
 
     toast(str, callback) {
@@ -430,7 +430,29 @@ export default {
       }, 2000);
     },
 
-    scoreInputChange(event, type, len) {
+    phoneInputCheck(event){
+      let val = event.target.value.trim()
+      if(/^[1-9]\d*$|^$/.test(val) && val.length <= 11) {
+        this.phone = val
+        this.phoneError = false
+      }else{
+        event.target.value = this.phone
+        this.phoneError = true
+      }
+    },
+    phoneChangeCheck(event){
+      console.log('phoneChangeCheck')
+      let val = event.target.value.trim()
+      if(val.length == 11){
+        this.phone = val
+        this.phoneError = false
+      }else{
+        event.target.value = this.phone
+        this.phoneError = true
+      }
+    },
+
+    scoreInputCheck(event, type, len) {
 						let val = event.target.value.trim()
 						if(/^[1-9]\d*$|^$/.test(val) && val.length <len) {
               if(type == 'score1'){
@@ -453,10 +475,7 @@ export default {
                 this.course2Score = val
                 this.course2ScoreError = false
               }
-              if(type == "phone"){
-                this.phone = val
-                this.phoneError = false
-              }
+
 						} else {
               if(type == 'score1'){
                 event.target.value = this.score1
@@ -480,11 +499,6 @@ export default {
                 event.target.value = this.course2Score
                 this.course2ScoreError = true
               }
-              if(type == "phone"){
-                event.target.value = this.phone
-                this.phoneError = true
-              }
-                
 						}
 					}
   },

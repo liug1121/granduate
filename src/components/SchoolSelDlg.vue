@@ -5,8 +5,9 @@ export default {
   name: "SchoolSelDlg",
   methods: {
     close() {
-      if (this.schoolSelectedName != "")
-        this.$emit("onSelectedSchool", this.schoolSelectedName);
+      if (this.schoolSelectedName == "")
+        this.schoolSelectedName = this.schools[this.schoolSelectedIndex];
+      this.$emit("onSelectedSchool", this.schoolSelectedName);
       this.$emit("close");
     },
 

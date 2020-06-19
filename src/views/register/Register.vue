@@ -1,5 +1,6 @@
 <template>
   <div class="register">
+    <div class = "modal-backdrop" v-if="isSubmiting"></div>
     <div class="title">
       <p class="title-big-text">研究生兼职信息登记表</p>
       <p class="title-small-text">
@@ -72,20 +73,20 @@
         </tr>
         <tr>
           <td class="label">初试分数：</td>
-          <td><input v-model.number="score1" class="input" type="number" oninput="if(value.length>3) value = value.slice(0,3)"/></td>
-          <td></td>
+          <td><input :value="score1" v-bind:class ="checkInput('score1')" @input="scoreInputChange($event, 'score1', 4)" @change="scoreInputChange($event, 'score1', 4)" /></td>
+          <td><p v-if="score1Error" class="error">初试分数请输入不大于3位的数字</p></td>
         </tr>
         <tr>
           <td class="label">初试排名：</td>
-          <td><input v-model.number="rank" class="input" type="number" oninput="if(value.length>3) value = value.slice(0,3)"/></td>
-          <td></td>
+          <td><input :value="rank" v-bind:class ="checkInput('rank')" @input="scoreInputChange($event, 'rank', 4)" @change="scoreInputChange($event, 'rank', 4)"/></td>
+          <td><p v-if="rankError" class="error">初试排名请输入不大于3位的数字</p></td>
         </tr>
         <tr>
           <td class="label">总排名：</td>
           <td>
-            <input v-model.number="allRank" class="input" type="number" oninput="if(value.length>3) value = value.slice(0,3)"/>
+            <input :value="allRank" v-bind:class ="checkInput('allRank')" @input="scoreInputChange($event, 'allRank', 4)" @change="scoreInputChange($event, 'allRank', 4)"/>
           </td>
-          <td></td>
+          <td><p v-if="allRankError" class="error">总排名请输入不大于3位的数字</p></td>
         </tr>
       </table>
 
@@ -98,9 +99,9 @@
           <td>*分值：</td>
           <td>
             <input
-              v-model.number="course1Score"
+              :value="course1Score"
               v-bind:class="checkInput('course1Score')"
-              type="number" oninput="if(value.length>3) value = value.slice(0,3)"
+              @input="scoreInputChange($event, 'course1Score', 4)" @change="scoreInputChange($event, 'course1Score', 4)"
             />
           </td>
         </tr>
@@ -110,9 +111,9 @@
           <td>分值：</td>
           <td>
             <input
-              v-model.number="course2Score"
-              class="input-small"
-              type="number" oninput="if(value.length>3) value = value.slice(0,3)"
+              :value="course2Score"
+              :class="checkInput('course2Score')"
+              @input="scoreInputChange($event, 'course2Score', 4)" @change="scoreInputChange($event, 'course2Score', 4)"
             />
           </td>
         </tr>
@@ -121,8 +122,9 @@
       <table>
         <tr>
           <td class="label">*手机：</td>
-          <td><input v-model="phone" v-bind:class="checkInput('phone')" /></td>
-          <td><p v-if="phoneError" class="error">请输入手机</p></td>
+          <td><input :value="phone" v-bind:class="checkInput('phone')" 
+          @input="scoreInputChange($event, 'phone', 12)" @change="scoreInputChange($event, 'phone', 12)"/></td>
+          <td><p v-if="phoneError" class="error">请输入正确的手机号码</p></td>
         </tr>
         <tr>
           <td class="label">微信：</td>
@@ -362,24 +364,27 @@ export default {
         school: this.school,
         major: this.major,
         year: this.year,
-        score: this.score1,
-        rank: this.rank,
-        allRank: this.allRank,
+        score: this.score1 == null ? 0 : this.score1,
+        rank: this.rank == null ? 0 : this.rank,
+        allRank: this.allRank == null ? 0 : this.allRank,
         professionOne: this.course1,
-        professionOneScore: this.course1Score,
+        professionOneScore: this.course1Score == null ? 0 : this.course1Score,
         professionTwo: this.course2,
-        professionTwoScore: this.course2Score,
+        professionTwoScore: this.course2Score == null ? 0 : this.course2Score,
         phone: this.phone,
         wechat: this.weChart,
         introduction: this.comment,
         eductionInfo: this.addImageResult.eductionInfo,
         type: this.type
       };
-
+      this.isSubmiting = true
       this.$store.dispatch("student/addStudent", student);
 
-      this.toast("添加成功");
-      this.$router.push("/");
+      this.toast("提交成功！", ()=>{
+        this.isSubmiting = false
+        this.$router.push("/");
+      });
+      
     },
 
     initErrorStatus() {
@@ -391,6 +396,10 @@ export default {
       this.phoneError = false;
       this.course1Error = false;
       this.course1ScoreError = false;
+      this.score1Error = false
+      this.rankError = false
+      this.allRankError = false
+      this.course2ScoreError = false
     },
 
     checkInput(type) {
@@ -400,20 +409,84 @@ export default {
       if (type == "major") return !this.majorError ? "input" : "input-error";
       if (type == "year") return !this.yearError ? "input" : "input-error";
       if (type == "phone") return !this.phoneError ? "input" : "input-error";
+      if (type == "score1") return !this.score1Error ? "input" : "input-error";
+      if (type == "rank") return !this.rankError ? "input" : "input-error";
+      if (type == "allRank") return !this.allRankError ? "input" : "input-error";
       if (type == "course1")
         return !this.course1Error ? "input-small" : "input-small-error";
       if (type == "course1Score")
         return !this.course1ScoreError ? "input-small" : "input-small-error";
+      if (type == "course2Score")
+        return !this.course1ScoreError ? "input-small" : "input-small-error";
     },
 
-    toast(str) {
+    toast(str, callback) {
       let v = this;
       v.toastText = str;
       v.toastShow = true;
       setTimeout(function() {
         v.toastShow = false;
-      }, 1500);
-    }
+        callback()
+      }, 2000);
+    },
+
+    scoreInputChange(event, type, len) {
+						let val = event.target.value.trim()
+						if(/^[1-9]\d*$|^$/.test(val) && val.length <len) {
+              if(type == 'score1'){
+                this.score1 = val
+                this.score1Error = false
+              }
+              if(type == 'rank'){
+                this.rank = val
+                this.rankError = false
+              }
+              if(type == 'allRank'){
+                this.allRank = val
+                this.allRankError = false
+              }
+              if(type == 'course1Score'){
+                this.course1Score = val
+                this.course1ScoreError = false
+              }
+              if(type == 'course2Score'){
+                this.course2Score = val
+                this.course2ScoreError = false
+              }
+              if(type == "phone"){
+                this.phone = val
+                this.phoneError = false
+              }
+						} else {
+              if(type == 'score1'){
+                event.target.value = this.score1
+                this.score1Error = true
+              }
+                
+              if(type == 'rank'){
+                event.target.value = this.rank
+                this.rankError = true
+              }
+                
+              if(type == 'allRank'){
+                event.target.value = this.allRank
+                this.allRankError = true;
+              }
+              if(type == 'course1Score'){
+                event.target.value = this.course1Score
+                this.course1ScoreError = true
+              }
+              if(type == 'course2Score'){
+                event.target.value = this.course2Score
+                this.course2ScoreError = true
+              }
+              if(type == "phone"){
+                event.target.value = this.phone
+                this.phoneError = true
+              }
+                
+						}
+					}
   },
 
   data() {
@@ -443,7 +516,11 @@ export default {
       yearError: false,
       phoneError: false,
       course1Error: false,
+      score1Error: false,
+      rankError: false,
+      allRankError: false,
       course1ScoreError: false,
+      course2ScoreError: false,
       hasNoImg: true,
       imgs: [],
       toastShow: false,
@@ -452,7 +529,9 @@ export default {
       isSchoolSelVisible: false,
       isSpecialtySelDlgVisible: false,
       isYearSelDlgVisible: false,
-      isSexSelDlgVisible: false
+      isSexSelDlgVisible: false,
+
+      isSubmiting : false
     };
   }
 };
@@ -651,5 +730,17 @@ tr{
 .type-radio{
   margin-left 7px
   margin-right 7px
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

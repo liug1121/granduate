@@ -14,7 +14,7 @@
             <td>
               <table>
                 <tr>
-                  <td><img class="img-tc" src="../../assets/tc51.png" /></td>
+                  <td><img class="img-tc" :src="require('../../assets/' + student.icon + '.png')" />{{student.iconUrl}}</td>
                   <td>
                     <Student
                       :name="student.nickName"
@@ -24,6 +24,7 @@
                       :major="student.major"
                       :grade="student.year"
                       :gradeinfo="type2Name(student.type)"
+                      :iconUrl = "student.iconUrl"
                     />
                   </td>
                 </tr>
@@ -59,7 +60,7 @@
             <td>
               <table>
                 <tr>
-                  <td><img class="img-tc" src="../../assets/tc51.png" /></td>
+                  <td><img class="img-tc" :src="require('../../assets/' + student.icon + '.png')" /></td>
                   <td>
                     <Student
                       :name="student.nickName"
@@ -137,10 +138,13 @@ export default {
       for (let i = 0; i < students.length; i++) {
         if (students[i].sex == 0) {
           students[i].nickName = "XXX学长";
+          students[i].icon = "male"
         } else if (students[i].sex == 1) {
           students[i].nickName = "XXX学姐";
+          students[i].icon = "female"
         } else {
           students[i].nickName = "XXX";
+          students[i].icon = "secret"
         }
 
         let createDate = students[i].createTime.substring(0, 10).split("-");
@@ -156,6 +160,8 @@ export default {
         if (allRank == 0 || allRank == "" || allRank == undefined)
           students[i].allRankDisplay = "保密";
         else students[i].allRankDisplay = "第" + allRank + "名";
+        console.log(students[i].iconUrl)
+
       }
       return students;
     }

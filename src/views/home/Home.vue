@@ -73,7 +73,7 @@
       <table class="submit">
         <tr>
           <td class="submit-horizontal-split"></td>
-          <td class="submit-left">提交需求，我想被辅导</td>
+          <td class="submit-left" @click="todo">提交需求，我想被辅导</td>
           <td class="submit-right">
             <router-link to="/register" class="submit-right-text"
               ><p>我是研究生,提交表单做兼职</p></router-link
@@ -250,18 +250,10 @@ export default {
         this.show = true;
         this.listClass = "list-container";
       }
+    },
+    todo(){
+      location.href="http://kaoyanpai.mikecrm.com/5zQFZoA"
     }
-    // fixedPage(){
-    //   let scrollTop = document.body.scrollTop || document.documentElement.scrollTop
-    //   document.body.style.cssText += 'position:fixed;width:100%;top:-' + scrollTop + 'px;'
-    // },
-    // unfixedPage(){
-    //   let body = document.body
-    //   body.style.position = ''
-    //   let top = body.style.top
-    //   document.body.scrollTop = document.documentElement.scrollTop = -parseInt(top)
-    //   body.style.top = ''
-    // }
   },
 
   data() {

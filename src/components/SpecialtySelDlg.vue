@@ -52,6 +52,8 @@ export default {
         majors.push(major);
       }
       majors.push({ name: "", valid: false });
+      majors.push({ name: "", valid: false });
+      majors.push({ name: "", valid: false });
       return majors;
     }
   },
@@ -234,6 +236,7 @@ export default {
 
 .item{
     margin-top:54px;
+    height 31px
 }
 
 .ok-btn{

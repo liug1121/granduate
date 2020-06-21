@@ -9,6 +9,7 @@ export default {
       allSex.push("女");
       allSex.push("保密")
       allSex.push("");
+      allSex.push("");
       return allSex;
     }
   },
@@ -168,6 +169,7 @@ export default {
 
 .item{
     margin-top:54px;
+    height : 33px
 }
 
 .ok-btn{

@@ -164,6 +164,7 @@ export default {
 
 .item{
     margin-top:54px;
+    height:28px;
 }
 
 .ok-btn{

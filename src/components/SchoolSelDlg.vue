@@ -24,6 +24,20 @@ export default {
       this.$emit("onSelectedSchool", schoolName);
     },
     provinceScroller() {
+
+      // let index = commom.getScrollPosition1(
+      //   this.$refs.provinceItem,
+      //   this.getProvinceForList
+      // );
+      // if(index == -1)
+      //   return
+      
+      // this.proviceSelectedIndex = index
+      // this.provinceSelectedName = this.provinces[this.proviceSelectedIndex];
+      // this.getSchools(this.provinceSelectedName);
+
+
+
       this.proviceSelectedIndex = commom.getScrollPosition(
         this.$refs.provinceItem,
         this.getProvinceForList.length
@@ -74,11 +88,11 @@ export default {
         };
         provinces.push(province);
       }
-      provinces.push({ name: "", valid: false });
-      provinces.push({ name: "", valid: false });
-      provinces.push({ name: "", valid: false });
-      provinces.push({ name: "", valid: false });
-      provinces.push({ name: "", valid: false });
+      provinces.push({ name: "", valid: false});
+      provinces.push({ name: "", valid: false});
+      provinces.push({ name: "", valid: false});
+      provinces.push({ name: "", valid: false});
+      provinces.push({ name: "", valid: false});
       return provinces;
     }
   },
@@ -94,7 +108,7 @@ export default {
       proviceSelectedIndex: 0,
       provinceSelectedName: "",
       schoolSelectedIndex: 0,
-      schoolSelectedName: ""
+      schoolSelectedName: "",
     };
   }
 };
@@ -135,7 +149,7 @@ export default {
                     <div
                       v-for="(province, index) in getProvinceForList"
                       :key="index"
-                      class="items-infos"
+                      class="items-infos" 
                     >
                       <div
                         v-bind:class="[

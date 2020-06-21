@@ -24,15 +24,17 @@ export default {
       } else {
         this.$store.dispatch("majors/getByMajorName", majorName);
       }
-      this.majorSelectIndex = 0;
+      this.majorSelectIndex = 1;
+      this.$refs.items.scrollTop = 0;
+      this.major == ""
     },
     majorScroller() {
-      this.majorSelectIndex = common.getScrollPosition(
+      let majorSelectIndex = common.getScrollPosition(
         this.$refs.items,
         this.getMajorsForList.length
       );
-      if (this.majorSelectIndex >= this.majors.length) return;
-      this.major = this.majors[this.majorSelectIndex];
+      this.majorSelectIndex = majorSelectIndex + 1
+      this.major = this.majors[this.majorSelectIndex - 1];
     }
   },
   beforeCreate() {
@@ -44,6 +46,8 @@ export default {
     }),
     getMajorsForList() {
       let majors = [];
+      majors.push({ name: "", valid: false });
+      
       for (let i = 0; i < this.majors.length; i++) {
         let major = {
           name: this.majors[i],
@@ -57,9 +61,14 @@ export default {
       return majors;
     }
   },
+  watch:{
+    getMajorsForList(){
+      this.major = this.majors[this.majorSelectIndex - 1];
+    }
+  },
   data() {
     return {
-      majorSelectIndex: 0,
+      majorSelectIndex: 1,
       major: ""
     };
   }

@@ -11,8 +11,7 @@ export default {
     },
       yearScoller(){
         this.yearSelectedIndex = common.getScrollPosition(this.$refs.items, this.years.length)
-        if(this.yearSelectedIndex >= 5)
-          return 
+        this.yearSelectedIndex = this.yearSelectedIndex + 1
         this.year = this.years[this.yearSelectedIndex]
       }
   },
@@ -21,6 +20,7 @@ export default {
           let d = new Date()
           let year = d.getYear() + 1900
           let years = []
+          years.push('')
           years.push(year)
           for(let i = 0; i < 4; i++){
               year = year - 1
@@ -34,7 +34,7 @@ export default {
   },
   data(){
     return {
-        yearSelectedIndex:0,
+        yearSelectedIndex:1,
         year:''
     }
   }

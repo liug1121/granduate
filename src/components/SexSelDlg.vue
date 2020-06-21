@@ -5,6 +5,7 @@ export default {
   computed: {
     getAllSex() {
       let allSex = [];
+      allSex.push("");
       allSex.push("男");
       allSex.push("女");
       allSex.push("保密")
@@ -28,13 +29,14 @@ export default {
         this.getAllSex.length
       );
       if (this.selectedIndex >= 3) return;
+      this.selectedIndex =this.selectedIndex + 1
       this.sex = this.getAllSex[this.selectedIndex];
     }
   },
 
   data() {
     return {
-      selectedIndex: 0,
+      selectedIndex: 1,
       sex: ""
     };
   }

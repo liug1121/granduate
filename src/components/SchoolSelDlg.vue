@@ -24,20 +24,6 @@ export default {
       this.$emit("onSelectedSchool", schoolName);
     },
     provinceScroller() {
-
-      // let index = commom.getScrollPosition1(
-      //   this.$refs.provinceItem,
-      //   this.getProvinceForList
-      // );
-      // if(index == -1)
-      //   return
-      
-      // this.proviceSelectedIndex = index
-      // this.provinceSelectedName = this.provinces[this.proviceSelectedIndex];
-      // this.getSchools(this.provinceSelectedName);
-
-
-
       this.proviceSelectedIndex = commom.getScrollPosition(
         this.$refs.provinceItem,
         this.getProvinceForList.length
@@ -94,7 +80,7 @@ export default {
       provinces.push({ name: "", valid: false});
       provinces.push({ name: "", valid: false});
       return provinces;
-    }
+    },
   },
 
   beforeCreate() {

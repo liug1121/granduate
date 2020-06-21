@@ -6,7 +6,7 @@ export default {
   methods: {
     close() {
       if (this.major == "") 
-        this.major = this.majors[this.majorSelectIndex];
+        this.major = this.getMajorsForList[this.majorSelectIndex].name;
       this.$emit("onSelectedMajor", this.major);
       this.$emit("close");
     },
@@ -34,7 +34,7 @@ export default {
         this.getMajorsForList.length
       );
       this.majorSelectIndex = majorSelectIndex + 1
-      this.major = this.majors[this.majorSelectIndex - 1];
+      this.major = this.getMajorsForList[this.majorSelectIndex].name;
     }
   },
   beforeCreate() {
@@ -47,7 +47,6 @@ export default {
     getMajorsForList() {
       let majors = [];
       majors.push({ name: "", valid: false });
-      
       for (let i = 0; i < this.majors.length; i++) {
         let major = {
           name: this.majors[i],
@@ -63,7 +62,7 @@ export default {
   },
   watch:{
     getMajorsForList(){
-      this.major = this.majors[this.majorSelectIndex - 1];
+      this.major = this.getMajorsForList[this.majorSelectIndex].name;
     }
   },
   data() {

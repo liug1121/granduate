@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/home/Home.vue";
 import Register from "../views/register/Register.vue";
 import Senior from "../views/senior/Senior.vue";
+import Bind from "../views/bigflow/Bind.vue";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/senior",
     name: "Senior",
     component: Senior
+  },
+  {
+    path:"/bind",
+    name:"Bind",
+    component:Bind
   }
 ];
 

@@ -1,3 +1,23 @@
+<script>
+import Foucus from "./components/Foucus.vue";
+export default {
+  name: "positionHome",
+  components: {
+    Foucus
+  },
+  data() {
+    return {
+      foucusDetailShow:false
+    };
+  },
+  methods:{
+      openFoucus:function(){
+          console.log('openFoucus')
+          this.foucusDetailShow = true
+      }
+  }
+};
+</script>
 <template>
     <div class="container">
         <div class="head">
@@ -9,7 +29,7 @@
             <table>
                 <tr>
                     <td>
-                        <div class="statics-box">重点关注</div>
+                        <div class="statics-box" @click="openFoucus()">重点关注</div>
                     </td>
                     <td>
                         <div class="statics-box">风险车辆</div>
@@ -59,8 +79,13 @@
             <div class="chart-left"> chart-left</div>
             <div class="chart-right">chart-right</div>
         </div>
+        <Foucus
+        id="foucusDetails"
+        v-show="foucusDetailShow"
+        />
     </div>
 </template>
+
 
 <style scoped lang="stylus">
 .container{

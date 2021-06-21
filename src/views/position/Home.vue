@@ -12,8 +12,10 @@ export default {
   },
   methods:{
       openFoucus:function(){
-          console.log('openFoucus')
           this.foucusDetailShow = true
+      },
+      closeFoucus:function(){
+          this.foucusDetailShow = false
       }
   }
 };
@@ -82,6 +84,7 @@ export default {
         <Foucus
         id="foucusDetails"
         v-show="foucusDetailShow"
+        @close="closeFoucus"
         />
     </div>
 </template>

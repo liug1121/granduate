@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" ref="root">
+  <div class="wrapper" ref="root" id="app">
     <app-header />
     <router-view></router-view>
   </div>
@@ -16,17 +16,11 @@ export default {
 </script>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
+html,body,#app{
+ height: 100%;
+ margin: 0;
+ padding: 0;
 }
+
 </style>
 
-<style scoped>
-.wrapper {
-  width: 750px;
-  height: 1333px;
-  background: rgba(255, 255, 255, 1);
-  position: absolute;
-}
-</style>

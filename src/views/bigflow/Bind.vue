@@ -35,8 +35,6 @@
     margin-bottom 10%
     border-radius 15px;
     box-shadow  #666 0px 0px 10px;
-    
-    
 }
 .table{
     width 100%
@@ -60,7 +58,6 @@
 .scan{
     width 80px
     height 80px
-    // background blue
     display: inline-block
     border-radius 15px;
     border 1px solid #ddd

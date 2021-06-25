@@ -5,6 +5,7 @@ import Register from "../views/register/Register.vue";
 import Senior from "../views/senior/Senior.vue";
 import Bind from "../views/bigflow/Bind.vue";
 import Position from "../views/position/Home.vue"
+import Material from '../views/position/Material.vue'
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,11 @@ const routes = [
     path: "/position/Home",
     name: "Position",
     component: Position
+  },
+  {
+    path: "/position/Material",
+    name: "Material",
+    component: Material
   },
   {
     path: "/",

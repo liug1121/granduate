@@ -197,7 +197,7 @@ export default {
             <div class="chart-left">
                  <div class="chart-statuses">
                      <div class="chart-status">车辆状态</div>
-                     <div class="chart-status">车辆离线</div>
+                     <div class="chart-status">离线车辆</div>
                  </div>
                  <Vepie class="veLine" :data="statusChartData"></Vepie>
             </div>

@@ -41,7 +41,19 @@ export default {
       otherAlertShow:false
     };
   },
+
   methods:{
+      toView:function(page){
+          if(page == 1){
+                this.$router.push({ name: "Position"})
+          }else if(page== 2){
+                this.$router.push({ name: "Monitor"})
+          }else if(page == 3){
+                this.$router.push({ name: "Travel"})
+          }else if(page == 4){
+                this.$router.push({ name: "Material"})
+          }
+      },
       openPop:function(type){
           if(type=='FOUCUS'){
               this.foucusDetailShow = true
@@ -101,7 +113,12 @@ export default {
     <div class="container">
         <div class="head">
             <div class="logo">logo</div>
-            <div class = "tab">tab</div>
+            <div class = "head-tabs">
+                <div class="head-tab" @click="toView(1)">首页</div>
+                <div class="head-tab" @click="toView(2)">监控中心</div>
+                <div class="head-tab" @click="toView(3)">轨迹回放</div>
+                <div class="head-tab" @click="toView(4)">资料管理</div>
+            </div>
             <div class="login">login</div>
         </div>
         <div class="statics">
@@ -235,10 +252,7 @@ export default {
     flex 1
     border 1px solid #ddd
 }
-.tab{
-    flex 3
-    border 1px solid #ddd
-}
+
 .login{
     flex 1
     border 1px solid #ddd
@@ -272,5 +286,15 @@ export default {
     margin-top 30px
     margin-left 60px
 }
+.head-tabs{
+    flex 3
+    display flex
+}
 
+.head-tab{
+    flex 1
+    text-align center
+    height 80px
+    line-height  80px
+}
 </style>

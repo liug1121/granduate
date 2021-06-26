@@ -10,6 +10,7 @@ export default {
   },
   data() {
     return {
+        showFoot:1,
       type:0,  //0 用户管理  1 车辆管理  2导入管理
       userTreeData :{
         name: "用管理",
@@ -158,6 +159,7 @@ export default {
                             :columnNames="userColumnNames"
                             :filter-key="searchQuery"
                             :currentPage="currentPage"
+                            :showFoot = "showFoot"
                         >
                         </Table>
                     </div>

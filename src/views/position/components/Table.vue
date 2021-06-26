@@ -20,7 +20,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="footer">
+      <div class="footer" v-if="showFoot == '1'">
           <div class="footer-item">{{currentPage}}</div>
           <div class="footer-item">上一页</div>
           <div class="footer-item">下一页</div>
@@ -35,7 +35,8 @@ export default {
         columns: Array,
         columnNames:Object,
         filterKey: String,
-        currentPage:String
+        currentPage:String,
+        showFoot:String
     },
     data: function() {
         var sortOrders = {};

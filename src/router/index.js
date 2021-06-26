@@ -6,6 +6,8 @@ import Senior from "../views/senior/Senior.vue";
 import Bind from "../views/bigflow/Bind.vue";
 import Position from "../views/position/Home.vue"
 import Material from '../views/position/Material.vue'
+import Monitor from '../views/position/Monitor.vue'
+import Travel from '../views/position/Travel.vue'
 
 Vue.use(VueRouter);
 
@@ -19,6 +21,16 @@ const routes = [
     path: "/position/Material",
     name: "Material",
     component: Material
+  },
+  {
+    path: "/position/Monitor",
+    name: "Monitor",
+    component: Monitor
+  },
+  {
+    path: "/position/Travel",
+    name: "Travel",
+    component: Travel
   },
   {
     path: "/",

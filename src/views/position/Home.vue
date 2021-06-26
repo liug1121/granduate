@@ -10,6 +10,8 @@ import AreaAlert from "./components/AreaAlert.vue"
 import OverSpeedAlert from "./components/OverSpeedAlert.vue"
 import EmergeAlert from "./components/EmergeAlert.vue"
 import OtherAlert from "./components/OtherAlert.vue"
+import Vepie from 'v-charts/lib/pie.common';
+
 
 export default {
   name: "positionHome",
@@ -24,7 +26,8 @@ export default {
     AreaAlert,
     OverSpeedAlert,
     EmergeAlert,
-    OtherAlert
+    OtherAlert,
+    Vepie
   },
   data() {
     return {
@@ -38,7 +41,25 @@ export default {
       areaAlertShow:false,
       overSpeedAlertShow:false,
       emergeAlertShow:false,
-      otherAlertShow:false
+      otherAlertShow:false,
+      chartData: {
+        columns: ['日期', '新增车辆数据分析图'],
+        rows: [
+            { '日期': '1月1日', '新增车辆数据分析图': 123 },
+            { '日期': '1月2日', '新增车辆数据分析图': 1223 },
+            { '日期': '1月3日', '新增车辆数据分析图': 2123 },
+            { '日期': '1月4日', '新增车辆数据分析图': 4123 },
+            { '日期': '1月5日', '新增车辆数据分析图': 3123 },
+            { '日期': '1月6日', '新增车辆数据分析图': 7123 }
+        ]
+        },
+        statusChartData: {
+        columns: ['在线', '车辆状态'],
+        rows: [
+            { '在线': '在线', '车辆状态': 123 },
+            { '在线': '不在线', '车辆状态': 123 }
+        ]
+        }
     };
   },
 
@@ -109,6 +130,7 @@ export default {
   }
 };
 </script>
+
 <template>
     <div class="container">
         <div class="head">
@@ -172,8 +194,23 @@ export default {
             </table>
         </div>
         <div class="chart">
-            <div class="chart-left"> chart-left</div>
-            <div class="chart-right">chart-right</div>
+            <div class="chart-left">
+                 <div class="chart-statuses">
+                     <div class="chart-status">车辆状态</div>
+                     <div class="chart-status">车辆离线</div>
+                 </div>
+                 <Vepie class="veLine" :data="statusChartData"></Vepie>
+            </div>
+            <div class="chart-right">
+                <div class="chart-days">
+                    <div class="chart-day">12个月</div>
+                    <div class="chart-day">30天</div>
+                </div>
+                <div>
+                    <ve-line class="veLine" :data="chartData"></ve-line>
+                </div>
+                
+            </div>
         </div>
         <Foucus
         id="foucusDetails"
@@ -230,7 +267,6 @@ export default {
         v-show="otherAlertShow"
         @close="closePop('OTHER')"
         />
-        OTHER
     </div>
 </template>
 
@@ -238,7 +274,7 @@ export default {
 <style scoped lang="stylus">
 .container{
     border 1px solid #ddd
-    height 100%
+    height 1400px
     width 100%
 }
 .head{
@@ -258,12 +294,12 @@ export default {
     border 1px solid #ddd
 }
 .statics{
-    height 60%
+    height 35%
     border 1px solid #ddd
     margin 1%
 }
 .chart{
-    height 22%
+    height 50%
     border 1px solid #ddd
     margin 1%
     display flex
@@ -277,6 +313,7 @@ export default {
     flex 1
     border 1px solid #ddd
 }
+
 .statics-box{
     width 200px
     height 200px
@@ -296,5 +333,32 @@ export default {
     text-align center
     height 80px
     line-height  80px
+}
+.chart-days{
+    position relative
+    top 600px
+    display flex
+    width 300px
+    margin-left 40%
+}
+.chart-day{
+    flex 1
+    border 1px solid #ddd
+    margin 20px
+    text-align center
+}
+.chart-statuses{
+    margin-top 20px
+    display flex
+    height 20%
+    width 30%
+    margin-left 70%
+}
+.chart-status{
+    flex 1
+    border 1px solid #ddd
+    text-align center
+    height 20%
+    margin 10px
 }
 </style>

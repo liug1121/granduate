@@ -81,7 +81,7 @@ export default {
             </div>
             <div class = "head-tabs">
                 <div class="head-tab" @click="toView(1)">首页</div>
-                <div class="head-tab" @click="toView(2)">监控中心</div>
+                <div class="head-tab-selected" @click="toView(2)">监控中心</div>
                 <div class="head-tab" @click="toView(3)">轨迹回放</div>
                 <div class="head-tab" @click="toView(4)">资料管理</div>
             </div>
@@ -198,23 +198,35 @@ export default {
 }
 .left{
     flex 1
-    border 1px solid #ddd
+   
+    
 }
 .left-top{
     height 40%
     margin 10px
     margin-left 20px
+    border-radius 15px;
+    margin 5px
+    background #ffffff
+    padding 10px
+    
 }
 .left-bottom{
     height 50%
-    border 1px solid #ddd
     padding 10px
     padding-left 10px
+    margin 5px
+    margin-top 10px
+    background #ffffff
+    border-radius 15px;
 }
 .right{
     flex 4
-    border 1px solid #ddd
+    padding 20px
     height 100%
+    background #ffffff
+    border-radius 15px
+    margin 5px
 }
 .bm-view {
   width 100%
@@ -231,22 +243,31 @@ export default {
 }
 .button{
     flex 1
-    border 1px solid #ddd
     margin 5px
     text-align center
     height 30px
     line-height  30px
+    border-radius 15px
+    background #f6f4e9
 }
 .head-tabs{
     flex 3
     display flex
+    font-size 25px
 }
 
+.head-tab-selected{
+    flex 1
+    text-align center
+    height 80px
+    line-height  80px
+    border-bottom 2px solid #ddd
+}
 .head-tab{
     flex 1
     text-align center
     height 80px
     line-height  80px
-    font-size 25px
+
 }
 </style>

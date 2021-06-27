@@ -225,7 +225,7 @@ export default {
                 <div class="logo-title">联通物联网公司</div>
             </div>
             <div class = "head-tabs">
-                <div class="head-tab" @click="toView(1)">首页</div>
+                <div class="head-tab-selected" @click="toView(1)">首页</div>
                 <div class="head-tab" @click="toView(2)">监控中心</div>
                 <div class="head-tab" @click="toView(3)">轨迹回放</div>
                 <div class="head-tab" @click="toView(4)">资料管理</div>
@@ -489,12 +489,19 @@ export default {
     display flex
     font-size 25px
 }
-
+.head-tab-selected{
+    flex 1
+    text-align center
+    height 80px
+    line-height  80px
+    border-bottom 2px solid #ddd
+}
 .head-tab{
     flex 1
     text-align center
     height 80px
     line-height  80px
+
 }
 .chart-days{
     position relative

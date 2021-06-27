@@ -10,6 +10,9 @@ export default {
   },
   data() {
     return {
+        menu1Class:'menu-selected',
+        menu2Class:'menu',
+        menu3Class:'menu',
         showFoot:1,
       type:0,  //0 用户管理  1 车辆管理  2导入管理
       userTreeData :{
@@ -102,6 +105,19 @@ export default {
       },
       changeMenu:function(type){
           this.type = type
+          if(type == 0){
+              this.menu1Class = 'menu-selected'
+              this.menu2Class = 'menu'
+              this.menu3Class = 'menu'
+          }else if(type == 1){
+              this.menu1Class = 'menu'
+              this.menu2Class = 'menu-selected'
+              this.menu3Class = 'menu'
+          }else if(type ==2){
+              this.menu1Class = 'menu'
+              this.menu2Class = 'menu'
+              this.menu3Class = 'menu-selected'
+          }
       },
       showAddForm:function(){
           this.isAddFormShow = true
@@ -141,7 +157,7 @@ export default {
                 <div class="head-tab" @click="toView(1)">首页</div>
                 <div class="head-tab" @click="toView(2)">监控中心</div>
                 <div class="head-tab" @click="toView(3)">轨迹回放</div>
-                <div class="head-tab" @click="toView(4)">资料管理</div>
+                <div class="head-tab-selected" @click="toView(4)">资料管理</div>
             </div>
             <div class="login">
                 <div class="login-left">
@@ -152,13 +168,13 @@ export default {
         </div>
         <div class="body">
             <div class="left">
-                <div class="menu" @click="changeMenu(0)">
+                <div :class="menu1Class" @click="changeMenu(0)">
                     用户管理
                 </div>
-                <div class="menu" @click="changeMenu(1)">
+                <div :class="menu2Class" @click="changeMenu(1)">
                     车辆管理
                 </div>
-                <div class="menu" @click="changeMenu(2)">
+                <div :class="menu3Class" @click="changeMenu(2)">
                     批量导入
                 </div>
             </div>
@@ -344,18 +360,28 @@ export default {
 }
 .left{
     flex 1
-    border 1px solid #ddd
+    background #ffffff
+    border-radius 15px
+    margin 5px
 }
 .menu{
     width 100%
     height 80px
-    border 1px solid #ddd
     text-align center
     line-height  80px
+    border-bottom 1px solid #ddd
+}
+.menu-selected{
+    width 100%
+    height 80px
+    text-align center
+    line-height  80px
+    border-bottom 1px solid #ddd
+    background #f6f4e9
 }
 .right{
     flex 5
-    border 1px solid #ddd
+    border-radius 15px
 }
 .user{
     display flex
@@ -364,13 +390,17 @@ export default {
 }
 .user-left{
     flex 1
-    border 1px solid #ddd
     padding 10px
+    background #ffffff
+    margin 5px
+    border-radius 15px
 }
 .user-right{
     flex 5
-    border 1px solid #ddd
+    margin 5px
     padding 50px
+    background #ffffff
+    border-radius 15px
 }
 .opt{
     margin-bottom 10px
@@ -388,6 +418,7 @@ export default {
     line-height  28px
     text-align center
     border-radius 15px;
+    background #f6f4e9
 }
 
 .head{
@@ -477,6 +508,7 @@ input{
     border-radius 15px;
     width 100px
     text-align center
+    background #f6f4e9
 }
 .import-notice{
     margin-top 20px
@@ -487,13 +519,20 @@ input{
 .head-tabs{
     flex 3
     display flex
+    font-size 25px
 }
-
+.head-tab-selected{
+    flex 1
+    text-align center
+    height 80px
+    line-height  80px
+    border-bottom 2px solid #ddd
+}
 .head-tab{
     flex 1
     text-align center
     height 80px
     line-height  80px
-    font-size 25px
+
 }
 </style>

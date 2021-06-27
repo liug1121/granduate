@@ -12,6 +12,9 @@ export default {
   },
   data() {
     return {
+        day1Class:'day-selected',
+        day2Class:'day',
+        day3Class:'day',
         showFoot:"0",
         searchQuery: "",
         currentPage:'1/20',
@@ -37,6 +40,22 @@ export default {
     };
   },
   methods:{
+      selectDay:function(type){
+          if(type == 1){
+              this.day1Class = 'day-selected'
+              this.day2Class = 'day'
+              this.day3Class = 'day'
+          }else if(type ==2){
+              this.day1Class = 'day'
+              this.day2Class = 'day-selected'
+              this.day3Class = 'day'
+          }else if(type ==3){
+              this.day1Class = 'day'
+              this.day2Class = 'day'
+              this.day3Class = 'day-selected'
+          }
+          
+      },
       toView:function(page){
           if(page == 1){
                 this.$router.push({ name: "Position"})
@@ -73,7 +92,7 @@ export default {
             <div class = "head-tabs">
                 <div class="head-tab" @click="toView(1)">首页</div>
                 <div class="head-tab" @click="toView(2)">监控中心</div>
-                <div class="head-tab" @click="toView(3)">轨迹回放</div>
+                <div class="head-tab-selected" @click="toView(3)">轨迹回放</div>
                 <div class="head-tab" @click="toView(4)">资料管理</div>
             </div>
             <div class="login">
@@ -96,9 +115,9 @@ export default {
                                 <td>选择时间</td>
                                 <td>
                                     <div class="days">
-                                        <div class="day">今天</div>
-                                        <div class="day">昨天</div>
-                                        <div class="day">前天</div>
+                                        <div :class="day1Class" @click="selectDay(1)">今天</div>
+                                        <div :class="day2Class" @click="selectDay(2)">昨天</div>
+                                        <div :class="day3Class" @click="selectDay(3)">前天</div>
                                     </div>
                                 </td>
                             </tr>
@@ -231,16 +250,20 @@ export default {
 }
 .top{
     display flex
-    border 1px solid #ddd
     height 50%
 }
 .top-left{
     flex 1
-    border 1px solid #ddd
+    background #ffffff
+    border-radius 15px
+    margin 5px
 }
 .top-right{
     flex 3
-    border 1px solid #ddd
+    margin 5px
+    padding 10px
+    background #ffffff
+    border-radius 15px
 }
 .bm-view {
   width 100%
@@ -249,16 +272,25 @@ export default {
 .bottom{
     width 100%
     height 50%
-    border 1px solid #ddd
+    background #ffffff
+    border-radius 15px
+    margin-top 10px
 }
 .days{
     display flex
 }
 .day{
     flex 1
-    border 1px solid #ddd
     text-align center
     margin-left 2px
+    border-radius 15px;
+}
+.day-selected{
+    flex 1
+    text-align center
+    margin-left 2px
+    background #f6f4e9
+    border-radius 15px;
 }
 .search{
     border 1px solid #ddd
@@ -266,22 +298,24 @@ export default {
     padding-left 10%
     margin 20px
     margin-top 60px
-    border-radius 5px;
+    border-radius 15px;
 
 }
 .search-button{
     width 100%
+    height 40px
+    line-height 40px
     margin-top 30px
-    border 1px solid #ddd
     text-align center
-    
+    background #f6f4e9
+    border-radius 15px;
+    font-size 20px
 }
 tr{
     height 40px
 }
 .list-menu{
     height 10%
-    border 1px solid #ddd
     display flex
 }
 .list{
@@ -307,12 +341,12 @@ tr{
 }
 .tag{
     flex 1
-    border 1px solid #ddd
     height 40px
     line-height  40px
     margin 2px
     text-align center
     border-radius 15px;
+    background #f6f4e9
 }
 .datas{
     display flex
@@ -327,13 +361,21 @@ tr{
 .head-tabs{
     flex 3
     display flex
+    font-size 25px
 }
 
+.head-tab-selected{
+    flex 1
+    text-align center
+    height 80px
+    line-height  80px
+    border-bottom 2px solid #ddd
+}
 .head-tab{
     flex 1
     text-align center
     height 80px
     line-height  80px
-    font-size 25px
+
 }
 </style>

@@ -8,6 +8,7 @@ import Position from "../views/position/Home.vue"
 import Material from '../views/position/Material.vue'
 import Monitor from '../views/position/Monitor.vue'
 import Travel from '../views/position/Travel.vue'
+import Login from '../views/position/Login.vue'
 
 Vue.use(VueRouter);
 
@@ -31,6 +32,11 @@ const routes = [
     path: "/position/Travel",
     name: "Travel",
     component: Travel
+  },
+  {
+    path: "/position/Login",
+    name: "Login",
+    component: Login
   },
   {
     path: "/",

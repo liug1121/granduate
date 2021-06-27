@@ -32,6 +32,7 @@ module.exports = {
     }
   },
 
+  outputDir: 'position',
   devServer: {
     proxy: {
       "/api/": {

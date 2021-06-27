@@ -72,14 +72,25 @@ export default {
 <template>
     <div class="container">
          <div class="head">
-            <div class="logo">logo</div>
+            <div class="logo">
+                <img class="logo-img-union" src="../../assets/logo_new.png" />
+                <div class="logo-img-yanfei">
+                    <img class="logo-img-yanfei-image" src="../../assets/logo_yanfei.png" />
+                </div>
+                <div class="logo-title">联通物联网公司</div>
+            </div>
             <div class = "head-tabs">
                 <div class="head-tab" @click="toView(1)">首页</div>
                 <div class="head-tab" @click="toView(2)">监控中心</div>
                 <div class="head-tab" @click="toView(3)">轨迹回放</div>
                 <div class="head-tab" @click="toView(4)">资料管理</div>
             </div>
-            <div class="login">login</div>
+            <div class="login">
+                <div class="login-left">
+                    <img class="login-left-image" src="../../assets/user_pic.png" />
+                </div>
+                <div class="login-right">taojiangmin</div>
+            </div>
         </div>
         <div class="body">
             <div class = "left">
@@ -125,26 +136,61 @@ export default {
 .container{
     height 100%
     width 100%
+    background #f6f6f6
 }
 .head{
     height 8%
-    border 1px solid #ddd
     margin 1%
     display flex
     padding 3px
+    background #ffffff
 }
 .logo{
+    display flex
+    flex 2
+}
+.logo-title{
+    flex 5
+    font-size 40px
+    height 70px
+    line-height  70px
+}
+.logo-img-union{
     flex 1
-    border 1px solid #ddd
+    margin 5px
+    margin-left 5px
+}
+.logo-img-yanfei{
+    flex 1
+    padding-left 10px
+}
+.logo-img-yanfei-image{
+    height 65px
+    width 65px
+    margin 5px
+}
+.login{
+    display flex
+    flex 1
+}
+.login-left{
+    flex 1
+}
+.login-left-image{
+    height 65px
+    width 65px
+    padding-left 80px
+}
+.login-right{
+    flex 1
+    height 65px
+    line-height  65px
 }
 .tab{
     flex 3
     border 1px solid #ddd
 }
-.login{
-    flex 1
-    border 1px solid #ddd
-}
+
 .body{
     height 100%
     display flex
@@ -201,5 +247,6 @@ export default {
     text-align center
     height 80px
     line-height  80px
+    font-size 25px
 }
 </style>

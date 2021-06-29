@@ -4,6 +4,9 @@ import Home from "../views/home/Home.vue";
 import Register from "../views/register/Register.vue";
 import Senior from "../views/senior/Senior.vue";
 import Bind from "../views/bigflow/Bind.vue";
+import PayRecord from "../views/bigflow/PayRecord.vue"
+import UsageInfo from "../views/bigflow/UsageInfo.vue"
+import UsageDetails from "../views/bigflow/UsageDetails.vue"
 import Position from "../views/position/Home.vue"
 import Material from '../views/position/Material.vue'
 import Monitor from '../views/position/Monitor.vue'
@@ -57,7 +60,23 @@ const routes = [
     path:"/bind",
     name:"Bind",
     component:Bind
+  },
+  {
+    path:"/payRecord",
+    name:"PayRecord",
+    component:PayRecord
+  },
+  {
+    path:"/usageInfo",
+    name:"UsageInfo",
+    component:UsageInfo
+  },
+  {
+    path:"/usageDetails",
+    name:"UsageDetails",
+    component:UsageDetails
   }
+  
 ];
 
 const router = new VueRouter({

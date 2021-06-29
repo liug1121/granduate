@@ -1,6 +1,8 @@
 <template>
     <div class="page">
-        <div class="head"></div>
+        <div class="head">
+            <img class="head-img" src="../../assets/bigflow-head.jpeg" />
+        </div>
         <div class="iccid">
             <table class="table">
                 <tr>
@@ -8,13 +10,15 @@
                         <input class="iccid-input">
                     </td>
                     <td class="col-iccid-scan">
-                        <div class="scan"></div>
+                        <img class="scan" src="../../assets/scan.jpeg" />
                     </td>
                 </tr>
             </table>
         </div>
         <div class="button">确定</div>
-        <div class="note"></div>
+        <div class="note">
+            温馨提示：请根据相应提示完成开卡激活流程
+        </div>
     </div>
 </template>
 
@@ -25,6 +29,10 @@
 .head{
     background gray
     height 30%
+}
+.head-img{
+    height 100%
+    width 100%
 }
 .iccid{
     background white
@@ -48,27 +56,27 @@
     text-align center
 }
 .iccid-input{
-    width 90%
+    width 95%
     height 80px
     display: inline-block
     margin-top:20px
+    margin-left 20px
     border-radius 15px;
-    background white
+    background #dadada
+    border 1px solid #dadada
 }
 .scan{
-    width 80px
-    height 80px
-    display: inline-block
-    border-radius 15px;
-    border 1px solid #ddd
-    margin-top:20px
+    width 60px
+    height 60px
+    margin-top 25px
+
 }
 .button{
-    background green
-    width 80%
+    background #4388de
+    width 90%
     height:6%
     border-radius 15px
-    margin-left 10%
+    margin-left 5%
     color white
     font-size 45px
     align-items center
@@ -77,8 +85,8 @@
     display -webkit-flex
 }
 .note{
-    margin-top 20px
-    background: gray
+    margin 35px
+    background: white
     height:20%
 }
 </style>

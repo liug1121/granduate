@@ -1,23 +1,59 @@
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "UsageInfo",
   
   data() {
     return {
-        iccid:''
+        iccid:'',
+        tabIndex:0,
+        tabAddPackageClass:'buys-menu-selected',
+        tabPackageClass:'buys-menu'
     };
   },
   created(){
       this.iccid = this.$route.query.iccid
       console.log('iccid:' + this.iccid)
+      this.getDetails(this.iccid)
+      this.getAddPackages(this.iccid)
+      this.getPackages(this.iccid)
   },
 
   computed: {
-    
+    ...mapGetters("card", {
+      cardDetails: "getCardDetails",
+    }),
+    ...mapGetters("bigFlowPackage", {
+      addPackages:"getAddPackagesForCard",
+      packages:"getPackagesForCard"
+    }),
   },
   methods:{
-      
+      changeTab:function(tabIndex){
+          this.tabIndex = tabIndex
+          if(this.tabIndex == 0){
+            this.tabAddPackageClass ='buys-menu-selected'
+            this.tabPackageClass = 'buys-menu'
+          }else if(this.tabIndex == 1){
+            this.tabAddPackageClass ='buys-menu'
+            this.tabPackageClass = 'buys-menu-selected'
+          }
+      },
+      getDetails:function(iccid){
+          let queryParams = {}
+          queryParams.iccid = iccid
+          this.$store.dispatch("card/getCardDetails", queryParams);
+      },
+      getAddPackages:function(iccid){
+         let queryParams = {}
+          queryParams.iccid = iccid
+          this.$store.dispatch("bigFlowPackage/callAddPackagesForCard", queryParams); 
+      },
+      getPackages:function(iccid){
+         let queryParams = {}
+          queryParams.iccid = iccid
+          this.$store.dispatch("bigFlowPackage/callPackagesForCard", queryParams); 
+      }
   }
 };
 </script>
@@ -29,79 +65,60 @@ export default {
            </div>
            
            <div class="head-card">
-               <div>手机号：18767656789</div>
-               <div>ICCIC编码：88888888888888888888</div>
+               <div>手机号：{{cardDetails.phone_number}}</div>
+               <div>ICCIC编码：{{cardDetails.iccid}}</div>
            </div>
        </div>
        <div class="detail">
            <div class="detail-title">套餐详情</div>
-           <div class="detail-button">剩余3.00G</div>
+           <div class="detail-button">剩余{{cardDetails.flowSurplusUsed}}</div>
            <div class="detail-note">
-               <div>您的套餐：3G/每月 x 2个月</div>
-               <div>有效期：2021年05月15日-2021年07月26日</div>
+               <div>您的套餐：{{cardDetails.currentMeal}}</div>
+               <div>有效期：{{cardDetails.mealStartDate}}-{{cardDetails.mealEndDate}}</div>
            </div>
        </div>
        <div class="buys">
            <div class="buys-menus">
-               <div class="buys-menu-selected">购买套餐</div>
-               <div class="buys-menu">加油包</div>
+               <div :class="tabAddPackageClass" @click="changeTab(0)">购买套餐</div>
+               <div :class="tabPackageClass"  @click="changeTab(1)">加油包</div>
            </div>
-           <div class="buys-products">
-               <div class="buys-product">
+           <div class="buys-products" v-if="tabIndex ==1">
+               <div class="buys-product" v-for="(addpackage, index) in addPackages"
+                      :key="index">
                    <div class="product-icon">
                        <img class="product-icon-image" src="../../assets/bigflow-buys.jpeg" />
                    </div>
                    <div class="product-info">
-                       <div>5G全国加油包</div>
-                       <div>5G全国流量，当月有效</div>
+                       <div>{{addpackage.viewName}}</div>
+                       <div>{{addpackage.memo}}</div>
                    </div>
                    <div class="product-price">
-                       <div>现价：¥6.00</div>
-                       <div>原价：¥10.00</div>
+                       <div>现价：¥{{addpackage.price}}</div>
+                       <div>原价：¥{{addpackage.originalPrice}}</div>
                    </div>
                </div>
-               <div class="buys-product">
+           </div>
+           <div class="buys-products" v-if="tabIndex ==0">
+               <div class="buys-product" v-for="(pkg, index) in packages"
+                      :key="index">
                    <div class="product-icon">
                        <img class="product-icon-image" src="../../assets/bigflow-buys.jpeg" />
                    </div>
                    <div class="product-info">
-                       <div>5G全国加油包</div>
-                       <div>5G全国流量，当月有效</div>
+                       <div>{{pkg.productName}}</div>
+                       <div>{{pkg.memo}}</div>
                    </div>
                    <div class="product-price">
-                       <div>现价：¥6.00</div>
-                       <div>原价：¥10.00</div>
-                   </div>
-               </div>
-               <div class="buys-product">
-                   <div class="product-icon">
-                       <img class="product-icon-image" src="../../assets/bigflow-buys.jpeg" />
-                   </div>
-                   <div class="product-info">
-                       <div>5G全国加油包</div>
-                       <div>5G全国流量，当月有效</div>
-                   </div>
-                   <div class="product-price">
-                       <div>现价：¥6.00</div>
-                       <div>原价：¥10.00</div>
-                   </div>
-               </div>
-               <div class="buys-product">
-                   <div class="product-icon">
-                       <img class="product-icon-image" src="../../assets/bigflow-buys.jpeg" />
-                   </div>
-                   <div class="product-info">
-                       <div>5G全国加油包</div>
-                       <div>5G全国流量，当月有效</div>
-                   </div>
-                   <div class="product-price">
-                       <div>现价：¥6.00</div>
-                       <div>原价：¥10.00</div>
+                       <div>现价：¥{{pkg.price}}</div>
+                       <div>原价：¥{{pkg.originalPrice}}</div>
                    </div>
                </div>
            </div>
        </div>
-       <div class="buy-btn">购买</div>
+       <div class="footer">
+           <div class="buy-btn">购买</div>
+       </div>
+       
     </div>
 </template>
 <style scoped lang="stylus">
@@ -203,6 +220,13 @@ export default {
 .product-icon-image{
     width 80px
     height 80px
+}
+.footer{
+    position fixed
+    width 100%
+    height 100%
+    background white
+    padding-top 15px
 }
 .buy-btn{
     width 80%

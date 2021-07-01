@@ -63,7 +63,7 @@ export default {
             </table>
             <div class="buttons">
                 <div class="button-unbind">解绑</div>
-                <div class="button-detail" @click="toDetail(record.iccid)">详情</div>
+                <div class="button-detail" @click="toDetail(record.iccid20)">详情</div>
             </div>
         </div>
     </div>

@@ -2,12 +2,16 @@
 import api from "../../api/api";
 
 const state = () => ({
-  cards:[]
+  cards:[],
+  cardDetails:{}
 });
 
 const getters = {
     getCardInfos: state => {
         return state.cards;
+    },
+    getCardDetails: state=>{
+        return state.cardDetails;
     }
 };
 
@@ -16,6 +20,11 @@ const actions = {
     api.getCardInfos(resp => {
       commit("setCardInfos", resp);
     }, null)
+},
+getCardDetails({commit}, queryParams){
+    api.getCardDetails(resp => {
+        commit("setCardDetails", resp);
+      }, null,queryParams)
 }
 };
 
@@ -24,6 +33,12 @@ const mutations = {
         if(resp.data.resultCode == 0){
             let cards=resp.data.data
             state.cards = cards
+        }
+    },
+    setCardDetails(state, resp){
+        if(resp.data.resultCode == 0){
+            let cardDetails=resp.data.data
+            state.cardDetails = cardDetails
         }
     }
 };

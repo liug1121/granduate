@@ -12,6 +12,19 @@ function get(method, uri, mSucess = null, mError = null, params = {}) {
   );
 }
 
+function postWithToken(uri, mSucess = null, mError = null, params = {}, token) {
+  let headers = { 
+    "token": token
+  };
+  axios
+    .post(uri, params, {headers})
+    .then(function(response) {
+      if (mSucess != null) mSucess(response);
+    })
+    .catch(function(error) {
+      if (mError != null) mError(error);
+    });
+}
 function post(uri, mSucess = null, mError = null, params = {}) {
   axios
     .post(uri, params)
@@ -80,5 +93,10 @@ export default {
 
   getStudentByRandom(mSetStudents) {
     get("GET", "/api/parttime/random", mSetStudents);
+  },
+
+  getBuyRecords(mSuccess, mError, queryParams){
+    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    postWithToken("/bigflow/boss/v1.0/wechat/card/buy/products", mSuccess, mError, queryParams,token)
   }
 };

@@ -11,6 +11,20 @@ function get(method, uri, mSucess = null, mError = null, params = {}) {
     }
   );
 }
+// axios.get("https://api.npms.io/v2/search?q=vue")
+//     .then(response => this.totalVuePackages = response.data.total);
+function getWithToken(uri, mSucess = null, mError = null, token){
+  let headers = { 
+    "token": token
+  };
+  axios.get(uri, {headers})
+  .then(function(response) {
+    if (mSucess != null) mSucess(response);
+  })
+  .catch(function(error) {
+    if (mError != null) mError(error);
+  });
+}
 
 function postWithToken(uri, mSucess = null, mError = null, params = {}, token) {
   let headers = { 
@@ -98,5 +112,9 @@ export default {
   getBuyRecords(mSuccess, mError, queryParams){
     let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/buy/products", mSuccess, mError, queryParams,token)
+  },
+  getCardInfos(mSuccess, mError){
+    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    getWithToken("/bigflow/boss/v1.0/wechat/user/cards", mSuccess, mError, token)
   }
 };

@@ -1,26 +1,58 @@
+<script>
+import { mapGetters } from "vuex";
+export default {
+  name: "UsageInfo",
+  
+  data() {
+    return {
+        
+    };
+  },
+  created(){
+      this.getCards()
+  },
+
+  computed: {
+    ...mapGetters("card", {
+      cardInfos: "getCardInfos"
+    }),
+    getCardInfos(){
+        let cardInfos = this.cardInfos
+        console.log(JSON.stringify(cardInfos))
+        return cardInfos
+    }
+  },
+  methods:{
+      getCards:function(){
+          this.$store.dispatch("card/getCardInfos");
+      }
+  }
+};
+</script>
 <template>
     <div class="page">
-        <div class="useage">
+        <div class="useage" v-for="(record, index) in getCardInfos"
+                      :key="index">
             <table>
                 <tr>
                     <td>设备名称：</td>
-                    <td class="order-info">14909098980</td>
+                    <td class="order-info">{{record.phoneNumber}}</td>
                 </tr>
                 <tr>
                     <td>MSISDN：</td>
-                    <td class="order-info">14909098980</td>
+                    <td class="order-info">{{record.phoneNumber}}</td>
                 </tr>
                 <tr>
                     <td>ICCID：</td>
-                    <td class="order-info">88888888888888888888</td>
+                    <td class="order-info">{{record.iccid}}</td>
                 </tr>
                 <tr>
                     <td>当前套餐：</td>
-                    <td class="order-info">3G/每月x1个月</td>
+                    <td class="order-info">{{record.currentMeal}}</td>
                 </tr>
                 <tr>
                     <td>当月剩余：</td>
-                    <td class="order-info">3.00G</td>
+                    <td class="order-info">{{record.flowSurplusUsed}}</td>
                 </tr>
             </table>
             <div class="buttons">

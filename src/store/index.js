@@ -7,6 +7,7 @@ import schools from "./modules/schools";
 import student from "./modules/student";
 import notices from "./modules/notices";
 import buyRecords from "./modules/buyrecords"
+import card from "./modules/card.js"
 
 Vue.use(Vuex);
 
@@ -16,6 +17,6 @@ export default new Vuex.Store({
   state: {},
   mutations: {},
   actions: {},
-  modules: { majors, provinces, schools, student, notices, buyRecords },
+  modules: { majors, provinces, schools, student, notices, buyRecords,card },
   strict: debug
 });

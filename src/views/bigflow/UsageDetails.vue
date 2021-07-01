@@ -93,8 +93,8 @@ export default {
                        <div>{{addpackage.memo}}</div>
                    </div>
                    <div class="product-price">
-                       <div>现价：¥{{addpackage.price}}</div>
-                       <div>原价：¥{{addpackage.originalPrice}}</div>
+                       <div><span class="price">现价：¥{{addpackage.price}}</span></div>
+                       <div class="old-price">原价：¥{{addpackage.originalPrice}}</div>
                    </div>
                </div>
            </div>
@@ -109,8 +109,8 @@ export default {
                        <div>{{pkg.memo}}</div>
                    </div>
                    <div class="product-price">
-                       <div>现价：¥{{pkg.price}}</div>
-                       <div>原价：¥{{pkg.originalPrice}}</div>
+                       <div class="price">现价：¥{{pkg.price}}</div>
+                       <div class="old-price">原价：¥{{pkg.originalPrice}}</div>
                    </div>
                </div>
            </div>
@@ -237,5 +237,12 @@ export default {
     background #4388de 
     border-radius 15px;
     color white
+}
+.price{
+    color red
+}
+.old-price{
+    text-decoration:line-through
+    color gray
 }
 </style>

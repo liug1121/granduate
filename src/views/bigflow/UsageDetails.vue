@@ -1,3 +1,26 @@
+<script>
+// import { mapGetters } from "vuex";
+export default {
+  name: "UsageInfo",
+  
+  data() {
+    return {
+        iccid:''
+    };
+  },
+  created(){
+      this.iccid = this.$route.query.iccid
+      console.log('iccid:' + this.iccid)
+  },
+
+  computed: {
+    
+  },
+  methods:{
+      
+  }
+};
+</script>
 <template>
     <div class="page">
        <div class="head">

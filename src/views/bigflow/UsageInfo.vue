@@ -25,6 +25,12 @@ export default {
   methods:{
       getCards:function(){
           this.$store.dispatch("card/getCardInfos");
+      },
+      toDetail:function(iccid){
+        this.$router.push({ name: "UsageDetails",
+        query: {
+            iccid: iccid
+          }})
       }
   }
 };
@@ -57,7 +63,7 @@ export default {
             </table>
             <div class="buttons">
                 <div class="button-unbind">解绑</div>
-                <div class="button-detail">详情</div>
+                <div class="button-detail" @click="toDetail(record.iccid)">详情</div>
             </div>
         </div>
     </div>

@@ -1,7 +1,11 @@
 <script>
+// import MsgDlg from "./MsgDlg.vue"
 import { mapGetters } from "vuex";
 export default {
   name: "UsageInfo",
+//   components: {
+//     MsgDlg
+//   },
   
   data() {
     return {

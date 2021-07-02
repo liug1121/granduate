@@ -1,11 +1,15 @@
 <script>
+import MsgDlg from "./MsgDlg.vue"
 import { mapGetters } from "vuex";
 export default {
   name: "UsageInfo",
-  
+  components: {
+    MsgDlg
+  },
   data() {
     return {
-        
+        showComfirmDlg: 0,
+        iccidForUnbind:''
     };
   },
   created(){
@@ -24,13 +28,24 @@ export default {
     }
   },
   methods:{
-      unbindCard:function(iccid){
+      shwoMsgDlg:function(iccid){
+        this.showComfirmDlg = 1
+        this.iccidForUnbind = iccid
+      },
+      hideMsgDlg:function(){
+          this.showComfirmDlg = 0
+      },
+      unbindCard:function(){
           let queryParams = {}
-          queryParams.iccid = iccid
+          queryParams.iccid = this.iccidForUnbind
           this.$store.dispatch("card/unbindCard", queryParams);
+        this.showComfirmDlg = 0
       },
       getCards:function(){
           this.$store.dispatch("card/getCardInfos");
+      },
+      toBind:function(){
+        this.$router.push({ name: "Bind"})
       },
       toDetail:function(iccid){
         this.$router.push({ name: "UsageDetails",
@@ -69,16 +84,16 @@ export default {
                     </tr>
                 </table>
                 <div class="buttons">
-                    <div class="button-unbind" @click="unbindCard(record.iccid20)">解绑</div>
+                    <div class="button-unbind" @click="shwoMsgDlg(record.iccid20)">解绑</div>
                     <div class="button-detail" @click="toDetail(record.iccid20)">详情</div>
                 </div>
             </div>
         </div>
         <div class="addcardpage" v-else>
             <div class="note">当前没有绑定任何卡</div>
-            <div class="addcard">+</div>
+            <div class="addcard" @click="toBind">+</div>
         </div>
-        
+        <MsgDlg v-if="showComfirmDlg == 1" @close="hideMsgDlg" @ok="unbindCard" msg="确认解除绑定？"></MsgDlg>
     </div>
 </template>
 <style scoped lang="stylus">

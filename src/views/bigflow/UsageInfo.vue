@@ -23,7 +23,6 @@ export default {
     }),
     getCardInfos(){
         let cardInfos = this.cardInfos
-        console.log(JSON.stringify(cardInfos))
         return cardInfos
     }
   },

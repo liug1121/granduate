@@ -3,7 +3,8 @@ import api from "../../api/api";
 
 const state = () => ({
   cards:[],
-  cardDetails:{}
+  cardDetails:{},
+  bindStatus:0
 });
 
 const getters = {
@@ -12,6 +13,9 @@ const getters = {
     },
     getCardDetails: state=>{
         return state.cardDetails;
+    },
+    getBindStatus: state=>{
+        return state.bindStatus
     }
 };
 
@@ -20,19 +24,34 @@ const actions = {
     api.getCardInfos(resp => {
       commit("setCardInfos", resp);
     }, null)
-},
-getCardDetails({commit}, queryParams){
-    api.getCardDetails(resp => {
-        commit("setCardDetails", resp);
-      }, null,queryParams)
-}
+    },
+    getCardDetails({commit}, queryParams){
+        api.getCardDetails(resp => {
+            commit("setCardDetails", resp);
+        }, null,queryParams)
+    },
+    unbindCard({commit}, queryParams){
+        api.unbindCard(resp=>{
+            commit("setCardBindStatus", resp);
+        }, null, queryParams)
+    }
 };
 
 const mutations = {
+    setCardBindStatus(state, resp){
+        if(resp.data.resultCode == 0){
+            state.bindStatus = 0
+        }
+        
+    },
     setCardInfos(state, resp) {
         if(resp.data.resultCode == 0){
             let cards=resp.data.data
             state.cards = cards
+            if(state.cards.length == 0)
+                state.bindStatus = 0
+            else
+                state.bindStatus = 1
         }
     },
     setCardDetails(state, resp){

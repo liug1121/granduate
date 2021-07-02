@@ -128,5 +128,9 @@ export default {
   getPackagesForCard(mSuccess, mError, queryParams){
     let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/buy/packages", mSuccess, mError, queryParams,token)
+  },
+  unbindCard(mSuccess, mError, queryParams){
+    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    postWithToken("/bigflow/boss/v1.0/wechat/card/unbind", mSuccess, mError, queryParams,token)
   }
 };

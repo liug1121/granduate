@@ -14,7 +14,8 @@ export default {
 
   computed: {
     ...mapGetters("card", {
-      cardInfos: "getCardInfos"
+      cardInfos: "getCardInfos",
+      bindStatus:"getBindStatus"
     }),
     getCardInfos(){
         let cardInfos = this.cardInfos
@@ -23,6 +24,11 @@ export default {
     }
   },
   methods:{
+      unbindCard:function(iccid){
+          let queryParams = {}
+          queryParams.iccid = iccid
+          this.$store.dispatch("card/unbindCard", queryParams);
+      },
       getCards:function(){
           this.$store.dispatch("card/getCardInfos");
       },
@@ -37,35 +43,42 @@ export default {
 </script>
 <template>
     <div class="page">
-        <div class="useage" v-for="(record, index) in getCardInfos"
+        <div v-if="bindStatus == 1">
+            <div class="useage" v-for="(record, index) in getCardInfos"
                       :key="index">
-            <table>
-                <tr>
-                    <td>设备名称：</td>
-                    <td class="order-info">{{record.phoneNumber}}</td>
-                </tr>
-                <tr>
-                    <td>MSISDN：</td>
-                    <td class="order-info">{{record.phoneNumber}}</td>
-                </tr>
-                <tr>
-                    <td>ICCID：</td>
-                    <td class="order-info">{{record.iccid}}</td>
-                </tr>
-                <tr>
-                    <td>当前套餐：</td>
-                    <td class="order-info">{{record.currentMeal}}</td>
-                </tr>
-                <tr>
-                    <td>当月剩余：</td>
-                    <td class="order-info">{{record.flowSurplusUsed}}</td>
-                </tr>
-            </table>
-            <div class="buttons">
-                <div class="button-unbind">解绑</div>
-                <div class="button-detail" @click="toDetail(record.iccid20)">详情</div>
+                <table>
+                    <tr>
+                        <td>设备名称：</td>
+                        <td class="order-info">{{record.phoneNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td>MSISDN：</td>
+                        <td class="order-info">{{record.phoneNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td>ICCID：</td>
+                        <td class="order-info">{{record.iccid}}</td>
+                    </tr>
+                    <tr>
+                        <td>当前套餐：</td>
+                        <td class="order-info">{{record.currentMeal}}</td>
+                    </tr>
+                    <tr>
+                        <td>当月剩余：</td>
+                        <td class="order-info">{{record.flowSurplusUsed}}</td>
+                    </tr>
+                </table>
+                <div class="buttons">
+                    <div class="button-unbind" @click="unbindCard(record.iccid20)">解绑</div>
+                    <div class="button-detail" @click="toDetail(record.iccid20)">详情</div>
+                </div>
             </div>
         </div>
+        <div class="addcardpage" v-else>
+            <div class="note">当前没有绑定任何卡</div>
+            <div class="addcard">+</div>
+        </div>
+        
     </div>
 </template>
 <style scoped lang="stylus">
@@ -108,5 +121,18 @@ tr{
     height 60px
     margin 20px
     line-height 60px
+}
+.note{
+    text-align center
+    font-size 50px
+    color gray
+}
+.addcard{
+    text-align center
+    font-size 50px
+    color gray
+}
+.addcardpage{
+    padding-top 20%
 }
 </style>

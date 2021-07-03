@@ -33,7 +33,6 @@ export default {
           let that = this
           this.checkCardBindStatus(this.iccid2Bind, ret=>{
               if(ret.showComfirmDlg == 0){
-                  console.log('*****bind' )
                   that.bindCard(that.iccid2Bind)
               }else{
                     this.showComfirmDlg = ret.showComfirmDlg
@@ -50,26 +49,17 @@ export default {
           let ret = {}
           this.$store.dispatch("card/queryCardBindInfo", queryParams).then(response => {
               if(response.data.resultCode == -1){
-                //   this.showComfirmDlg = 1
-                //   this.msg = '该卡已经绑定用户' + response.data.data.weixin
                   ret.showComfirmDlg = 1
                   ret.msg = response.data.resultInfo
                   callback(ret)
-                //   return Promise.resolve(ret)
               }else{
-                //   this.showComfirmDlg = 0
-                //   this.bindCard(iccid)
                   ret.showComfirmDlg = 0
                   callback(ret)
-                //   return Promise.resolve(ret)
               }
         }, error => {
-            // console.log("2:" + JSON.stringify(error))
             ret.showComfirmDlg = 1
             ret.msg = '绑卡失败！' + JSON.stringify(error)
             callback(ret)
-            // return Promise.resolve(ret)
-            
         });
       },
       bindCard:function(iccid){

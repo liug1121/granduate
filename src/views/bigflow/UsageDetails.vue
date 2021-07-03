@@ -205,7 +205,7 @@ export default {
 }
 .buys-product{
     margin 30px
-    height 100px
+    height 110px
     border-bottom 1px solid #ddd
     display flex
 }
@@ -213,9 +213,9 @@ export default {
     flex 1
 }
 .product-info{
-    flex 3
+    flex 4
     border-right 1px solid #ddd
-    margin-bottom 10px
+    
 }
 .product-price{
     flex 2
@@ -228,15 +228,15 @@ export default {
 .footer{
     position fixed
     width 100%
-    height 100%
     background white
-    padding-top 15px
+    top 90%
+
 }
 .buy-btn{
     width 80%
-    height 60px
+    height 80px
     text-align center
-    line-height 60px
+    line-height 80px
     margin-left 10%
     background #4388de 
     border-radius 15px;

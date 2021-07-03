@@ -143,7 +143,7 @@ export default {
     width 95%
     height 80px
     display: inline-block
-    margin-top:20px
+    margin-top:10px
     margin-left 20px
     border-radius 15px;
     background #dadada

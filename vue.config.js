@@ -32,7 +32,8 @@ module.exports = {
     }
   },
 
-  outputDir: 'position',
+  // outputDir: 'position',
+  outputDir: 'bigflowH5',
   devServer: {
     proxy: {
       "/bigflow/": {

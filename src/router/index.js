@@ -57,22 +57,22 @@ const routes = [
     component: Senior
   },
   {
-    path:"/bind",
+    path:"/h5/bind",
     name:"Bind",
     component:Bind
   },
   {
-    path:"/payRecord",
+    path:"/h5/payRecord",
     name:"PayRecord",
     component:PayRecord
   },
   {
-    path:"/usageInfo",
+    path:"/h5/usageInfo",
     name:"UsageInfo",
     component:UsageInfo
   },
   {
-    path:"/usageDetails",
+    path:"/h5/usageDetails",
     name:"UsageDetails",
     component:UsageDetails
   }

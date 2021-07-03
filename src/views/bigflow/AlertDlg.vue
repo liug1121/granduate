@@ -62,7 +62,7 @@ export default {
     width 30%
     height 50px
     line-height 50px
-    margin 20px
+    margin 5px
     border 1px solid #ddd
     border-radius 15px;
 }

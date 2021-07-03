@@ -8,7 +8,7 @@ export default {
   },
   data() {
     return {
-        iccid2Bind:'8986061912003378900',
+        iccid2Bind:'',
         bindNickName:'',
         showComfirmDlg:0,
         msg:''
@@ -25,24 +25,50 @@ export default {
   },
   methods:{
       bind:function(){
-          this.checkCardBindStatus(this.iccid2Bind)
+          if(this.iccid2Bind.length!= 19){
+              this.showComfirmDlg = 1
+              this.msg="请输入正确的19位卡号"
+              return
+          }
+          let that = this
+          this.checkCardBindStatus(this.iccid2Bind, ret=>{
+              if(ret.showComfirmDlg == 0){
+                  console.log('*****bind' )
+                  that.bindCard(that.iccid2Bind)
+              }else{
+                    this.showComfirmDlg = ret.showComfirmDlg
+                    this.msg = ret.msg
+              }
+          })
       },
       hideMsgDlg:function(){
           this.showComfirmDlg = 0
       },
-      checkCardBindStatus:function(iccid){
+      checkCardBindStatus:function(iccid, callback){
           let queryParams = {}
           queryParams.iccid19 = iccid
+          let ret = {}
           this.$store.dispatch("card/queryCardBindInfo", queryParams).then(response => {
               if(response.data.resultCode == -1){
-                  this.showComfirmDlg = 1
-                  this.msg = '该卡已经绑定用户' + response.data.data.weixin
+                //   this.showComfirmDlg = 1
+                //   this.msg = '该卡已经绑定用户' + response.data.data.weixin
+                  ret.showComfirmDlg = 1
+                  ret.msg = response.data.resultInfo
+                  callback(ret)
+                //   return Promise.resolve(ret)
               }else{
-                  this.showComfirmDlg = 0
-                  this.bindCard(iccid)
+                //   this.showComfirmDlg = 0
+                //   this.bindCard(iccid)
+                  ret.showComfirmDlg = 0
+                  callback(ret)
+                //   return Promise.resolve(ret)
               }
         }, error => {
-            console.log("2:" + JSON.stringify(error))
+            // console.log("2:" + JSON.stringify(error))
+            ret.showComfirmDlg = 1
+            ret.msg = '绑卡失败！' + JSON.stringify(error)
+            callback(ret)
+            // return Promise.resolve(ret)
             
         });
       },
@@ -74,7 +100,7 @@ export default {
             <table class="table">
                 <tr>
                     <td class="col-iccid-input">
-                        <input class="iccid-input">
+                        <input class="iccid-input" v-model="iccid2Bind">
                     </td>
                     <td class="col-iccid-scan">
                         <img class="scan" src="../../assets/scan.jpeg" />

@@ -4,8 +4,7 @@ import api from "../../api/api";
 const state = () => ({
   cards:[],
   cardDetails:{},
-  bindStatus:0,
-  bindInfo:{}
+  bindStatus:0
 });
 
 const getters = {
@@ -17,20 +16,6 @@ const getters = {
     },
     getBindStatus: state=>{
         return state.bindStatus
-    },
-    getBindInfo: state=>{
-        let bindInfo = {}
-        if(state.bindInfo.resultCode == -1){
-            console.log('*****ss:' + JSON.stringify(state.bindInfo.data))
-            let bindNickName = state.bindInfo.data.weixin
-            let msg = '该卡已经绑定用户' + bindNickName
-            bindInfo.msg=msg
-            bindInfo.canBind = false
-            return bindInfo
-        }else {
-            bindInfo.canBind = true
-            return bindInfo
-        }
     }
 };
 
@@ -50,8 +35,15 @@ const actions = {
             commit("setCardBindStatus", resp);
         }, null, queryParams)
     },
+    bindCard({commit}, queryParams){
+        return new Promise((resolve) => {
+            api.bindCard(resp=>{
+                resolve(resp); 
+                commit("setBindResult", resp);
+            }, null, queryParams)
+        })
+    },
     queryCardBindInfo({commit}, queryParams){
-
         return new Promise((resolve) => {
             api.queryCardBindInfo(resp=>{
                 resolve(resp); 
@@ -85,10 +77,10 @@ const mutations = {
         }
     },
     setCardBindInfo(state, resp){
-        console.log('setCardBindInfo:' + JSON.stringify(resp))
         state.bindInfo = resp.data
-        // console.log(callback)s
-        
+    },
+    setBindResult(state, resp){
+        state.bindResult = resp.data
     }
 };
 

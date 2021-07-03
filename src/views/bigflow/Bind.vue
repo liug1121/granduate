@@ -1,10 +1,10 @@
 <script>
-import MsgDlg from "./MsgDlg.vue"
+import AlertDlg from "./AlertDlg.vue"
 import { mapGetters } from "vuex";
 export default {
   name: "Bind",
   components: {
-    MsgDlg
+    AlertDlg
   },
   data() {
     return {
@@ -12,73 +12,56 @@ export default {
         bindNickName:'',
         showComfirmDlg:0,
         msg:''
-        // showComfirmDlg: 0,
-        // iccidForUnbind:''
     };
   },
   created(){
-    //   this.getCards()
     
   },
 
   computed: {
     ...mapGetters("card", {
       bindInfo: "getBindInfo"
-    }),
-    // ...mapGetters("card", {
-    //   cardInfos: "getCardInfos",
-    //   bindStatus:"getBindStatus"
-    // }),
+    })
   },
   methods:{
       bind:function(){
-          this.bindCard(this.iccid2Bind)
+          this.checkCardBindStatus(this.iccid2Bind)
       },
       hideMsgDlg:function(){
           this.showComfirmDlg = 0
       },
-      bindCard:function(iccid){
+      checkCardBindStatus:function(iccid){
           let queryParams = {}
           queryParams.iccid19 = iccid
           this.$store.dispatch("card/queryCardBindInfo", queryParams).then(response => {
-              console.log('1:' + JSON.stringify(response))
               if(response.data.resultCode == -1){
                   this.showComfirmDlg = 1
                   this.msg = '该卡已经绑定用户' + response.data.data.weixin
               }else{
                   this.showComfirmDlg = 0
+                  this.bindCard(iccid)
               }
-            // console.log("Got some data, now lets show something in this component")
         }, error => {
             console.log("2:" + JSON.stringify(error))
-            // console.error("Got nothing from server. Prompt user to check internet connection and try again")
+            
+        });
+      },
+      bindCard:function(iccid){
+          let queryParams = {}
+          queryParams.iccid = iccid
+          this.$store.dispatch("card/bindCard", queryParams).then(response => {
+              if(response.data.resultCode == 0){
+                  this.showComfirmDlg = 1
+                  this.msg = '卡绑定成功!'
+              }else{
+                this.showComfirmDlg = 1
+                  this.msg = '卡绑定失败!'
+              }
+        }, error => {
+            console.log("2:" + JSON.stringify(error))
+            
         });
       }
-    //   shwoMsgDlg:function(iccid){
-    //     this.showComfirmDlg = 1
-    //     this.iccidForUnbind = iccid
-    //   },
-    //   hideMsgDlg:function(){
-    //       this.showComfirmDlg = 0
-    //   },
-    //   unbindCard:function(){
-    //       let queryParams = {}
-    //       queryParams.iccid = this.iccidForUnbind
-    //       this.$store.dispatch("card/unbindCard", queryParams);
-    //     this.showComfirmDlg = 0
-    //   },
-    //   getCards:function(){
-    //       this.$store.dispatch("card/getCardInfos");
-    //   },
-    //   toBind:function(){
-    //     this.$router.push({ name: "Bind"})
-    //   },
-    //   toDetail:function(iccid){
-    //     this.$router.push({ name: "UsageDetails",
-    //     query: {
-    //         iccid: iccid
-    //       }})
-    //   }
   }
 };
 </script>
@@ -103,7 +86,7 @@ export default {
         <div class="note">
             温馨提示：请根据相应提示完成开卡激活流程
         </div>
-        <MsgDlg v-if="showComfirmDlg == 1" @close="hideMsgDlg" @ok="hideMsgDlg" :msg="msg"></MsgDlg>
+        <AlertDlg v-if="showComfirmDlg == 1" @close="hideMsgDlg" :msg="msg"></AlertDlg>
     </div>
 </template>
 

@@ -59,7 +59,7 @@ export default {
     display flex
     width 80%
     margin-left 10%
-    margin-top 10%
+    margin-top 40px
 }
 .dlg-btn{
     flex 1

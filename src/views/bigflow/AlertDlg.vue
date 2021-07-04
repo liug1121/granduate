@@ -53,9 +53,9 @@ export default {
 }
 .dlg-btns{
     display flex
-    width 80%
-    margin-left 10%
-    margin-top 10%
+    width 60%
+    margin-left 20%
+    margin-top 40px
 }
 .dlg-btn{
     flex 1
@@ -65,6 +65,8 @@ export default {
     margin 5px
     border 1px solid #ddd
     border-radius 15px;
+    background #e9975a
+    color white
 }
 .dlg-btn-ok{
     flex 1

@@ -18,6 +18,7 @@
     "pd-select": "^2.0.4",
     "v-charts": "^1.19.0",
     "v-echarts": "^1.0.2",
+    "vconsole": "^3.8.1",
     "vue": "^2.6.11",
     "vue-baidu-map": "^0.21.22",
     "vue-clipboard2": "^0.3.1",

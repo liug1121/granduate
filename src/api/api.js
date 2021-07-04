@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import store from '../store'
 function get(method, uri, mSucess = null, mError = null, params = {}) {
   axios({ method: method, url: uri, params: params }).then(
     result => {
@@ -111,35 +111,54 @@ export default {
   },
 
   getBuyRecords(mSuccess, mError, queryParams){
-    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    console.log('******token:' + store.state.user.token)
+    let token = store.state.user.token
+    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/buy/products", mSuccess, mError, queryParams,token)
   },
   getCardInfos(mSuccess, mError){
-    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    console.log('******token:' + store.state.user.token)
+    let token = store.state.user.token
+    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     getWithToken("/bigflow/boss/v1.0/wechat/user/cards", mSuccess, mError, token)
   },
   getCardDetails(mSuccess, mError, queryParams){
-    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    console.log('******token:' + store.state.user.token)
+    let token = store.state.user.token
+    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/info", mSuccess, mError, queryParams,token)
   },
   getAddPackagesForCard(mSuccess, mError, queryParams){
-    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    console.log('******token:' + store.state.user.token)
+    let token = store.state.user.token
+    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/buy/addpackages", mSuccess, mError, queryParams,token)
   },
   getPackagesForCard(mSuccess, mError, queryParams){
-    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    console.log('******token:' + store.state.user.token)
+    let token = store.state.user.token
+    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/buy/packages", mSuccess, mError, queryParams,token)
   },
   unbindCard(mSuccess, mError, queryParams){
-    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    console.log('******token:' + store.state.user.token)
+    let token = store.state.user.token
+    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/unbind", mSuccess, mError, queryParams,token)
   },
   queryCardBindInfo(mSuccess, mError, queryParams){
-    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    console.log('******token:' + store.state.user.token)
+    let token = store.state.user.token
+    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/bind/info", mSuccess, mError, queryParams,token)
   },
   bindCard(mSuccess, mError, queryParams){
-    let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
+    console.log('******token:' + store.state.user.token)
+    let token = store.state.user.token
+    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/bind", mSuccess, mError, queryParams,token)
+  },
+  login(mSuccess, mError, queryParams){
+    post("/bigflow/boss/v1.0/users/login", mSuccess, mError, queryParams);
   }
 };

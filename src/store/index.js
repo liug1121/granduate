@@ -9,6 +9,7 @@ import notices from "./modules/notices";
 import buyRecords from "./modules/buyrecords"
 import card from "./modules/card.js"
 import bigFlowPackage from "./modules/package.js"
+import user from "./modules/user.js"
 
 Vue.use(Vuex);
 
@@ -18,6 +19,6 @@ export default new Vuex.Store({
   state: {},
   mutations: {},
   actions: {},
-  modules: { majors, provinces, schools, student, notices, buyRecords,card ,bigFlowPackage},
+  modules: { majors, provinces, schools, student, notices, buyRecords,card ,bigFlowPackage,user},
   strict: debug
 });

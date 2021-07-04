@@ -141,7 +141,7 @@ export default {
 }
 .iccid-input{
     width 95%
-    height 80px
+    height 60px
     display: inline-block
     margin-top:10px
     margin-left 20px

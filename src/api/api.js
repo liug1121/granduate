@@ -11,9 +11,9 @@ function get(method, uri, mSucess = null, mError = null, params = {}) {
     }
   );
 }
-// axios.get("https://api.npms.io/v2/search?q=vue")
-//     .then(response => this.totalVuePackages = response.data.total);
+
 function getWithToken(uri, mSucess = null, mError = null, token){
+  console.log('token:' + token)
   let headers = { 
     "token": token
   };
@@ -27,6 +27,7 @@ function getWithToken(uri, mSucess = null, mError = null, token){
 }
 
 function postWithToken(uri, mSucess = null, mError = null, params = {}, token) {
+  console.log('token:' + token)
   let headers = { 
     "token": token,
     "Content-Type":"application/json"
@@ -111,51 +112,35 @@ export default {
   },
 
   getBuyRecords(mSuccess, mError, queryParams){
-    console.log('******token:' + store.state.user.token)
     let token = store.state.user.token
-    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/buy/products", mSuccess, mError, queryParams,token)
   },
   getCardInfos(mSuccess, mError){
-    console.log('******token:' + store.state.user.token)
     let token = store.state.user.token
-    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     getWithToken("/bigflow/boss/v1.0/wechat/user/cards", mSuccess, mError, token)
   },
   getCardDetails(mSuccess, mError, queryParams){
-    console.log('******token:' + store.state.user.token)
     let token = store.state.user.token
-    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/info", mSuccess, mError, queryParams,token)
   },
   getAddPackagesForCard(mSuccess, mError, queryParams){
-    console.log('******token:' + store.state.user.token)
     let token = store.state.user.token
-    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/buy/addpackages", mSuccess, mError, queryParams,token)
   },
   getPackagesForCard(mSuccess, mError, queryParams){
-    console.log('******token:' + store.state.user.token)
     let token = store.state.user.token
-    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/buy/packages", mSuccess, mError, queryParams,token)
   },
   unbindCard(mSuccess, mError, queryParams){
-    console.log('******token:' + store.state.user.token)
     let token = store.state.user.token
-    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/unbind", mSuccess, mError, queryParams,token)
   },
   queryCardBindInfo(mSuccess, mError, queryParams){
-    console.log('******token:' + store.state.user.token)
     let token = store.state.user.token
-    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/bind/info", mSuccess, mError, queryParams,token)
   },
   bindCard(mSuccess, mError, queryParams){
-    console.log('******token:' + store.state.user.token)
     let token = store.state.user.token
-    // let token = "eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvRm9SbTVfSk16MHE5eXZJa2ZKWUVCTGVXTmZjIiwidHlwZSI6IjQifQ.39PcMhyHz3j6F6cj1JaPkFg3RTkoy5j7GnSdCPXdNc7d1Kbvhw_pIQ2KtIDSMPUDklcvwNIJqSX6LFwVbNO6fw"
     postWithToken("/bigflow/boss/v1.0/wechat/card/bind", mSuccess, mError, queryParams,token)
   },
   login(mSuccess, mError, queryParams){

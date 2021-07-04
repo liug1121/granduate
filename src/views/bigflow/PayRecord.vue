@@ -18,7 +18,6 @@ export default {
     }),
     getRecords(){
         let buyRecords = this.buyRecords
-        console.log(JSON.stringify(buyRecords))
         return buyRecords
     }
   },
@@ -26,7 +25,6 @@ export default {
       getBuyRecords:function(iccid){
           let queryParams = {}
           queryParams.iccid = iccid
-          console.log(iccid)
           this.$store.dispatch("buyRecords/getBuyRecords", queryParams);
       }
   }

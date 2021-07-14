@@ -87,6 +87,7 @@ export default {
                     <div class="button-detail" @click="toDetail(record.iccid20)">详情</div>
                 </div>
             </div>
+            <div class="addcard" @click="toBind">+</div>
         </div>
         <div class="addcardpage" v-else>
             <div class="note">当前没有绑定任何卡</div>
@@ -143,7 +144,7 @@ tr{
 }
 .addcard{
     text-align center
-    font-size 50px
+    font-size 80px
     color gray
 }
 .addcardpage{

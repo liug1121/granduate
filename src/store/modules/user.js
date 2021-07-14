@@ -2,7 +2,7 @@
 import api from "../../api/api";
 
 const state = () => ({
-    token:''
+    token:'eyJhbGciOiJIUzUxMiJ9.eyJvcGVuSWQiOiJvTjhKSTB4TVF0WUJoSWs5eG40clZ0X2dCMXRFIiwidHlwZSI6IjQifQ.Oj2cQB3DkSxUwF4NXFaQKaKeY70AT05E5mHghokRGN4eBPlsuuNOa9xudgxDgGI1jXvSLObeZPwpPgxsoLBKag'
 });
 
 const getters = {

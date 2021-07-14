@@ -84,7 +84,7 @@ export default {
 <template>
     <div class="page">
         <div class="head">
-            <img class="head-img" src="../../assets/bigflow-head.jpeg" />
+            <img class="head-img" src="../../assets/bigflow-head.png" />
         </div>
         <div class="iccid">
             <table class="table">
@@ -100,8 +100,9 @@ export default {
         </div>
         <div class="button" @click="bind">确定</div>
         <div class="note">
-            温馨提示：请根据相应提示完成开卡激活流程
+            温馨提示：请根据下图提示完成开卡激活流程
         </div>
+        <div class="card"></div>
         <AlertDlg v-if="showComfirmDlg == 1" @close="hideMsgDlg" :msg="msg"></AlertDlg>
     </div>
 </template>
@@ -171,6 +172,14 @@ export default {
 .note{
     margin 35px
     background: white
-    height:20%
+    height:20px
+}
+.card{
+    margin 60px
+    width: 5.8rem;
+    height: 4.3rem;
+    display block
+    background  url(../../assets/card-demo.png) no-repeat 100% 100%;
+    background-size: contain;
 }
 </style>

@@ -9,7 +9,9 @@ export default {
   
   data() {
     return {
+        alertMsg:'',
         showComfirmDlg:0,
+        showAlertDlg:0,
         selectedRow:-1,
         iccid:'',
         tabIndex:0,
@@ -39,11 +41,28 @@ export default {
       hideMsgDlg:function(){
           this.showComfirmDlg = 0
       },
+      hideAlertMsgDlg:function(){
+          this.showAlertDlg = 0
+      },
       shouBuy:function(){
           this.showComfirmDlg = 1
       },
       buyProduct:function(){
-          this.showComfirmDlg = 0
+        this.$store.dispatch("card/bindCard", queryParams).then(response => {
+            if(response.data.resultCode == 0){
+                this.alertMsg = '卡绑定成功!'
+                this.showAlertDlg = 1
+            }else{
+                this.alertMsg = '卡绑定失败!'
+                this.showAlertDlg = 1
+            }
+        }, error => {
+            console.log("2:" + JSON.stringify(error))
+            this.alertMsg = '卡绑定失败!'
+            this.showAlertDlg = 1
+            
+        });
+          
       },
       selRow:function(row, productCode){
           this.selectedRow = row
@@ -152,6 +171,7 @@ export default {
            <div class="buy-btn" @click="shouBuy">购买</div>
        </div>
        <MsgDlg v-if="showComfirmDlg == 1" @close="hideMsgDlg" @ok="buyProduct" msg="确认购买该商品吗？"></MsgDlg>
+       <AlertDlg v-if="showAlertDlg == 1" @close="hideAlertMsgDlg" :msg="alertMsg"></AlertDlg>
     </div>
 </template>
 <style scoped lang="stylus">

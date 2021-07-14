@@ -1,18 +1,21 @@
 <script>
-// import MsgDlg from "./MsgDlg.vue"
+import MsgDlg from "./MsgDlg.vue"
 import { mapGetters } from "vuex";
 export default {
   name: "UsageInfo",
-//   components: {
-//     MsgDlg
-//   },
+  components: {
+    MsgDlg
+  },
   
   data() {
     return {
+        showComfirmDlg:0,
+        selectedRow:-1,
         iccid:'',
         tabIndex:0,
         tabAddPackageClass:'buys-menu-selected',
-        tabPackageClass:'buys-menu'
+        tabPackageClass:'buys-menu',
+        product2Buy:{}
     };
   },
   created(){
@@ -33,6 +36,32 @@ export default {
     }),
   },
   methods:{
+      hideMsgDlg:function(){
+          this.showComfirmDlg = 0
+      },
+      shouBuy:function(){
+          this.showComfirmDlg = 1
+      },
+      buyProduct:function(){
+          this.showComfirmDlg = 0
+      },
+      selRow:function(row, productCode){
+          this.selectedRow = row
+          let product = {}
+          product.iccid = this.iccid
+          product.pdCode = productCode
+          product.body='套餐购买'
+          this.product2Buy = product
+      },
+      getRowClass:function(row){
+          if(this.selectedRow == row){
+            return 'buys-product-selected'
+          }
+          else{
+            return 'buys-product'
+          }
+            
+      },
       changeTab:function(tabIndex){
           this.tabIndex = tabIndex
           if(this.tabIndex == 0){
@@ -87,8 +116,8 @@ export default {
                <div :class="tabPackageClass"  @click="changeTab(1)">加油包</div>
            </div>
            <div class="buys-products" v-if="tabIndex ==1">
-               <div class="buys-product" v-for="(addpackage, index) in addPackages"
-                      :key="index">
+               <div :class="getRowClass(index)" v-for="(addpackage, index) in addPackages"
+                      :key="index" @click="selRow(index,addpackage.productCode)">
                    <div class="product-icon">
                        <img class="product-icon-image" src="../../assets/bigflow-buys.jpeg" />
                    </div>
@@ -120,9 +149,9 @@ export default {
            </div>
        </div>
        <div class="footer">
-           <div class="buy-btn">购买</div>
+           <div class="buy-btn" @click="shouBuy">购买</div>
        </div>
-       
+       <MsgDlg v-if="showComfirmDlg == 1" @close="hideMsgDlg" @ok="buyProduct" msg="确认购买该商品吗？"></MsgDlg>
     </div>
 </template>
 <style scoped lang="stylus">
@@ -201,13 +230,20 @@ export default {
     border-bottom 1px solid #ddd
 }
 .buys-products{
-    margin 30px
+    margin 5px
 }
 .buys-product{
-    margin 30px
+    margin 5px
     height 110px
     border-bottom 1px solid #ddd
     display flex
+}
+.buys-product-selected{
+    margin 5px
+    height 110px
+    border-bottom 1px solid #ddd
+    display flex
+    background #fafddb
 }
 .product-icon{
     flex 1

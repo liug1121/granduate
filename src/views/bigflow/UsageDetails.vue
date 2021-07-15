@@ -20,7 +20,7 @@ export default {
         tabIndex:0,
         tabAddPackageClass:'buys-menu-selected',
         tabPackageClass:'buys-menu',
-        product2Buy:{}
+        product2Buy:null
     };
   },
   created(){
@@ -51,6 +51,11 @@ export default {
           this.showComfirmDlg = 1
       },
       buyProduct:function(){
+        if(this.product2Buy == null){
+            this.alertMsg = '请选择您要购买的商品!'
+            this.showAlertDlg = 1
+            return
+        }
         let buyParams = {}
         buyParams = this.product2Buy
         console.log(JSON.stringify(buyParams))
@@ -138,7 +143,6 @@ export default {
            <div class = "head-img">
                <img class="head-img-image" src="../../assets/bigflow-person.jpeg" />
            </div>
-           
            <div class="head-card">
                <div>手机号：{{cardDetails.phone_number}}</div>
                <div>ICCIC编码：{{cardDetails.iccid}}</div>
@@ -174,8 +178,8 @@ export default {
                </div>
            </div>
            <div class="buys-products" v-if="tabIndex ==0">
-               <div class="buys-product" v-for="(pkg, index) in packages"
-                      :key="index">
+               <div :class="getRowClass(index)" v-for="(pkg, index) in packages"
+                      :key="index" @click="selRow(index,pkg.productCode)">
                    <div class="product-icon">
                        <img class="product-icon-image" src="../../assets/bigflow-buys.jpeg" />
                    </div>
@@ -200,11 +204,12 @@ export default {
 <style scoped lang="stylus">
 .page{
     background #f6f6f6
-    height 100%
+    height 110%
     width 100%
+    padding-bottom 300px
 }
 .head{
-    height 15%
+    height 14%
     margin 30px
     border-radius 15px;
     background white
@@ -233,7 +238,7 @@ export default {
     background white
 }
 .buys{
-    height 50%
+    height 70%
     margin 30px
     border-radius 15px;
     background white
@@ -307,16 +312,15 @@ export default {
 .footer{
     position fixed
     width 100%
-    background white
-    top 90%
+    top 93%
 
 }
 .buy-btn{
-    width 80%
+    width 90%
     height 80px
     text-align center
     line-height 80px
-    margin-left 10%
+    margin-left 5%
     background #4388de 
     border-radius 15px;
     color white

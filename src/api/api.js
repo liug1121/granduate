@@ -145,6 +145,7 @@ export default {
   },
   buyProduct(mSuccess, mError, queryParams){
     let token = store.state.user.token
+    console.log('queryParams:' + JSON.stringify(queryParams))
     postWithToken("/bigflow/boss/v1.0/buy", mSuccess, mError, queryParams,token)
   },
   login(mSuccess, mError, queryParams){

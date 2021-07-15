@@ -1,10 +1,12 @@
 <script>
 import MsgDlg from "./MsgDlg.vue"
+import AlertDlg from "./AlertDlg.vue"
 import { mapGetters } from "vuex";
 export default {
   name: "UsageInfo",
   components: {
-    MsgDlg
+    MsgDlg,
+    AlertDlg
   },
   
   data() {
@@ -48,18 +50,24 @@ export default {
           this.showComfirmDlg = 1
       },
       buyProduct:function(){
-        this.$store.dispatch("card/bindCard", queryParams).then(response => {
+        let buyParams = {}
+        buyParams = this.product2Buy
+        console.log(JSON.stringify(buyParams))
+        this.$store.dispatch("buyRecords/buy", buyParams).then(response => {
             if(response.data.resultCode == 0){
-                this.alertMsg = '卡绑定成功!'
+                this.alertMsg = '您已经成功购买该商品!'
                 this.showAlertDlg = 1
+                this.showComfirmDlg = 0
             }else{
-                this.alertMsg = '卡绑定失败!'
+                this.alertMsg = '您暂时不能购买该商品，请与客服联系!'
                 this.showAlertDlg = 1
+                this.showComfirmDlg = 0
             }
         }, error => {
             console.log("2:" + JSON.stringify(error))
             this.alertMsg = '卡绑定失败!'
             this.showAlertDlg = 1
+            this.showComfirmDlg = 0
             
         });
           

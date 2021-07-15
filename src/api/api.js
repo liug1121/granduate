@@ -150,5 +150,28 @@ export default {
   },
   login(mSuccess, mError, queryParams){
     post("/bigflow/boss/v1.0/users/login", mSuccess, mError, queryParams);
+  },
+  weixinPay(payParams, callback){
+    window.WeixinJSBridge.invoke('getBrandWCPayRequest', {
+      "appId": payParams.appId,        
+      "timeStamp": payParams.timeStamp,     
+      "nonceStr": payParams.nonceStr,       
+      "package": payParams.package,
+      "signType": payParams.signType,  
+      "paySign": payParams.paySign
+  },
+  function(res) {
+    let payResult = {}
+    console.log("pay:::::" + JSON.stringify(res))
+      if (res.err_msg == "get_brand_wcpay_request:ok") {
+        payResult.resultCode = 0
+        payResult.message = res.err_msg
+      }else{
+        payResult.resultCode = -1
+        payResult.message = res.err_msg
+      }
+      if(callback != null)
+        callback(payResult)
+  });
   }
 };

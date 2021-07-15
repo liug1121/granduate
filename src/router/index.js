@@ -12,8 +12,8 @@ import Material from '../views/position/Material.vue'
 import Monitor from '../views/position/Monitor.vue'
 import Travel from '../views/position/Travel.vue'
 import Login from '../views/position/Login.vue'
-// import { Const } from "@/common"
-// import store from '../store'
+import { Const } from "@/common"
+import store from '../store'
 Vue.use(VueRouter);
 
 const routes = [
@@ -86,40 +86,40 @@ const router = new VueRouter({
 
 export default router;
 
-// function rgetUrlParam(name) {
-//   let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-//   let r = window.location.search.substr(1).match(reg);
-//   if (r != null) {
-//     return unescape(r[2]);
-//   }
-//   return null;
-// }
-// router.beforeEach((to,from,next)=>{
-//   let code = rgetUrlParam("code");
-//   console.log('code:' + code)
-//   if (!code) {
-//     let local = window.location.href;
-//     console.log('local:' + local)
-//     let appid = Const.wechatAppId
-//     console.log('appId:' + appid)
-//     window.location.href =
-//       `https://open.weixin.qq.com/connect/oauth2/authorize?appid=` +
-//       appid +
-//       `&redirect_uri=${encodeURIComponent(
-//         local
-//       )}&response_type=code&scope=snsapi_base&state=1#wechat_redirect`;
-//   } else {
-//     if(store.state.user.token == ''){
-//       store.dispatch("user/login", code).then(response => {
-//             if(response.data.resultCode == 0){
-//               next();
-//               console.log('登录成功')
-//             }
-//       }, error => {
-//         console.log('登录失败'+ error)
-//       });
-//     }else{
-//       next();
-//     }
-//   }
-// })
+function rgetUrlParam(name) {
+  let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+  let r = window.location.search.substr(1).match(reg);
+  if (r != null) {
+    return unescape(r[2]);
+  }
+  return null;
+}
+router.beforeEach((to,from,next)=>{
+  let code = rgetUrlParam("code");
+  console.log('code:' + code)
+  if (!code) {
+    let local = window.location.href;
+    console.log('local:' + local)
+    let appid = Const.wechatAppId
+    console.log('appId:' + appid)
+    window.location.href =
+      `https://open.weixin.qq.com/connect/oauth2/authorize?appid=` +
+      appid +
+      `&redirect_uri=${encodeURIComponent(
+        local
+      )}&response_type=code&scope=snsapi_base&state=1#wechat_redirect`;
+  } else {
+    if(store.state.user.token == ''){
+      store.dispatch("user/login", code).then(response => {
+            if(response.data.resultCode == 0){
+              next();
+              console.log('登录成功')
+            }
+      }, error => {
+        console.log('登录失败'+ error)
+      });
+    }else{
+      next();
+    }
+  }
+})

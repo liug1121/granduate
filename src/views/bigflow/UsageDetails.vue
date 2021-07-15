@@ -1,4 +1,5 @@
 <script>
+import api from "../../api/api";
 import MsgDlg from "./MsgDlg.vue"
 import AlertDlg from "./AlertDlg.vue"
 import { mapGetters } from "vuex";
@@ -55,9 +56,23 @@ export default {
         console.log(JSON.stringify(buyParams))
         this.$store.dispatch("buyRecords/buy", buyParams).then(response => {
             if(response.data.resultCode == 0){
-                this.alertMsg = '您已经成功购买该商品!'
-                this.showAlertDlg = 1
                 this.showComfirmDlg = 0
+                let payParams = {}
+                payParams.appId = response.data.data.appId
+                payParams.timeStamp = response.data.data.timeStamp
+                payParams.nonceStr =  response.data.data.nonceStr
+                payParams.package = response.data.data.pkg
+                payParams.paySign = response.data.data.paySign
+                payParams.signType = response.data.data.signType
+                api.weixinPay(payParams, res=>{
+                    if(res.resultCode == 0){
+                        this.alertMsg = '您已经成功购买该商品!'
+                        this.showAlertDlg = 1
+                    }else{
+                        this.alertMsg = '支付失败，请与客服联系!'
+                        this.showAlertDlg = 1
+                    }
+                })
             }else{
                 this.alertMsg = '您暂时不能购买该商品，请与客服联系!'
                 this.showAlertDlg = 1

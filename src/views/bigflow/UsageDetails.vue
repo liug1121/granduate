@@ -48,14 +48,14 @@ export default {
           this.showAlertDlg = 0
       },
       shouBuy:function(){
-          this.showComfirmDlg = 1
-      },
-      buyProduct:function(){
         if(this.product2Buy == null){
             this.alertMsg = '请选择您要购买的商品!'
             this.showAlertDlg = 1
             return
         }
+        this.showComfirmDlg = 1
+      },
+      buyProduct:function(){
         let buyParams = {}
         buyParams = this.product2Buy
         console.log(JSON.stringify(buyParams))

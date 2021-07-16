@@ -38,7 +38,7 @@ export default {
 .dlg{
     margin-top 300px
     width 80%
-    height 20%
+    height 30%
     background white
     border-radius 15px;
 }
@@ -55,13 +55,13 @@ export default {
     display flex
     width 60%
     margin-left 20%
-    margin-top 40px
+    margin-top 90px
 }
 .dlg-btn{
     flex 1
     width 30%
-    height 50px
-    line-height 50px
+    height 60px
+    line-height 60px
     margin 5px
     border 1px solid #ddd
     border-radius 15px;
@@ -71,8 +71,8 @@ export default {
 .dlg-btn-ok{
     flex 1
     width 30%
-    height 50px
-    line-height 50px
+    height 60px
+    line-height 60px
     margin 20px
     border 1px solid #ddd
     border-radius 15px;
@@ -82,5 +82,7 @@ export default {
     font-size 30px
     height 10%
     margin-top 30px
+    margin-left 15%
+    width 70%
 }
 </style>

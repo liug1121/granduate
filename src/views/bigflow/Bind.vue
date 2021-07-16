@@ -1,17 +1,23 @@
 <script>
 import AlertDlg from "./AlertDlg.vue"
+import MsgDlg from "./MsgDlg.vue"
 import { mapGetters } from "vuex";
 export default {
   name: "Bind",
   components: {
-    AlertDlg
+    AlertDlg,
+    MsgDlg
   },
   data() {
     return {
         iccid2Bind:'',
         bindNickName:'',
         showComfirmDlg:0,
-        msg:''
+        toNextShow:0,
+        msg:'',
+        toNextMsg:'',
+        toNextType:-1,
+        bindIccid:''
     };
   },
   created(){
@@ -40,6 +46,18 @@ export default {
               }
           })
       },
+      toNext:function(){
+          if(this.toNextType == 0){
+              this.$router.push({ name: "UsageDetails",
+                query: {
+                    iccid: this.bindIccid
+                }
+              })
+          }
+      },
+      hideToNextMsgDlg:function(){
+          this.toNextShow = 0
+      },
       hideMsgDlg:function(){
           this.showComfirmDlg = 0
       },
@@ -67,8 +85,28 @@ export default {
           queryParams.iccid = iccid
           this.$store.dispatch("card/bindCard", queryParams).then(response => {
               if(response.data.resultCode == 0){
-                  this.showComfirmDlg = 1
-                  this.msg = '卡绑定成功!'
+                  this.bindIccid = response.data.data.iccid
+                  let authStatus = response.data.data.authStatus
+                  let flowSurplusUsed = response.data.data.flowSurplusUsed
+                  if(flowSurplusUsed <= 0){
+                      this.toNextType = 0
+                      this.toNextMsg='该卡当前没有用量，暂时还不能使用，是否前往产品购买页面，购买相关流量产品？'
+                      this.toNextShow = 1
+                      this.iccid2Bind = ''
+                  }else{
+                      if(authStatus == 'uncertified'){
+                          this.showComfirmDlg = 1
+                          this.msg = '该卡当前没有实名，请前往中国联通实名官网进行实名'
+                          this.iccid2Bind = ''
+                      }else if(authStatus == 'authedSuccess'){
+                          this.showComfirmDlg = 1
+                          this.msg = '卡绑定成功!'
+                          this.iccid2Bind = ''
+                      }else{
+                          this.showComfirmDlg = 1
+                          this.msg = '无效的卡状态信息，请与客服联系!'
+                      }
+                  }
               }else{
                 this.showComfirmDlg = 1
                   this.msg = '卡绑定失败!'
@@ -104,6 +142,7 @@ export default {
         </div>
         <div class="card"></div>
         <AlertDlg v-if="showComfirmDlg == 1" @close="hideMsgDlg" :msg="msg"></AlertDlg>
+        <MsgDlg v-if="toNextShow == 1" @close="hideToNextMsgDlg" @ok="toNext" :msg="toNextMsg"></MsgDlg>
     </div>
 </template>
 

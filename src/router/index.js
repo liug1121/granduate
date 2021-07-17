@@ -7,11 +7,13 @@ import Bind from "../views/bigflow/Bind.vue";
 import PayRecord from "../views/bigflow/PayRecord.vue"
 import UsageInfo from "../views/bigflow/UsageInfo.vue"
 import UsageDetails from "../views/bigflow/UsageDetails.vue"
+import ToCertified from '../views/bigflow/ToCertified'
 import Position from "../views/position/Home.vue"
 import Material from '../views/position/Material.vue'
 import Monitor from '../views/position/Monitor.vue'
 import Travel from '../views/position/Travel.vue'
 import Login from '../views/position/Login.vue'
+
 import { Const } from "@/common"
 import store from '../store'
 Vue.use(VueRouter);
@@ -76,6 +78,11 @@ const routes = [
     path:"/h5/usageDetails",
     name:"UsageDetails",
     component:UsageDetails
+  },
+  {
+    path:"/h5/toCertified",
+    name:"ToCertified",
+    component:ToCertified
   }
   
 ];

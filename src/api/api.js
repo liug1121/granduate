@@ -148,6 +148,11 @@ export default {
     console.log('queryParams:' + JSON.stringify(queryParams))
     postWithToken("/bigflow/boss/v1.0/buy", mSuccess, mError, queryParams,token)
   },
+  wxSign(mSuccess, mError, queryParams){
+    let token = store.state.user.token
+    postWithToken("/bigflow/boss/v1.0/sigin", mSuccess, mError, queryParams,token)
+
+  },
   login(mSuccess, mError, queryParams){
     post("/bigflow/boss/v1.0/users/login", mSuccess, mError, queryParams);
   },

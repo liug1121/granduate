@@ -2,6 +2,8 @@
 import AlertDlg from "./AlertDlg.vue"
 import MsgDlg from "./MsgDlg.vue"
 import { mapGetters } from "vuex";
+import api from "../../api/api";
+import wx from 'weixin-jsapi'
 export default {
   name: "Bind",
   components: {
@@ -30,6 +32,52 @@ export default {
     })
   },
   methods:{
+      scan:function(){
+          let params = {}
+          let url = window.location.href.split('#')[0]
+          params.url = url
+          api.wxSign(res=>{
+              if(res.data.resultCode == 0){
+                  let wxSign = res.data.data
+                  let that = this
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: wxSign.appId, // 必填，公众号的唯一标识
+                        timestamp: wxSign.timestamp, // 必填，生成签名的时间戳
+                        nonceStr: wxSign.nonceStr, // 必填，生成签名的随机串
+                        signature: wxSign.signature, // 必填，签名
+                        jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表
+                    })
+                    wx.ready(function () {
+                        wx.checkJsApi({
+                        jsApiList: ['scanQRCode'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+                        success: function (res) {
+                            // 以键值对的形式返回，可用的api值true，不可用为false
+                            // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+                            console.log(JSON.stringify(res))
+                            wx.scanQRCode({
+                                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                                scanType: ['barCode'], // 可以指定扫二维码还是一维码，默认二者都有
+                                success: function (res) {
+                                // alert(JSON.stringify(res))
+                                let iccid = res.resultStr.split('CODE_128,')[1]
+                                if (!iccid) {
+                                    iccid = res.resultStr
+                                }
+                                if (!iccid && iccid.length !== 19) {
+                                    return 
+                                }
+                                // alert(iccid)
+                                that.iccid2Bind = iccid
+                                }
+                            })
+                        }
+                        })
+                        wx.hideAllNonBaseMenuItem()
+                    })
+              } 
+          }, null, params)
+      },
       bind:function(){
           if(this.iccid2Bind.length!= 19){
               this.showComfirmDlg = 1
@@ -52,6 +100,9 @@ export default {
                 query: {
                     iccid: this.bindIccid
                 }
+              })
+          }else if(this.toNextType == 1){
+              this.$router.push({ name: "ToCertified"
               })
           }
       },
@@ -95,9 +146,13 @@ export default {
                       this.iccid2Bind = ''
                   }else{
                       if(authStatus == 'uncertified'){
-                          this.showComfirmDlg = 1
-                          this.msg = '该卡当前没有实名，请前往中国联通实名官网进行实名'
-                          this.iccid2Bind = ''
+                        //   this.showComfirmDlg = 1
+                        //   this.msg = '该卡当前没有实名，请前往中国联通实名官网进行实名'
+                        //   this.iccid2Bind = ''
+                        this.toNextType = 1
+                        this.toNextMsg='该卡还未开卡，无法使用，是否立即去开卡？'
+                        this.toNextShow = 1
+                        this.iccid2Bind = ''
                       }else if(authStatus == 'authedSuccess'){
                           this.showComfirmDlg = 1
                           this.msg = '卡绑定成功!'
@@ -131,7 +186,7 @@ export default {
                         <input class="iccid-input" v-model="iccid2Bind">
                     </td>
                     <td class="col-iccid-scan">
-                        <img class="scan" src="../../assets/scan.jpeg" />
+                        <img class="scan" src="../../assets/scan.jpeg" @click="scan"/>
                     </td>
                 </tr>
             </table>

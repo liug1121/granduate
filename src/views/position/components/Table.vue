@@ -21,9 +21,10 @@
         </tbody>
       </table>
       <div class="footer" v-if="showFoot == '1'">
-          <div class="footer-item">{{currentPage}}</div>
-          <div class="footer-item">上一页</div>
-          <div class="footer-item">下一页</div>
+          <!-- <div class="footer-item">{{currentPage}}</div> -->
+          <div class="footer-item"></div>
+          <div class="footer-item" @click="prePage">上一页</div>
+          <div class="footer-item" @click="nextPage">下一页</div>
       </div>
     </div>
 </template>
@@ -81,10 +82,16 @@ export default {
         }
     },
     methods: {
-        sortBy: function(key) {
+      sortBy: function(key) {
         this.sortKey = key;
         this.sortOrders[key] = this.sortOrders[key] * -1;
-        }
+        },
+      prePage() {
+        this.$emit("prePage");
+      },
+      nextPage(){
+        this.$emit("nextPage"); 
+      }
     }
 };
 </script>

@@ -40,6 +40,11 @@ module.exports = {
         //业务类的接口请求地址，这里的api可以是后端的工程名
         changeOrigin: true,
         target: "http://localhost:8888/"
+      },
+      "/car/": {
+        //业务类的接口请求地址，这里的api可以是后端的工程名
+        changeOrigin: true,
+        target: "http://47.115.157.89:8086/"
       }
     }
   }

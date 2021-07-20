@@ -1,4 +1,5 @@
 <script>
+import position from "../../api/position";
 import Vue from "vue";
 import Tree from "./components/Tree.vue"
 import Table from "./components/Table.vue"
@@ -10,6 +11,7 @@ export default {
   },
   data() {
     return {
+        currentPage:0,
         menu1Class:'menu-selected',
         menu2Class:'menu',
         menu3Class:'menu',
@@ -84,14 +86,46 @@ export default {
         { carNo: "111", sim: '111', device:'No001', deviceType:'类型', cardFrameNo:'test1', mac:'xosdse', comment:'', addTime:'', status:'', operation:''},
         { carNo: "111", sim: '111', device:'No001', deviceType:'类型', cardFrameNo:'test1', mac:'xosdse', comment:'', addTime:'', status:'', operation:''}
         ],
-
-
-        currentPage:'1/20',
         isAddFormShow:false,
-        isChangeCardGroupShow:false
+        isChangeCardGroupShow:false,
+        users:[]
     };
   },
+  created(){
+      console.log('created...')
+      this.nextPage()
+    //   position.getGroup(params, res=>{
+    //       console.log('getGroup:' + JSON.stringify(res.data.obj.data))
+    //   }, null)
+      
+  },
   methods:{
+      prePage:function(){
+        let params = {}
+        this.currentPage = this.currentPage - 1
+        if(this.currentPage < 1)
+            return
+        params.pageNumber = this.currentPage
+        params.pageSize = 1
+        position.getUser(params, res=>{
+            console.log('getUser:' + JSON.stringify(res.data.obj.data))
+            if(res.data.obj.data.length > 0){
+                this.users = res.data.obj.data
+            }
+        }, null)
+      },
+      nextPage:function(){
+        let params = {}
+        this.currentPage = this.currentPage + 1
+        params.pageNumber = this.currentPage
+        params.pageSize = 1
+        position.getUser(params, res=>{
+            console.log('getUser:' + JSON.stringify(res.data.obj.data))
+            if(res.data.obj.data.length > 0){
+                this.users = res.data.obj.data
+            }
+        }, null)
+      },
       toView:function(page){
           if(page == 1){
                 this.$router.push({ name: "Position"})
@@ -197,12 +231,14 @@ export default {
                         </div>
                         
                         <Table
-                            :heroes="userGridData"
-                            :columns="userGridColumns"
-                            :columnNames="userColumnNames"
-                            :filter-key="searchQuery"
-                            :currentPage="currentPage"
+                            :heroes = "userGridData"
+                            :columns = "userGridColumns"
+                            :columnNames = "userColumnNames"
+                            :filter-key = "searchQuery"
+                            :currentPage = "currentPage"
                             :showFoot = "showFoot"
+                            @prePage = "prePage"
+                            @nextPage = "nextPage"
                         >
                         </Table>
                     </div>

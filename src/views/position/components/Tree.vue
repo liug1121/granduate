@@ -3,7 +3,7 @@
         <li>
         <div
           :class="{bold: isFolder}"
-          @click="toggle"
+          @click="$emit('clickItem', item)"
           @dblclick="makeFolder">
           {{ item.name }}
           <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
@@ -16,8 +16,9 @@
             :item="child"
             @make-folder="$emit('make-folder', $event)"
             @add-item="$emit('add-item', $event)"
+            @clickItem = "clickItem"
           ></Tree>
-          <li class="add" @click="$emit('add-item', item)">+</li>
+          <!-- <li class="add" @click="$emit('add-item', item)">+</li> -->
         </ul>
       </li>
     </div>
@@ -30,7 +31,7 @@ export default {
     },
     data: function() {
         return {
-        isOpen: false
+        isOpen: true
         };
     },
     computed: {
@@ -39,9 +40,13 @@ export default {
         }
     },
     methods: {
+        clickItem:function(item){
+          item.clickFun(item)
+        },
         toggle: function() {
         if (this.isFolder) {
             this.isOpen = !this.isOpen;
+            console.log('toggle')
         }
         },
         makeFolder: function() {

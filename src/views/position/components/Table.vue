@@ -36,8 +36,8 @@ export default {
         columns: Array,
         columnNames:Object,
         filterKey: String,
-        currentPage:String,
-        showFoot:String
+        currentPage:Number,
+        showFoot:Number
     },
     data: function() {
         var sortOrders = {};

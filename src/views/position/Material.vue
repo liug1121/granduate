@@ -11,6 +11,7 @@ export default {
   },
   data() {
     return {
+        pageUsers:[],
         currentPage:0,
         menu1Class:'menu-selected',
         menu2Class:'menu',
@@ -48,9 +49,9 @@ export default {
         ]
       },
       searchQuery: "",
-        userGridColumns: ["loginAccount", "pwd", "loginName", "type", "parentAccount", "parentCompany", "createTime", "operation"],
+        userGridColumns: ["userName", "pwd", "loginName", "type", "parentAccount", "parentCompany", "createTime", "operation"],
         userColumnNames:{
-            loginAccount:'登录帐号',
+            userName:'登录帐号',
             pwd:'密码',
             loginName:'客户名称',
             type:'类型',
@@ -58,12 +59,13 @@ export default {
             parentCompany:'上级公司',
             createTime:'创建时间',
             operation:'操作'
-        },
+        }
+        ,
         userGridData: [
-        { loginAccount: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''},
-        { loginAccount: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''},
-        { loginAccount: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''},
-        { loginAccount: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''}
+        { userName: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''},
+        { userName: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''},
+        { userName: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''},
+        { userName: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''}
         ],
 
         carGridColumns: ["carNo", "sim", "device", "deviceType", "cardFrameNo", "mac", "comment", "addTime", "status", "lastOnline", 'operation'],
@@ -92,37 +94,71 @@ export default {
     };
   },
   created(){
-      console.log('created...')
-      this.nextPage()
-    //   position.getGroup(params, res=>{
-    //       console.log('getGroup:' + JSON.stringify(res.data.obj.data))
-    //   }, null)
-      
+      this.allUser() 
   },
   methods:{
-      prePage:function(){
+       listToUserTree:function(userDatas){
+           let that = this
+           let users = userDatas
+            users.forEach(element => {
+                element.name = element.userName
+                element.clickFun = that.nextPage
+                let parentId = element.parentId;
+                if(parentId != null && parentId != '' && parentId != undefined){
+                users.forEach(ele => {
+                    if(ele.userId == parentId){
+                    if(!ele.children){
+                        ele.children = [];
+                    }
+                    ele.children.push(element);
+                    }
+            
+                });
+                }
+            });
+            users = users.filter(ele => ele.children != undefined); 
+            return users;
+        },
+      
+      prePage:function(parentId){
         let params = {}
         this.currentPage = this.currentPage - 1
         if(this.currentPage < 1)
             return
         params.pageNumber = this.currentPage
-        params.pageSize = 1
-        position.getUser(params, res=>{
-            console.log('getUser:' + JSON.stringify(res.data.obj.data))
-            if(res.data.obj.data.length > 0){
-                this.users = res.data.obj.data
-            }
-        }, null)
+        params.pageSize = 10
+        let users = this.users.filter(user=> user.parentId == parentId)
+        this.pageUsers = this.getPageUsers(params,users)
       },
-      nextPage:function(){
+      nextPage:function(item){
+        let parentId = item.userId
         let params = {}
-        this.currentPage = this.currentPage + 1
-        params.pageNumber = this.currentPage
-        params.pageSize = 1
+        params.pageNumber = 1
+        params.pageSize = 200
+        let users = this.users.filter(user=> user.parentId == parentId)
+        this.pageUsers = this.getPageUsers(params,users)
+      },
+      getPageUsers:function(params,users){
+        let startIndex = (params.pageNumber - 1) * params.pageSize
+        let endIndex = params.pageNumber * params.pageSize
+        if(endIndex >= users.length)
+            endIndex = users.length
+        let pageUsers = []
+        for(let i = startIndex; i < endIndex && i < users.length; i++){
+            pageUsers.push(users[i])
+        }
+        return pageUsers;
+      },
+      allUser:function(){
+        let params = {}
+        params.pageNumber = 1
+        params.pageSize = 200
         position.getUser(params, res=>{
-            console.log('getUser:' + JSON.stringify(res.data.obj.data))
             if(res.data.obj.data.length > 0){
                 this.users = res.data.obj.data
+                let treeDatas = this.listToUserTree(this.users)
+                if(treeDatas.length > 0)
+                this.userTreeData = treeDatas[0]
             }
         }, null)
       },
@@ -218,9 +254,14 @@ export default {
                         <Tree
                             class="item"
                             :item="userTreeData"
+                            @clickItem = "nextPage"
+                        ></Tree>
+                        <!-- <Tree
+                            class="item"
+                            :item="userTreeData"
                             @make-folder="makeFolder"
                             @add-item="addItem"
-                        ></Tree>
+                        ></Tree> -->
                     </div>
                     <div class="user-right">
                         <div class="opt">
@@ -231,7 +272,7 @@ export default {
                         </div>
                         
                         <Table
-                            :heroes = "userGridData"
+                            :heroes = "pageUsers"
                             :columns = "userGridColumns"
                             :columnNames = "userColumnNames"
                             :filter-key = "searchQuery"

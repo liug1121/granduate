@@ -16,23 +16,8 @@ export default {
         menu1Class:'menu-selected',
         menu2Class:'menu',
         menu3Class:'menu',
-        showFoot:1,
       type:0,  //0 用户管理  1 车辆管理  2导入管理
-      userTreeData :{
-        name: "用管理",
-        children: [
-          {
-            name: "天地杰",
-            children: [
-              {
-                name: "渠道1",
-                children: [{ name: "子渠道" }, { name: "子渠道" }]
-              },
-              { name: "渠道2" },
-            ]
-          }
-        ]
-      },
+      userTreeData :{},
       carTreeData :{
         name: "车组",
         children: [
@@ -59,15 +44,7 @@ export default {
             parentCompany:'上级公司',
             createTime:'创建时间',
             operation:'操作'
-        }
-        ,
-        userGridData: [
-        { userName: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''},
-        { userName: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''},
-        { userName: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''},
-        { userName: "test", pwd: '111', loginName:'天地杰', type:'管理员', parentAccount:'test1', parentCompany:'天地杰', createTime:'2020-09-09', operation:''}
-        ],
-
+        },
         carGridColumns: ["carNo", "sim", "device", "deviceType", "cardFrameNo", "mac", "comment", "addTime", "status", "lastOnline", 'operation'],
         carColumnNames:{
             carNo:'车牌号',
@@ -112,7 +89,6 @@ export default {
                     }
                     ele.children.push(element);
                     }
-            
                 });
                 }
             });
@@ -145,6 +121,12 @@ export default {
             endIndex = users.length
         let pageUsers = []
         for(let i = startIndex; i < endIndex && i < users.length; i++){
+            let parentId = users[i].parentId
+            this.users.forEach(user=>{
+                if(user.userId == parentId){
+                    users[i].parentAccount = user.userName
+                }
+            })
             pageUsers.push(users[i])
         }
         return pageUsers;
@@ -277,7 +259,7 @@ export default {
                             :columnNames = "userColumnNames"
                             :filter-key = "searchQuery"
                             :currentPage = "currentPage"
-                            :showFoot = "showFoot"
+                            :showFoot = 0
                             @prePage = "prePage"
                             @nextPage = "nextPage"
                         >

@@ -22,7 +22,8 @@
 export default {
   name: "Tree",
   props: {
-    item: Object
+    item: Object,
+    type:String
   },
   data: function() {
     return {
@@ -36,7 +37,10 @@ export default {
   },
   methods: {
     clickItem: function(item) {
-      item.clickFun(item);
+      if(this.type == 'forCar')
+        item.clickFun(item);
+      if(this.type == 'forGroup')
+        item.groupFun(item)
     },
     toggle: function() {
       if (this.isFolder) {

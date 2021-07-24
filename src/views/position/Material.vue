@@ -65,7 +65,9 @@ export default {
       users: [],
       groups: [],
       groupTreeData: {},
-      cars: []
+      cars: [],
+      group2Move:{},
+      carSelectedRow:null
     };
   },
   created() {
@@ -79,6 +81,7 @@ export default {
       groups.forEach(element => {
         element.name = element.groupName;
         element.clickFun = that.getCarsByTreeNode;
+        element.groupFun = that.selectGroup
         let parentId = element.parentId;
         if (parentId != null && parentId != "" && parentId != undefined) {
           groups.forEach(ele => {
@@ -135,6 +138,7 @@ export default {
         params,
         res => {
           if (res.data.flag == 1) {
+            this.cars = []
             let cars = res.data.obj.data;
             cars.forEach(one => {
               let car = {};
@@ -205,6 +209,13 @@ export default {
         null
       );
     },
+    selectGroup:function(item){
+        this.group2Move = item
+    },
+    selectRow:function(row){
+        console.log(JSON.stringify(row))
+        this.carSelectedRow = row
+    },
     toView: function(page) {
       if (page == 1) {
         this.$router.push({ name: "Position" });
@@ -239,10 +250,38 @@ export default {
       this.isAddFormShow = false;
     },
     showChangeCardGroupForm: function() {
+      if(this.carSelectedRow == null){
+          alert('请选择要转移的车辆信息')
+          return 
+      }
       this.isChangeCardGroupShow = true;
     },
     hideChangeCardGroupForm: function() {
       this.isChangeCardGroupShow = false;
+    },
+    saveCarInfo:function(){
+        let car = this.carSelectedRow
+        let group = this.group2Move
+        if(group.groupName == undefined){
+            alert('请选择要转移到的组信息')
+            return
+        }
+        let groupId = group.groupId
+        let terminalNo = car.device
+        let params = {}
+        params.groupId = groupId
+        params.terminalNo = terminalNo
+        position.modifyCarGroup(params, 
+        res=>{
+            console.log(JSON.stringify(res.data))
+            if(res.data.flag == 1){
+                alert('转移成功')
+                this.isChangeCardGroupShow = false;
+            }else{
+                alert('转移失败')
+            }
+        }, null)
+
     }
   }
 };
@@ -295,12 +334,12 @@ export default {
             ></Tree>
           </div>
           <div class="user-right">
-            <div class="opt">
+            <!-- <div class="opt">
               <form id="search" class="search">
                 按帐号查询 <input name="query" v-model="searchQuery" />
               </form>
               <div class="addnew" @click="showAddForm">新增客户</div>
-            </div>
+            </div> -->
             <Table
               :heroes="pageUsers"
               :columns="userGridColumns"
@@ -317,6 +356,7 @@ export default {
             <Tree
               class="item"
               :item="groupTreeData"
+              type="forCar"
               @clickItem="getCarsByTreeNode"
             ></Tree>
           </div>
@@ -333,6 +373,7 @@ export default {
               :filter-key="searchQuery"
               :currentPage="currentPage"
               :showFoot="0"
+              @selectRow = "selectRow"
             >
             </Table>
           </div>
@@ -432,20 +473,29 @@ export default {
           <table class="addform">
             <tr>
               <td class="label">转移到</td>
-              <td class="input"><input /></td>
+              <td class="input"><input v-model="group2Move.groupName" readonly></td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td class="label">转移方式</td>
               <td class="input"><input /></td>
             </tr>
             <tr>
               <td class="label">车牌号</td>
               <td class="input"><input /></td>
-            </tr>
+            </tr> -->
           </table>
+          <div class="select-group">
+              <span class="select-group-notice">请选择要转移到的车组</span>
+              <Tree
+              class="item"
+              :item="groupTreeData"
+              type="forGroup"
+              @clickItem="selectGroup"
+            ></Tree>
+          </div>
 
           <div>
-            <div class="button" @click="hideChangeCardGroupForm">保存</div>
+            <div class="button" @click="saveCarInfo">保存</div>
             <div class="button" @click="hideChangeCardGroupForm">取消</div>
           </div>
         </div>
@@ -581,12 +631,20 @@ export default {
     flex 3
     border 1px solid #ddd
 }
-
+.select-group{
+    width 50%
+    margin-left 30%
+    text-align left
+}
+.select-group-notice{
+    color red
+}
 .addform{
     width 100%
     text-align left
     margin 100px
     margin-left 20%
+    margin-bottom 20px
 }
 .label{
     width 10%

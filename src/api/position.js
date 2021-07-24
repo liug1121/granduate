@@ -27,6 +27,21 @@ function getWithToken(uri, params, mSucess = null, mError = null, token) {
       if (mError != null) mError(error);
     });
 }
+function postWithToken(uri, mSucess = null, mError = null, params = {}, token) {
+    console.log("token:" + token);
+    let headers = {
+      token: token,
+      "Content-Type": "application/json"
+    };
+    axios
+      .post(uri, params, { headers })
+      .then(function(response) {
+        if (mSucess != null) mSucess(response);
+      })
+      .catch(function(error) {
+        if (mError != null) mError(error);
+      });
+  }
 export default {
   getUser(params, mSuccess, mError) {
     let token = store.state.positionUser.key;
@@ -58,5 +73,15 @@ export default {
       mError,
       token
     );
+  },
+  modifyCarGroup(params, mSuccess, mError){
+      let token = store.state.positionUser.key;
+      postWithToken(
+          '/car/v1/open/vehicle/base/updateVehicle.json', 
+          mSuccess, 
+          mError, 
+          params, 
+          token
+      );
   }
 };

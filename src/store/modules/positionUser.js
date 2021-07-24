@@ -1,23 +1,18 @@
-
 // import api from "../../api/api";
 
 const state = () => ({
-    key:'c13e5b0f-dba6-407f-a269-56c108a7ca4c'
+  key: "c13e5b0f-dba6-407f-a269-56c108a7ca4c"
 });
 
 const getters = {
-    getKey: state=>{
-        return state.key;
-    }
+  getKey: state => {
+    return state.key;
+  }
 };
 
-const actions = {
+const actions = {};
 
-};
-
-const mutations = {
-    
-};
+const mutations = {};
 
 export default {
   namespaced: true,

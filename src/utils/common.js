@@ -17,10 +17,9 @@ export default {
   getScrollPosition(scroller, itemsLen) {
     let viewHeight = scroller.scrollHeight;
     let heightPerItem = viewHeight / itemsLen;
-    console.log('heightPerItem:' + heightPerItem)
+    console.log("heightPerItem:" + heightPerItem);
     let scrollTop = scroller.scrollTop;
-    let itemsNum = scrollTop / (heightPerItem);
-    return Math.floor(itemsNum)
-  },
-  
+    let itemsNum = scrollTop / heightPerItem;
+    return Math.floor(itemsNum);
+  }
 };

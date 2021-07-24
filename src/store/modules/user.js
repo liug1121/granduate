@@ -1,36 +1,38 @@
-
 import api from "../../api/api";
 
 const state = () => ({
-    token:''
+  token: ""
 });
 
 const getters = {
-    getToken: state=>{
-        return state.token;
-    }
+  getToken: state => {
+    return state.token;
+  }
 };
 
 const actions = {
-    login({commit}, wechatCode){
-        let queryParams = {}
-        queryParams.code = wechatCode
-        return new Promise((resolve) => {
-            api.login(resp => {
-                commit("setToken", resp);
-                resolve(resp); 
-                }, null,queryParams)
-        })
-        
-    }
+  login({ commit }, wechatCode) {
+    let queryParams = {};
+    queryParams.code = wechatCode;
+    return new Promise(resolve => {
+      api.login(
+        resp => {
+          commit("setToken", resp);
+          resolve(resp);
+        },
+        null,
+        queryParams
+      );
+    });
+  }
 };
 
 const mutations = {
-    setToken(state, resp){
-        if(resp.data.resultCode == 0){
-            state.token = resp.data.data
-        } 
+  setToken(state, resp) {
+    if (resp.data.resultCode == 0) {
+      state.token = resp.data.data;
     }
+  }
 };
 
 export default {

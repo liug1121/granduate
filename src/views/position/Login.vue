@@ -1,55 +1,55 @@
 <script>
-
 export default {
   name: "posionLogin",
-  components: {
-   
-  },
+  components: {},
   data() {
-    return {
-        
-    };
+    return {};
   },
-  methods:{
-      login:function(){
-          this.$router.push({ name: "Position"})
-      }
+  methods: {
+    login: function() {
+      this.$router.push({ name: "Position" });
+    }
   }
 };
 </script>
 <template>
-    <div class="container">
-        <div class="head">
-            <img class="head-img" src="../../assets/logo-chinauni-login.png" />
-            <div class="head-img-yanfei">
-                <img class="head-img-yanfei-image" src="../../assets/logo-yanfei-login.png" />
-            </div>
-            
-        </div>
-        <div class="body">
-            <div class="login">
-                <div class="login-title">
-                    雁飞·智连定位平台
-                </div>
-                <table>
-                    <tr>
-                        <td>用户名：</td>
-                        <td><input/></td>
-                    </tr>
-                    <tr>
-                        <td>密码：</td>
-                        <td><input/></td>
-                    </tr>
-                </table>
-            <div class="login-btn" @click="login">登录</div>
-        </div>
-        </div>
-        
-        <div class="footer">
-            <div class="footer-notice">网站首页 关于我们 联系方式</div>
-            <div class="footer-notice">苏ICP备18015610号-1 copyright: © 中国联通 2021.</div>
-        </div>
+  <div class="container">
+    <div class="head">
+      <img class="head-img" src="../../assets/logo-chinauni-login.png" />
+      <div class="head-img-yanfei">
+        <img
+          class="head-img-yanfei-image"
+          src="../../assets/logo-yanfei-login.png"
+        />
+      </div>
     </div>
+    <div class="body">
+      <div class="login">
+        <div class="login-title">
+          雁飞·智连定位平台
+        </div>
+        <table>
+          <tr>
+            <td>用户名：</td>
+            <td><input /></td>
+          </tr>
+          <tr>
+            <td>密码：</td>
+            <td><input /></td>
+          </tr>
+        </table>
+
+        <div class="login-btn" @click="login">登录</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-notice">网站首页 关于我们 联系方式</div>
+      <div class="footer-notice">
+        苏ICP备18015610号-1 copyright: © 中国联通 2021.
+      </div>
+    </div>
+  </div>
 </template>
 <style scoped lang="stylus">
 .container{

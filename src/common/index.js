@@ -1,4 +1,2 @@
-import * as Const from './const.js';
-export {
-    Const
-};
+import * as Const from "./const.js";
+export { Const };

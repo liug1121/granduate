@@ -1,4 +1,3 @@
-
 <script>
 export default {
   name: "AlertDlg",
@@ -11,17 +10,17 @@ export default {
 };
 </script>
 <template>
-    <div>
-        <div class="container">
-            <div class="dlg">
-                <div class="dlg-title">提示消息</div>
-                <div class="dlg-msg">{{msg}}</div>
-                <div class="dlg-btns">
-                    <div class="dlg-btn" @click="close">取消</div>
-                </div>
-            </div>
+  <div>
+    <div class="container">
+      <div class="dlg">
+        <div class="dlg-title">提示消息</div>
+        <div class="dlg-msg">{{ msg }}</div>
+        <div class="dlg-btns">
+          <div class="dlg-btn" @click="close">取消</div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 <style scoped lang="stylus">
 .container {

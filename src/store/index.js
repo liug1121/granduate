@@ -6,11 +6,11 @@ import provinces from "./modules/provinces";
 import schools from "./modules/schools";
 import student from "./modules/student";
 import notices from "./modules/notices";
-import buyRecords from "./modules/buyrecords"
-import card from "./modules/card.js"
-import bigFlowPackage from "./modules/package.js"
-import user from "./modules/user.js"
-import positionUser from "./modules/positionUser.js"
+import buyRecords from "./modules/buyrecords";
+import card from "./modules/card.js";
+import bigFlowPackage from "./modules/package.js";
+import user from "./modules/user.js";
+import positionUser from "./modules/positionUser.js";
 
 Vue.use(Vuex);
 
@@ -20,6 +20,17 @@ export default new Vuex.Store({
   state: {},
   mutations: {},
   actions: {},
-  modules: { majors, provinces, schools, student, notices, buyRecords,card ,bigFlowPackage,user, positionUser},
+  modules: {
+    majors,
+    provinces,
+    schools,
+    student,
+    notices,
+    buyRecords,
+    card,
+    bigFlowPackage,
+    user,
+    positionUser
+  },
   strict: debug
 });

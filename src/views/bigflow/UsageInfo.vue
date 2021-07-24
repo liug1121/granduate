@@ -1,5 +1,5 @@
 <script>
-import MsgDlg from "./MsgDlg.vue"
+import MsgDlg from "./MsgDlg.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "UsageInfo",
@@ -8,93 +8,104 @@ export default {
   },
   data() {
     return {
-        showComfirmDlg: 0,
-        iccidForUnbind:''
+      showComfirmDlg: 0,
+      iccidForUnbind: ""
     };
   },
-  created(){
-      this.getCards()
+  created() {
+    this.getCards();
   },
 
   computed: {
     ...mapGetters("card", {
       cardInfos: "getCardInfos",
-      bindStatus:"getBindStatus"
+      bindStatus: "getBindStatus"
     }),
-    getCardInfos(){
-        let cardInfos = this.cardInfos
-        return cardInfos
+    getCardInfos() {
+      let cardInfos = this.cardInfos;
+      return cardInfos;
     }
   },
-  methods:{
-      shwoMsgDlg:function(iccid){
-        this.showComfirmDlg = 1
-        this.iccidForUnbind = iccid
-      },
-      hideMsgDlg:function(){
-          this.showComfirmDlg = 0
-      },
-      unbindCard:function(){
-          let queryParams = {}
-          queryParams.iccid = this.iccidForUnbind
-          this.$store.dispatch("card/unbindCard", queryParams);
-        this.showComfirmDlg = 0
-      },
-      getCards:function(){
-          this.$store.dispatch("card/getCardInfos");
-      },
-      toBind:function(){
-        this.$router.push({ name: "Bind"})
-      },
-      toDetail:function(iccid){
-        this.$router.push({ name: "UsageDetails",
+  methods: {
+    shwoMsgDlg: function(iccid) {
+      this.showComfirmDlg = 1;
+      this.iccidForUnbind = iccid;
+    },
+    hideMsgDlg: function() {
+      this.showComfirmDlg = 0;
+    },
+    unbindCard: function() {
+      let queryParams = {};
+      queryParams.iccid = this.iccidForUnbind;
+      this.$store.dispatch("card/unbindCard", queryParams);
+      this.showComfirmDlg = 0;
+    },
+    getCards: function() {
+      this.$store.dispatch("card/getCardInfos");
+    },
+    toBind: function() {
+      this.$router.push({ name: "Bind" });
+    },
+    toDetail: function(iccid) {
+      this.$router.push({
+        name: "UsageDetails",
         query: {
-            iccid: iccid
-          }})
-      }
+          iccid: iccid
+        }
+      });
+    }
   }
 };
 </script>
 <template>
-    <div class="page">
-        <div v-if="bindStatus == 1">
-            <div class="useage" v-for="(record, index) in getCardInfos"
-                      :key="index">
-                <table>
-                    <tr>
-                        <td>设备名称：</td>
-                        <td class="order-info">{{record.phoneNumber}}</td>
-                    </tr>
-                    <tr>
-                        <td>MSISDN：</td>
-                        <td class="order-info">{{record.phoneNumber}}</td>
-                    </tr>
-                    <tr>
-                        <td>ICCID：</td>
-                        <td class="order-info">{{record.iccid}}</td>
-                    </tr>
-                    <tr>
-                        <td>当前套餐：</td>
-                        <td class="order-info">{{record.currentMeal}}</td>
-                    </tr>
-                    <tr>
-                        <td>当月剩余：</td>
-                        <td class="order-info">{{record.flowSurplusUsed}}</td>
-                    </tr>
-                </table>
-                <div class="buttons">
-                    <div class="button-unbind" @click="shwoMsgDlg(record.iccid20)">解绑</div>
-                    <div class="button-detail" @click="toDetail(record.iccid20)">详情</div>
-                </div>
-            </div>
-            <div class="addcard" @click="toBind">+</div>
+  <div class="page">
+    <div v-if="bindStatus == 1">
+      <div class="useage" v-for="(record, index) in getCardInfos" :key="index">
+        <table>
+          <tr>
+            <td>设备名称：</td>
+            <td class="order-info">{{ record.phoneNumber }}</td>
+          </tr>
+          <tr>
+            <td>MSISDN：</td>
+            <td class="order-info">{{ record.phoneNumber }}</td>
+          </tr>
+          <tr>
+            <td>ICCID：</td>
+            <td class="order-info">{{ record.iccid }}</td>
+          </tr>
+          <tr>
+            <td>当前套餐：</td>
+            <td class="order-info">{{ record.currentMeal }}</td>
+          </tr>
+          <tr>
+            <td>当月剩余：</td>
+            <td class="order-info">{{ record.flowSurplusUsed }}</td>
+          </tr>
+        </table>
+
+        <div class="buttons">
+          <div class="button-unbind" @click="shwoMsgDlg(record.iccid20)">
+            解绑
+          </div>
+          <div class="button-detail" @click="toDetail(record.iccid20)">
+            详情
+          </div>
         </div>
-        <div class="addcardpage" v-else>
-            <div class="note">当前没有绑定任何卡</div>
-            <div class="addcard" @click="toBind">+</div>
-        </div>
-        <MsgDlg v-if="showComfirmDlg == 1" @close="hideMsgDlg" @ok="unbindCard" msg="确认解除绑定？"></MsgDlg>
+      </div>
+      <div class="addcard" @click="toBind">+</div>
     </div>
+    <div class="addcardpage" v-else>
+      <div class="note">当前没有绑定任何卡</div>
+      <div class="addcard" @click="toBind">+</div>
+    </div>
+    <MsgDlg
+      v-if="showComfirmDlg == 1"
+      @close="hideMsgDlg"
+      @ok="unbindCard"
+      msg="确认解除绑定？"
+    ></MsgDlg>
+  </div>
 </template>
 <style scoped lang="stylus">
 .page{

@@ -3,16 +3,19 @@
     <div class="split"></div>
     <table class="student">
       <tr>
-        <td><img class="img-tc" :src="require('../../assets/' + student.icon + '.png')" /></td>
+        <td>
+          <img
+            class="img-tc"
+            :src="require('../../assets/' + student.icon + '.png')"
+          />
+        </td>
         <td>
           <table class="student-info">
             <tr>
               <td class="student-info-name">{{ student.name }}</td>
             </tr>
             <tr>
-              <td class="student-info-id">
-                编号：{{ student.id }}
-              </td>
+              <td class="student-info-id">编号：{{ student.id }}</td>
             </tr>
           </table>
 
@@ -42,20 +45,20 @@ export default {
     let student = this.$route.params;
     student.type = student.type == 0 ? "学硕" : "专硕";
     this.student = student;
-    let name = ''
-    let icon = ''
-    if(student.sex == 0){
-      name = "XXX学长"
-      icon = 'male'
-    }else if(student.sex == 1){
-       name = "XXX学姐"
-       icon = 'female'
-    }else{
-      name = "XXX"
-      icon = 'secret'
+    let name = "";
+    let icon = "";
+    if (student.sex == 0) {
+      name = "XXX学长";
+      icon = "male";
+    } else if (student.sex == 1) {
+      name = "XXX学姐";
+      icon = "female";
+    } else {
+      name = "XXX";
+      icon = "secret";
     }
-    this.student.name = name
-    this.student.icon = icon
+    this.student.name = name;
+    this.student.icon = icon;
   }
 };
 </script>

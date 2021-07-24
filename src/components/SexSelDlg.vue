@@ -8,7 +8,7 @@ export default {
       allSex.push("");
       allSex.push("男");
       allSex.push("女");
-      allSex.push("保密")
+      allSex.push("保密");
       allSex.push("");
       allSex.push("");
       return allSex;
@@ -17,8 +17,7 @@ export default {
 
   methods: {
     close() {
-      if (this.sex == "") 
-        this.sex = this.getAllSex[this.selectedIndex];
+      if (this.sex == "") this.sex = this.getAllSex[this.selectedIndex];
       this.$emit("onSelectSex", this.sex);
       this.$emit("close");
     },
@@ -29,7 +28,7 @@ export default {
         this.getAllSex.length
       );
       if (this.selectedIndex >= 3) return;
-      this.selectedIndex =this.selectedIndex + 1
+      this.selectedIndex = this.selectedIndex + 1;
       this.sex = this.getAllSex[this.selectedIndex];
     }
   },

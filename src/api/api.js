@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from '../store'
+import store from "../store";
 function get(method, uri, mSucess = null, mError = null, params = {}) {
   axios({ method: method, url: uri, params: params }).then(
     result => {
@@ -12,28 +12,29 @@ function get(method, uri, mSucess = null, mError = null, params = {}) {
   );
 }
 
-function getWithToken(uri, mSucess = null, mError = null, token){
-  console.log('token:' + token)
-  let headers = { 
-    "token": token
+function getWithToken(uri, mSucess = null, mError = null, token) {
+  console.log("token:" + token);
+  let headers = {
+    token: token
   };
-  axios.get(uri, {headers})
-  .then(function(response) {
-    if (mSucess != null) mSucess(response);
-  })
-  .catch(function(error) {
-    if (mError != null) mError(error);
-  });
+  axios
+    .get(uri, { headers })
+    .then(function(response) {
+      if (mSucess != null) mSucess(response);
+    })
+    .catch(function(error) {
+      if (mError != null) mError(error);
+    });
 }
 
 function postWithToken(uri, mSucess = null, mError = null, params = {}, token) {
-  console.log('token:' + token)
-  let headers = { 
-    "token": token,
-    "Content-Type":"application/json"
+  console.log("token:" + token);
+  let headers = {
+    token: token,
+    "Content-Type": "application/json"
   };
   axios
-    .post(uri, params, {headers})
+    .post(uri, params, { headers })
     .then(function(response) {
       if (mSucess != null) mSucess(response);
     })
@@ -92,7 +93,7 @@ export default {
     post("/api/parttime/filter", mSetStudents, undefined, queryParams);
   },
 
-  getStudent(mSetStudents, queryParams){
+  getStudent(mSetStudents, queryParams) {
     get("GET", "/api/parttime/detail", mSetStudents, undefined, queryParams);
   },
 
@@ -111,74 +112,132 @@ export default {
     get("GET", "/api/parttime/random", mSetStudents);
   },
 
-  getBuyRecords(mSuccess, mError, queryParams){
-    let token = store.state.user.token
-    postWithToken("/bigflow/boss/v1.0/wechat/card/buy/products", mSuccess, mError, queryParams,token)
+  getBuyRecords(mSuccess, mError, queryParams) {
+    let token = store.state.user.token;
+    postWithToken(
+      "/bigflow/boss/v1.0/wechat/card/buy/products",
+      mSuccess,
+      mError,
+      queryParams,
+      token
+    );
   },
-  getCardInfos(mSuccess, mError){
-    let token = store.state.user.token
-    getWithToken("/bigflow/boss/v1.0/wechat/user/cards", mSuccess, mError, token)
+  getCardInfos(mSuccess, mError) {
+    let token = store.state.user.token;
+    getWithToken(
+      "/bigflow/boss/v1.0/wechat/user/cards",
+      mSuccess,
+      mError,
+      token
+    );
   },
-  getCardDetails(mSuccess, mError, queryParams){
-    let token = store.state.user.token
-    postWithToken("/bigflow/boss/v1.0/wechat/card/info", mSuccess, mError, queryParams,token)
+  getCardDetails(mSuccess, mError, queryParams) {
+    let token = store.state.user.token;
+    postWithToken(
+      "/bigflow/boss/v1.0/wechat/card/info",
+      mSuccess,
+      mError,
+      queryParams,
+      token
+    );
   },
-  getAddPackagesForCard(mSuccess, mError, queryParams){
-    let token = store.state.user.token
-    postWithToken("/bigflow/boss/v1.0/wechat/card/buy/addpackages", mSuccess, mError, queryParams,token)
+  getAddPackagesForCard(mSuccess, mError, queryParams) {
+    let token = store.state.user.token;
+    postWithToken(
+      "/bigflow/boss/v1.0/wechat/card/buy/addpackages",
+      mSuccess,
+      mError,
+      queryParams,
+      token
+    );
   },
-  getPackagesForCard(mSuccess, mError, queryParams){
-    let token = store.state.user.token
-    postWithToken("/bigflow/boss/v1.0/wechat/card/buy/packages", mSuccess, mError, queryParams,token)
+  getPackagesForCard(mSuccess, mError, queryParams) {
+    let token = store.state.user.token;
+    postWithToken(
+      "/bigflow/boss/v1.0/wechat/card/buy/packages",
+      mSuccess,
+      mError,
+      queryParams,
+      token
+    );
   },
-  unbindCard(mSuccess, mError, queryParams){
-    let token = store.state.user.token
-    postWithToken("/bigflow/boss/v1.0/wechat/card/unbind", mSuccess, mError, queryParams,token)
+  unbindCard(mSuccess, mError, queryParams) {
+    let token = store.state.user.token;
+    postWithToken(
+      "/bigflow/boss/v1.0/wechat/card/unbind",
+      mSuccess,
+      mError,
+      queryParams,
+      token
+    );
   },
-  queryCardBindInfo(mSuccess, mError, queryParams){
-    let token = store.state.user.token
-    postWithToken("/bigflow/boss/v1.0/wechat/card/bind/info", mSuccess, mError, queryParams,token)
+  queryCardBindInfo(mSuccess, mError, queryParams) {
+    let token = store.state.user.token;
+    postWithToken(
+      "/bigflow/boss/v1.0/wechat/card/bind/info",
+      mSuccess,
+      mError,
+      queryParams,
+      token
+    );
   },
-  bindCard(mSuccess, mError, queryParams){
-    let token = store.state.user.token
-    postWithToken("/bigflow/boss/v1.0/wechat/card/bind", mSuccess, mError, queryParams,token)
+  bindCard(mSuccess, mError, queryParams) {
+    let token = store.state.user.token;
+    postWithToken(
+      "/bigflow/boss/v1.0/wechat/card/bind",
+      mSuccess,
+      mError,
+      queryParams,
+      token
+    );
   },
-  buyProduct(mSuccess, mError, queryParams){
-    let token = store.state.user.token
-    console.log('queryParams:' + JSON.stringify(queryParams))
-    postWithToken("/bigflow/boss/v1.0/buy", mSuccess, mError, queryParams,token)
+  buyProduct(mSuccess, mError, queryParams) {
+    let token = store.state.user.token;
+    console.log("queryParams:" + JSON.stringify(queryParams));
+    postWithToken(
+      "/bigflow/boss/v1.0/buy",
+      mSuccess,
+      mError,
+      queryParams,
+      token
+    );
   },
-  wxSign(mSuccess, mError, queryParams){
-    let token = store.state.user.token
-    postWithToken("/bigflow/boss/v1.0/sigin", mSuccess, mError, queryParams,token)
-
+  wxSign(mSuccess, mError, queryParams) {
+    let token = store.state.user.token;
+    postWithToken(
+      "/bigflow/boss/v1.0/sigin",
+      mSuccess,
+      mError,
+      queryParams,
+      token
+    );
   },
-  login(mSuccess, mError, queryParams){
+  login(mSuccess, mError, queryParams) {
     post("/bigflow/boss/v1.0/users/login", mSuccess, mError, queryParams);
   },
-  weixinPay(payParams, callback){
-    window.WeixinJSBridge.invoke('getBrandWCPayRequest', {
-      "appId": payParams.appId,        
-      "timeStamp": payParams.timeStamp,     
-      "nonceStr": payParams.nonceStr,       
-      "package": payParams.package,
-      "signType": payParams.signType,  
-      "paySign": payParams.paySign
-  },
-  function(res) {
-    let payResult = {}
-    console.log("pay:::::" + JSON.stringify(res))
-      if (res.err_msg == "get_brand_wcpay_request:ok") {
-        payResult.resultCode = 0
-        payResult.message = res.err_msg
-      }else{
-        payResult.resultCode = -1
-        payResult.message = res.err_msg
+  weixinPay(payParams, callback) {
+    window.WeixinJSBridge.invoke(
+      "getBrandWCPayRequest",
+      {
+        appId: payParams.appId,
+        timeStamp: payParams.timeStamp,
+        nonceStr: payParams.nonceStr,
+        package: payParams.package,
+        signType: payParams.signType,
+        paySign: payParams.paySign
+      },
+      function(res) {
+        let payResult = {};
+        console.log("pay:::::" + JSON.stringify(res));
+        if (res.err_msg == "get_brand_wcpay_request:ok") {
+          payResult.resultCode = 0;
+          payResult.message = res.err_msg;
+        } else {
+          payResult.resultCode = -1;
+          payResult.message = res.err_msg;
+        }
+        if (callback != null) callback(payResult);
       }
-      if(callback != null)
-        callback(payResult)
-  });
+    );
   }
 };
-
-

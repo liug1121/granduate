@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
-        <img src="../../assets/wemini-uncom.jpeg" >
-        <div><span>长按二维码，进入联通官方实名认证</span></div>
-    </div>
+  <div class="container">
+    <img src="../../assets/wemini-uncom.jpeg" />
+    <div><span>长按二维码，进入联通官方实名认证</span></div>
+  </div>
 </template>
 <style scoped lang="stylus">
 .container{

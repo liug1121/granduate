@@ -4,15 +4,15 @@ import Home from "../views/home/Home.vue";
 import Register from "../views/register/Register.vue";
 import Senior from "../views/senior/Senior.vue";
 import Bind from "../views/bigflow/Bind.vue";
-import PayRecord from "../views/bigflow/PayRecord.vue"
-import UsageInfo from "../views/bigflow/UsageInfo.vue"
-import UsageDetails from "../views/bigflow/UsageDetails.vue"
-import ToCertified from '../views/bigflow/ToCertified'
-import Position from "../views/position/Home.vue"
-import Material from '../views/position/Material.vue'
-import Monitor from '../views/position/Monitor.vue'
-import Travel from '../views/position/Travel.vue'
-import Login from '../views/position/Login.vue'
+import PayRecord from "../views/bigflow/PayRecord.vue";
+import UsageInfo from "../views/bigflow/UsageInfo.vue";
+import UsageDetails from "../views/bigflow/UsageDetails.vue";
+import ToCertified from "../views/bigflow/ToCertified";
+import Position from "../views/position/Home.vue";
+import Material from "../views/position/Material.vue";
+import Monitor from "../views/position/Monitor.vue";
+import Travel from "../views/position/Travel.vue";
+import Login from "../views/position/Login.vue";
 
 // import { Const } from "@/common"
 // import store from '../store'
@@ -60,31 +60,30 @@ const routes = [
     component: Senior
   },
   {
-    path:"/h5/bind",
-    name:"Bind",
-    component:Bind
+    path: "/h5/bind",
+    name: "Bind",
+    component: Bind
   },
   {
-    path:"/h5/payRecord",
-    name:"PayRecord",
-    component:PayRecord
+    path: "/h5/payRecord",
+    name: "PayRecord",
+    component: PayRecord
   },
   {
-    path:"/h5/usageInfo",
-    name:"UsageInfo",
-    component:UsageInfo
+    path: "/h5/usageInfo",
+    name: "UsageInfo",
+    component: UsageInfo
   },
   {
-    path:"/h5/usageDetails",
-    name:"UsageDetails",
-    component:UsageDetails
+    path: "/h5/usageDetails",
+    name: "UsageDetails",
+    component: UsageDetails
   },
   {
-    path:"/h5/toCertified",
-    name:"ToCertified",
-    component:ToCertified
+    path: "/h5/toCertified",
+    name: "ToCertified",
+    component: ToCertified
   }
-  
 ];
 
 const router = new VueRouter({

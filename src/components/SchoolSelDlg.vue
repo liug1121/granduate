@@ -74,13 +74,13 @@ export default {
         };
         provinces.push(province);
       }
-      provinces.push({ name: "", valid: false});
-      provinces.push({ name: "", valid: false});
-      provinces.push({ name: "", valid: false});
-      provinces.push({ name: "", valid: false});
-      provinces.push({ name: "", valid: false});
+      provinces.push({ name: "", valid: false });
+      provinces.push({ name: "", valid: false });
+      provinces.push({ name: "", valid: false });
+      provinces.push({ name: "", valid: false });
+      provinces.push({ name: "", valid: false });
       return provinces;
-    },
+    }
   },
 
   beforeCreate() {
@@ -94,7 +94,7 @@ export default {
       proviceSelectedIndex: 0,
       provinceSelectedName: "",
       schoolSelectedIndex: 0,
-      schoolSelectedName: "",
+      schoolSelectedName: ""
     };
   }
 };
@@ -135,7 +135,7 @@ export default {
                     <div
                       v-for="(province, index) in getProvinceForList"
                       :key="index"
-                      class="items-infos" 
+                      class="items-infos"
                     >
                       <div
                         v-bind:class="[

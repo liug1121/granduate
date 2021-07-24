@@ -29,7 +29,7 @@ const state = () => ({
   randomStudents: [],
   addedSuccess: false,
   addImageResult: {},
-  studentsInCookie:[]
+  studentsInCookie: []
 });
 
 const getters = {
@@ -59,14 +59,14 @@ const actions = {
     }, queryParams);
   },
 
-  getStudentForCookie({commit}){
+  getStudentForCookie({ commit }) {
     let studentIds = JSON.parse(cookies.get("students"));
-    commit("clearStudentInCookie")
-    for(let i = 0; i < studentIds.length; i++){
-        let param = {id: studentIds[i]}
-        api.getStudent(resp => {
-            commit("addStudentInCookie", resp);
-          }, param);
+    commit("clearStudentInCookie");
+    for (let i = 0; i < studentIds.length; i++) {
+      let param = { id: studentIds[i] };
+      api.getStudent(resp => {
+        commit("addStudentInCookie", resp);
+      }, param);
     }
   },
 
@@ -164,7 +164,6 @@ const actions = {
   },
 
   addStudent2Cookie({ commit }, student) {
-
     let studentsInCookie = cookies.get("students");
     if (studentsInCookie == undefined) studentsInCookie = "[]";
     studentsInCookie = JSON.parse(studentsInCookie);
@@ -177,9 +176,6 @@ const actions = {
     studentsInCookie.push(student.id);
     commit("setStudent2Cookie", studentsInCookie);
     cookies.set("students", studentsInCookie);
-
-
-
 
     // let studentsInCookie = cookies.get("students");
     // if (studentsInCookie == undefined) studentsInCookie = "[]";
@@ -241,12 +237,12 @@ const mutations = {
   setStudent2Cookie(studentsInCookie) {
     console.log("setStudent2Cookie...." + studentsInCookie);
   },
-  addStudentInCookie(state, resp){
-      let student = respUtils.toCommonResult(resp);
-      state.studentsInCookie.push(student.data)
+  addStudentInCookie(state, resp) {
+    let student = respUtils.toCommonResult(resp);
+    state.studentsInCookie.push(student.data);
   },
-  clearStudentInCookie(){
-    this.studentsInCookie = []
+  clearStudentInCookie() {
+    this.studentsInCookie = [];
   }
 };
 

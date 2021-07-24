@@ -5,7 +5,7 @@ export default {
   name: "SpecialtySelDlg",
   methods: {
     close() {
-      if (this.major == "") 
+      if (this.major == "")
         this.major = this.getMajorsForList[this.majorSelectIndex].name;
       this.$emit("onSelectedMajor", this.major);
       this.$emit("close");
@@ -26,14 +26,14 @@ export default {
       }
       this.majorSelectIndex = 1;
       this.$refs.items.scrollTop = 0;
-      this.major == ""
+      this.major == "";
     },
     majorScroller() {
       let majorSelectIndex = common.getScrollPosition(
         this.$refs.items,
         this.getMajorsForList.length
       );
-      this.majorSelectIndex = majorSelectIndex + 1
+      this.majorSelectIndex = majorSelectIndex + 1;
       this.major = this.getMajorsForList[this.majorSelectIndex].name;
     }
   },
@@ -60,8 +60,8 @@ export default {
       return majors;
     }
   },
-  watch:{
-    getMajorsForList(){
+  watch: {
+    getMajorsForList() {
       this.major = this.getMajorsForList[this.majorSelectIndex].name;
     }
   },

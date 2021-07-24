@@ -33,7 +33,14 @@
             </p>
           </td>
           <td>
-            <p class="base-item-text">{{ student.professionOneScore == 0|| student.professionOneScore == undefined ? '保密' : student.professionOneScore + '分' }}</p>
+            <p class="base-item-text">
+              {{
+                student.professionOneScore == 0 ||
+                student.professionOneScore == undefined
+                  ? "保密"
+                  : student.professionOneScore + "分"
+              }}
+            </p>
           </td>
         </tr>
       </table>

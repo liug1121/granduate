@@ -1,6 +1,6 @@
 <template>
   <div class="register">
-    <div class = "modal-backdrop" v-if="isSubmiting"></div>
+    <div class="modal-backdrop" v-if="isSubmiting"></div>
     <div class="title">
       <p class="title-big-text">研究生兼职信息登记表</p>
       <p class="title-small-text">
@@ -48,7 +48,7 @@
           <td class="label">*入学年份：</td>
           <td>
             <div v-bind:class="checkInput('year')" @click="onYearSel">
-              {{ year == 1900 ? '' : year }}
+              {{ year == 1900 ? "" : year }}
             </div>
           </td>
           <td><p v-if="yearError" class="error">请选择入学年份</p></td>
@@ -73,20 +73,47 @@
         </tr>
         <tr>
           <td class="label">初试分数：</td>
-          <td><input :value="score1" v-bind:class ="checkInput('score1')" @input="scoreInputCheck($event, 'score1', 4)" @blur="scoreInputCheck($event, 'score1', 4)" /></td>
-          <td><p v-if="score1Error" class="error">初试分数请输入不大于3位的数字</p></td>
+          <td>
+            <input
+              :value="score1"
+              v-bind:class="checkInput('score1')"
+              @input="scoreInputCheck($event, 'score1', 4)"
+              @blur="scoreInputCheck($event, 'score1', 4)"
+            />
+          </td>
+          <td>
+            <p v-if="score1Error" class="error">
+              初试分数请输入不大于3位的数字
+            </p>
+          </td>
         </tr>
         <tr>
           <td class="label">初试排名：</td>
-          <td><input :value="rank" v-bind:class ="checkInput('rank')" @input="scoreInputCheck($event, 'rank', 4)" @blur="scoreInputCheck($event, 'rank', 4)"/></td>
-          <td><p v-if="rankError" class="error">初试排名请输入不大于3位的数字</p></td>
+          <td>
+            <input
+              :value="rank"
+              v-bind:class="checkInput('rank')"
+              @input="scoreInputCheck($event, 'rank', 4)"
+              @blur="scoreInputCheck($event, 'rank', 4)"
+            />
+          </td>
+          <td>
+            <p v-if="rankError" class="error">初试排名请输入不大于3位的数字</p>
+          </td>
         </tr>
         <tr>
           <td class="label">总排名：</td>
           <td>
-            <input :value="allRank" v-bind:class ="checkInput('allRank')" @input="scoreInputCheck($event, 'allRank', 4)" @blur="scoreInputCheck($event, 'allRank', 4)"/>
+            <input
+              :value="allRank"
+              v-bind:class="checkInput('allRank')"
+              @input="scoreInputCheck($event, 'allRank', 4)"
+              @blur="scoreInputCheck($event, 'allRank', 4)"
+            />
           </td>
-          <td><p v-if="allRankError" class="error">总排名请输入不大于3位的数字</p></td>
+          <td>
+            <p v-if="allRankError" class="error">总排名请输入不大于3位的数字</p>
+          </td>
         </tr>
       </table>
 
@@ -101,7 +128,8 @@
             <input
               :value="course1Score"
               v-bind:class="checkInput('course1Score')"
-              @input="scoreInputCheck($event, 'course1Score', 4)" @blur="scoreInputCheck($event, 'course1Score', 4)"
+              @input="scoreInputCheck($event, 'course1Score', 4)"
+              @blur="scoreInputCheck($event, 'course1Score', 4)"
             />
           </td>
         </tr>
@@ -113,7 +141,8 @@
             <input
               :value="course2Score"
               :class="checkInput('course2Score')"
-              @input="scoreInputCheck($event, 'course2Score', 4)" @blur="scoreInputCheck($event, 'course2Score', 4)"
+              @input="scoreInputCheck($event, 'course2Score', 4)"
+              @blur="scoreInputCheck($event, 'course2Score', 4)"
             />
           </td>
         </tr>
@@ -122,8 +151,14 @@
       <table>
         <tr>
           <td class="label">*手机：</td>
-          <td><input :value="phone" v-bind:class="checkInput('phone')" 
-          @input="phoneInputCheck" @blur="phoneChangeCheck"/></td>
+          <td>
+            <input
+              :value="phone"
+              v-bind:class="checkInput('phone')"
+              @input="phoneInputCheck"
+              @blur="phoneChangeCheck"
+            />
+          </td>
           <td><p v-if="phoneError" class="error">请输入正确的手机号码</p></td>
         </tr>
         <tr>
@@ -267,24 +302,20 @@ export default {
     },
 
     onSelectSex(sex) {
-      console.log(sex)
+      console.log(sex);
 
       if (sex == "男") {
-        this.sex = 0; 
-        this.sexNick = '男';
+        this.sex = 0;
+        this.sexNick = "男";
+      } else if (sex == "女") {
+        this.sex = 1;
+        this.sexNick = "女";
+      } else {
+        this.sex = 2;
+        this.sexNick = "保密";
       }
-      else if(sex == '女'){
-        this.sex = 1; 
-        this.sexNick = '女'
-      }
-      else {
-        this.sex=2; 
-        this.sexNick = '保密'
-      }
-      console.log(this.sex)
-      console.log(this.sexNick)
-
-      
+      console.log(this.sex);
+      console.log(this.sexNick);
     },
 
     onSelectedMajor(major) {
@@ -377,14 +408,13 @@ export default {
         eductionInfo: this.addImageResult.eductionInfo,
         type: this.type
       };
-      this.isSubmiting = true
+      this.isSubmiting = true;
       this.$store.dispatch("student/addStudent", student);
 
-      this.toast("提交成功！", ()=>{
-        this.isSubmiting = false
+      this.toast("提交成功！", () => {
+        this.isSubmiting = false;
         this.$router.push("/");
       });
-      
     },
 
     initErrorStatus() {
@@ -396,10 +426,10 @@ export default {
       this.phoneError = false;
       this.course1Error = false;
       this.course1ScoreError = false;
-      this.score1Error = false
-      this.rankError = false
-      this.allRankError = false
-      this.course2ScoreError = false
+      this.score1Error = false;
+      this.rankError = false;
+      this.allRankError = false;
+      this.course2ScoreError = false;
     },
 
     checkInput(type) {
@@ -411,7 +441,8 @@ export default {
       if (type == "phone") return !this.phoneError ? "input" : "input-error";
       if (type == "score1") return !this.score1Error ? "input" : "input-error";
       if (type == "rank") return !this.rankError ? "input" : "input-error";
-      if (type == "allRank") return !this.allRankError ? "input" : "input-error";
+      if (type == "allRank")
+        return !this.allRankError ? "input" : "input-error";
       if (type == "course1")
         return !this.course1Error ? "input-small" : "input-small-error";
       if (type == "course1Score")
@@ -426,88 +457,87 @@ export default {
       v.toastShow = true;
       setTimeout(function() {
         v.toastShow = false;
-        callback()
+        callback();
       }, 2000);
     },
 
-    phoneInputCheck(event){
-      let val = event.target.value.trim()
-      if(/^[1-9]\d*$|^$/.test(val) && val.length <= 11) {
-        this.phone = val
-        this.phoneError = false
-      }else{
-        event.target.value = this.phone
-        this.phoneError = true
+    phoneInputCheck(event) {
+      let val = event.target.value.trim();
+      if (/^[1-9]\d*$|^$/.test(val) && val.length <= 11) {
+        this.phone = val;
+        this.phoneError = false;
+      } else {
+        event.target.value = this.phone;
+        this.phoneError = true;
       }
     },
-    phoneChangeCheck(event){
-      console.log('phoneChangeCheck')
-      let val = event.target.value.trim()
-      if(val.length == 11){
-        this.phone = val
-        this.phoneError = false
-      }else{
-        event.target.value = this.phone
-        this.phoneError = true
+    phoneChangeCheck(event) {
+      console.log("phoneChangeCheck");
+      let val = event.target.value.trim();
+      if (val.length == 11) {
+        this.phone = val;
+        this.phoneError = false;
+      } else {
+        event.target.value = this.phone;
+        this.phoneError = true;
       }
     },
 
     scoreInputCheck(event, type, len) {
-						let val = event.target.value.trim()
-						if(/^[1-9]\d*$|^$/.test(val) && val.length <len) {
-              if(type == 'score1'){
-                this.score1 = val
-                this.score1Error = false
-              }
-              if(type == 'rank'){
-                this.rank = val
-                this.rankError = false
-              }
-              if(type == 'allRank'){
-                this.allRank = val
-                this.allRankError = false
-              }
-              if(type == 'course1Score'){
-                this.course1Score = val
-                this.course1ScoreError = false
-              }
-              if(type == 'course2Score'){
-                this.course2Score = val
-                this.course2ScoreError = false
-              }
+      let val = event.target.value.trim();
+      if (/^[1-9]\d*$|^$/.test(val) && val.length < len) {
+        if (type == "score1") {
+          this.score1 = val;
+          this.score1Error = false;
+        }
+        if (type == "rank") {
+          this.rank = val;
+          this.rankError = false;
+        }
+        if (type == "allRank") {
+          this.allRank = val;
+          this.allRankError = false;
+        }
+        if (type == "course1Score") {
+          this.course1Score = val;
+          this.course1ScoreError = false;
+        }
+        if (type == "course2Score") {
+          this.course2Score = val;
+          this.course2ScoreError = false;
+        }
+      } else {
+        if (type == "score1") {
+          event.target.value = this.score1;
+          this.score1Error = true;
+        }
 
-						} else {
-              if(type == 'score1'){
-                event.target.value = this.score1
-                this.score1Error = true
-              }
-                
-              if(type == 'rank'){
-                event.target.value = this.rank
-                this.rankError = true
-              }
-                
-              if(type == 'allRank'){
-                event.target.value = this.allRank
-                this.allRankError = true;
-              }
-              if(type == 'course1Score'){
-                event.target.value = this.course1Score
-                this.course1ScoreError = true
-              }
-              if(type == 'course2Score'){
-                event.target.value = this.course2Score
-                this.course2ScoreError = true
-              }
-						}
-					}
+        if (type == "rank") {
+          event.target.value = this.rank;
+          this.rankError = true;
+        }
+
+        if (type == "allRank") {
+          event.target.value = this.allRank;
+          this.allRankError = true;
+        }
+        if (type == "course1Score") {
+          event.target.value = this.course1Score;
+          this.course1ScoreError = true;
+        }
+        if (type == "course2Score") {
+          event.target.value = this.course2Score;
+          this.course2ScoreError = true;
+        }
+      }
+    }
   },
 
   data() {
     return {
       name: "",
       sex: 0,
-      sexNick:'男',
+      sexNick: "男",
       school: "",
       major: "",
       year: 1900,
@@ -545,7 +575,7 @@ export default {
       isYearSelDlgVisible: false,
       isSexSelDlgVisible: false,
 
-      isSubmiting : false
+      isSubmiting: false
     };
   }
 };

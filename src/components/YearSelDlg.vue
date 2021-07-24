@@ -1,42 +1,44 @@
 <script>
-import common from '../utils/common'
+import common from "../utils/common";
 export default {
   name: "YearSelDlg",
   methods: {
     close() {
-      if(this.year == '')
-        this.year = this.years[this.yearSelectedIndex]
-      this.$emit('onSelectYear', this.year)
+      if (this.year == "") this.year = this.years[this.yearSelectedIndex];
+      this.$emit("onSelectYear", this.year);
       this.$emit("close");
     },
-      yearScoller(){
-        this.yearSelectedIndex = common.getScrollPosition(this.$refs.items, this.years.length)
-        this.yearSelectedIndex = this.yearSelectedIndex + 1
-        this.year = this.years[this.yearSelectedIndex]
-      }
-  },
-  computed:{
-      years() {
-          let d = new Date()
-          let year = d.getYear() + 1900
-          let years = []
-          years.push('')
-          years.push(year)
-          for(let i = 0; i < 4; i++){
-              year = year - 1
-              years.push(year)
-          }
-          years.push('')
-          years.push('')
-          years.push('')
-          return years
-      }
-  },
-  data(){
-    return {
-        yearSelectedIndex:1,
-        year:''
+    yearScoller() {
+      this.yearSelectedIndex = common.getScrollPosition(
+        this.$refs.items,
+        this.years.length
+      );
+      this.yearSelectedIndex = this.yearSelectedIndex + 1;
+      this.year = this.years[this.yearSelectedIndex];
     }
+  },
+  computed: {
+    years() {
+      let d = new Date();
+      let year = d.getYear() + 1900;
+      let years = [];
+      years.push("");
+      years.push(year);
+      for (let i = 0; i < 4; i++) {
+        year = year - 1;
+        years.push(year);
+      }
+      years.push("");
+      years.push("");
+      years.push("");
+      return years;
+    }
+  },
+  data() {
+    return {
+      yearSelectedIndex: 1,
+      year: ""
+    };
   }
 };
 </script>
@@ -65,9 +67,14 @@ export default {
           <slot name="body">
             <div class="split"></div>
             <div class="items" @scroll="yearScoller" ref="items">
-              <div v-for="(year, index) in years" :key="index"  
-              v-bind:class="[index == yearSelectedIndex ? 'item item-selected' : 'item']">
-              {{year}}
+              <div
+                v-for="(year, index) in years"
+                :key="index"
+                v-bind:class="[
+                  index == yearSelectedIndex ? 'item item-selected' : 'item'
+                ]"
+              >
+                {{ year }}
               </div>
             </div>
             <div class="split split-bottom"></div>
@@ -207,5 +214,4 @@ export default {
 .modal-fade-leave-active {
   transition: opacity .5s ease
 }
-
 </style>

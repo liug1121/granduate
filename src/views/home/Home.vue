@@ -161,12 +161,13 @@ export default {
     closeModal() {
       this.isModalVisible = false;
       this.isTwoCodeDlgVisible = true;
-      let info = ""
-      if(this.selectedSchool != "学校")
-        info = this.selectedSchool + "学校";
-      if(this.selectedMajor != "专业")
-        info =  info + this.selectedMajor + "专业"
-      this.$copyText("学姐您好，我想找" + info + "的学长，可以帮我对接下吗？").then(
+      let info = "";
+      if (this.selectedSchool != "学校") info = this.selectedSchool + "学校";
+      if (this.selectedMajor != "专业")
+        info = info + this.selectedMajor + "专业";
+      this.$copyText(
+        "学姐您好，我想找" + info + "的学长，可以帮我对接下吗？"
+      ).then(
         function(e) {
           console.log(e);
         },
@@ -251,8 +252,8 @@ export default {
         this.listClass = "list-container";
       }
     },
-    todo(){
-      location.href="http://kaoyanpai.mikecrm.com/5zQFZoA"
+    todo() {
+      location.href = "http://kaoyanpai.mikecrm.com/5zQFZoA";
     }
   },
 

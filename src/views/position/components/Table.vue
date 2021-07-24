@@ -1,98 +1,101 @@
 <template>
-    <div>
-        <table>
-        <thead>
-          <tr>
-            <th v-for="key in columns" :key="key"
-              @click="sortBy(key)"  
-              :class="{ active: sortKey == key }">
-              {{ columnNames[key] | capitalize }}
-              <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
-              </span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(entry,k) in filteredHeroes" :key="k">
-            <td v-for="(key,index) in columns" :key="index">
-              {{entry[key]}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="footer" v-if="showFoot == '1'">
-          <!-- <div class="footer-item">{{currentPage}}</div> -->
-          <div class="footer-item"></div>
-          <div class="footer-item" @click="prePage">上一页</div>
-          <div class="footer-item" @click="nextPage">下一页</div>
-      </div>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th
+            v-for="key in columns"
+            :key="key"
+            @click="sortBy(key)"
+            :class="{ active: sortKey == key }"
+          >
+            {{ columnNames[key] | capitalize }}
+            <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(entry, k) in filteredHeroes" :key="k">
+          <td v-for="(key, index) in columns" :key="index">
+            {{ entry[key] }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footer" v-if="showFoot == '1'">
+      <!-- <div class="footer-item">{{currentPage}}</div> -->
+      <div class="footer-item"></div>
+      <div class="footer-item" @click="prePage">上一页</div>
+      <div class="footer-item" @click="nextPage">下一页</div>
     </div>
+  </div>
 </template>
 <script>
 export default {
   name: "Table",
   props: {
-        heroes: Array,
-        columns: Array,
-        columnNames:Object,
-        filterKey: String,
-        currentPage:Number,
-        showFoot:Number
-    },
-    data: function() {
-        var sortOrders = {};
-          this.columns.forEach(function(key) {
-            sortOrders[key] = 1;
+    heroes: Array,
+    columns: Array,
+    columnNames: Object,
+    filterKey: String,
+    currentPage: Number,
+    showFoot: Number
+  },
+  data: function() {
+    var sortOrders = {};
+    this.columns.forEach(function(key) {
+      sortOrders[key] = 1;
+    });
+    return {
+      sortKey: "",
+      sortOrders: sortOrders
+    };
+  },
+  computed: {
+    filteredHeroes: function() {
+      var sortKey = this.sortKey;
+      var filterKey = this.filterKey && this.filterKey.toLowerCase();
+      var order = this.sortOrders[sortKey] || 1;
+      var heroes = this.heroes;
+      if (filterKey) {
+        heroes = heroes.filter(function(row) {
+          return Object.keys(row).some(function(key) {
+            return (
+              String(row[key])
+                .toLowerCase()
+                .indexOf(filterKey) > -1
+            );
           });
-          return {
-            sortKey: "",
-            sortOrders: sortOrders
-          };
-    },
-    computed: {
-        filteredHeroes: function() {
-            var sortKey = this.sortKey;
-            var filterKey = this.filterKey && this.filterKey.toLowerCase();
-            var order = this.sortOrders[sortKey] || 1;
-            var heroes = this.heroes;
-            if (filterKey) {
-              heroes = heroes.filter(function(row) {
-                return Object.keys(row).some(function(key) {
-                  return (
-                    String(row[key])
-                      .toLowerCase()
-                      .indexOf(filterKey) > -1
-                  );
-                });
-              });
-            }
-            if (sortKey) {
-              heroes = heroes.slice().sort(function(a, b) {
-                a = a[sortKey];
-                b = b[sortKey];
-                return (a === b ? 0 : a > b ? 1 : -1) * order;
-              });
-            }
-            return heroes;
-          }
-    },
-    filters: {
-        capitalize: function(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-        }
-    },
-    methods: {
-      sortBy: function(key) {
-        this.sortKey = key;
-        this.sortOrders[key] = this.sortOrders[key] * -1;
-        },
-      prePage() {
-        this.$emit("prePage");
-      },
-      nextPage(){
-        this.$emit("nextPage"); 
+        });
       }
+      if (sortKey) {
+        heroes = heroes.slice().sort(function(a, b) {
+          a = a[sortKey];
+          b = b[sortKey];
+          return (a === b ? 0 : a > b ? 1 : -1) * order;
+        });
+      }
+      return heroes;
     }
+  },
+  filters: {
+    capitalize: function(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+  },
+  methods: {
+    sortBy: function(key) {
+      this.sortKey = key;
+      this.sortOrders[key] = this.sortOrders[key] * -1;
+    },
+    prePage() {
+      this.$emit("prePage");
+    },
+    nextPage() {
+      this.$emit("nextPage");
+    }
+  }
 };
 </script>
 <style scoped>
@@ -152,16 +155,15 @@ th.active .arrow {
   border-right: 4px solid transparent;
   border-top: 4px solid #fff;
 }
-.footer{
-    margin-top: 20px;
-    margin-left: 80%;
-    width: 20%;
-    text-align: right;
-    display: flex;
+.footer {
+  margin-top: 20px;
+  margin-left: 80%;
+  width: 20%;
+  text-align: right;
+  display: flex;
 }
-.footer-item{
-    flex: 1;
-    text-align: right;
+.footer-item {
+  flex: 1;
+  text-align: right;
 }
 </style>
-

@@ -71,9 +71,8 @@ export default {
     },
     go(currentImg) {
       let url = this.imageUrls[currentImg];
-      if (url != "") this.$router.push("/register")
-      else location.href="http://kaoyanpai.mikecrm.com/5zQFZoA"
-      
+      if (url != "") this.$router.push("/register");
+      else location.href = "http://kaoyanpai.mikecrm.com/5zQFZoA";
     }
   },
 

@@ -2,7 +2,7 @@
 
 const state = () => ({
   key: "c13e5b0f-dba6-407f-a269-56c108a7ca4c",
-  token:''
+  token: null
 });
 
 const getters = {
@@ -22,7 +22,12 @@ const actions = {
 
         return new Promise(resolve => {
             if(loginInfo.pwd == '111111'){
-                commit("setToken", loginInfo.userName);
+                let date = new Date();  
+                let longDate = date.getTime() + 10000
+                let token = {}
+                token.userName = loginInfo.userName
+                token.longDate = longDate
+                commit("setToken", token);
                 resolve(1);
             }else{
                 resolve(-1);
@@ -32,8 +37,9 @@ const actions = {
 };
 
 const mutations = {
-    setToken(state, userName) {
-        state.token = userName
+    setToken(state, token) {
+        console.log('setToken:' + JSON.stringify(token))
+        state.token = token
     }
 };
 

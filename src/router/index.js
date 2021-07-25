@@ -132,8 +132,8 @@ export default router;
 
 router.beforeEach((to,from,next)=>{
   console.log(to.path)
-  if(store.state.positionUser.token != '' || to.path === '/position/Login'){
-    console.log('ssdsd')
+  console.log('token:' + store.state.positionUser.token)
+  if(store.state.positionUser.token != null || to.path === '/position/Login'){
     next()
   }else{
     next({

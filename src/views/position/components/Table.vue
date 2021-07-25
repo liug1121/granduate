@@ -16,7 +16,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(entry, k) in filteredHeroes" :key="k" @click="selectRow(entry, k)" :class="k === selectedKey ? 'row-selected' : ''">
+        <tr
+          v-for="(entry, k) in filteredHeroes"
+          :key="k"
+          @click="selectRow(entry, k)"
+          :class="k === selectedKey ? 'row-selected' : ''"
+        >
           <td v-for="(key, index) in columns" :key="index">
             {{ entry[key] }}
           </td>
@@ -50,7 +55,7 @@ export default {
     return {
       sortKey: "",
       sortOrders: sortOrders,
-      selectedKey:-1
+      selectedKey: -1
     };
   },
   computed: {
@@ -96,9 +101,9 @@ export default {
     nextPage() {
       this.$emit("nextPage");
     },
-    selectRow(row, k){
-      this.selectedKey = k
-      this.$emit("selectRow", row)
+    selectRow(row, k) {
+      this.selectedKey = k;
+      this.$emit("selectRow", row);
     }
   }
 };
@@ -110,7 +115,7 @@ table {
   border-radius: 3px;
   background-color: #fff;
 }
-.row-selected{
+.row-selected {
   color: red;
 }
 th {

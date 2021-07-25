@@ -62,12 +62,236 @@ export default {
       },
       isAddFormShow: false,
       isChangeCardGroupShow: false,
+      isAddCardShow: false,
       users: [],
       groups: [],
       groupTreeData: {},
       cars: [],
-      group2Move:{},
-      carSelectedRow:null
+      group2Move: {},
+      carSelectedRow: null,
+      carData2Add: {},
+      terminalTypes: [
+        {
+          type: "A5B",
+          typemap: "A5B"
+        },
+        {
+          type: "A5C",
+          typemap: "A5C"
+        },
+        {
+          type: "A5C-3",
+          typemap: "A5C-3"
+        },
+        {
+          type: "A5C-5",
+          typemap: "A5C-5"
+        },
+        {
+          type: "A5C-9",
+          typemap: "A5C-9"
+        },
+        {
+          type: "A5D",
+          typemap: "A5D"
+        },
+        {
+          type: "A5E",
+          typemap: "A5E"
+        },
+        {
+          type: "A5M",
+          typemap: "A5M"
+        },
+        {
+          type: "A5E-3",
+          typemap: "A5E-3"
+        },
+        {
+          type: "A5H",
+          typemap: "A5H"
+        },
+        {
+          type: "M6",
+          typemap: "M6"
+        },
+        {
+          type: "M11",
+          typemap: "M11"
+        },
+        {
+          type: "GPRS-部标",
+          typemap: "GPRS-部标"
+        },
+        {
+          type: "mini",
+          typemap: "mini"
+        },
+        {
+          type: "Acar",
+          typemap: "Acar"
+        },
+        {
+          type: "Bcar",
+          typemap: "Bcar"
+        },
+        {
+          type: "Otrack",
+          typemap: "Otrack"
+        },
+        {
+          type: "KM-08",
+          typemap: "KM-08"
+        },
+        {
+          type: "KM-02",
+          typemap: "KM-02"
+        },
+        {
+          type: "KM-01",
+          typemap: "KM-01"
+        },
+        {
+          type: "GT02D",
+          typemap: "GT02D"
+        },
+        {
+          type: "K10",
+          typemap: "K10"
+        },
+        {
+          type: "K9",
+          typemap: "K9"
+        },
+        {
+          type: "K11",
+          typemap: "K11"
+        },
+        {
+          type: "K10A",
+          typemap: "K10A"
+        },
+        {
+          type: "TQ",
+          typemap: "TQ"
+        },
+        {
+          type: "A5C-8",
+          typemap: "A5C-8"
+        },
+        {
+          type: "A5C-8W",
+          typemap: "A5C-8W"
+        },
+        {
+          type: "FS-A8S",
+          typemap: "FS-A8S"
+        },
+        {
+          type: "A5C-9W",
+          typemap: "A5C-9W"
+        },
+        {
+          type: "A5C-10W",
+          typemap: "A5C-10W"
+        },
+        {
+          type: "A5C-11W",
+          typemap: "A5C-11W"
+        },
+        {
+          type: "OCAR-3",
+          typemap: "OCAR-3"
+        },
+        {
+          type: "A5C-1W",
+          typemap: "A5C-1W"
+        },
+        {
+          type: "KM-10",
+          typemap: "KM-10"
+        },
+        {
+          type: "KM-06R",
+          typemap: "KM-06R"
+        },
+        {
+          type: "OTRACK5",
+          typemap: "OTRACK5"
+        },
+        {
+          type: "GH01",
+          typemap: "GH01"
+        },
+        {
+          type: "X6",
+          typemap: "X6"
+        },
+        {
+          type: "A5E-5",
+          typemap: "A5E-5"
+        },
+        {
+          type: "A5C-4G",
+          typemap: "A5C-4G"
+        },
+        {
+          type: "KM-08-V3",
+          typemap: "KM-08-V3"
+        },
+        {
+          type: "KM-06M",
+          typemap: "KM-06M"
+        },
+        {
+          type: "A5",
+          typemap: "A5"
+        },
+        {
+          type: "A7",
+          typemap: "A7"
+        },
+        {
+          type: "OCAR-5",
+          typemap: "OCAR-5"
+        },
+        {
+          type: "A5E-8W",
+          typemap: "A5E-8W"
+        },
+        {
+          type: "BMS",
+          typemap: "BMS"
+        },
+        {
+          type: "UA11",
+          typemap: "UA11"
+        },
+        {
+          type: "LA-01",
+          typemap: "LA-01"
+        },
+        {
+          type: "X7",
+          typemap: "X7"
+        },
+        {
+          type: "A5C-2W",
+          typemap: "A5C-2W"
+        },
+        {
+          type: "DS703",
+          typemap: "DS703"
+        },
+        {
+          type: "EG05W",
+          typemap: "EG05W"
+        },
+        {
+          type: "AG-01W",
+          typemap: "AG-01W"
+        }
+      ]
     };
   },
   created() {
@@ -81,7 +305,7 @@ export default {
       groups.forEach(element => {
         element.name = element.groupName;
         element.clickFun = that.getCarsByTreeNode;
-        element.groupFun = that.selectGroup
+        element.groupFun = that.selectGroup;
         let parentId = element.parentId;
         if (parentId != null && parentId != "" && parentId != undefined) {
           groups.forEach(ele => {
@@ -138,7 +362,7 @@ export default {
         params,
         res => {
           if (res.data.flag == 1) {
-            this.cars = []
+            this.cars = [];
             let cars = res.data.obj.data;
             cars.forEach(one => {
               let car = {};
@@ -209,12 +433,12 @@ export default {
         null
       );
     },
-    selectGroup:function(item){
-        this.group2Move = item
+    selectGroup: function(item) {
+      this.group2Move = item;
     },
-    selectRow:function(row){
-        console.log(JSON.stringify(row))
-        this.carSelectedRow = row
+    selectRow: function(row) {
+      console.log(JSON.stringify(row));
+      this.carSelectedRow = row;
     },
     toView: function(page) {
       if (page == 1) {
@@ -247,41 +471,120 @@ export default {
       this.isAddFormShow = true;
     },
     hideAddForm: function() {
+      console.log("sdsd");
       this.isAddFormShow = false;
     },
     showChangeCardGroupForm: function() {
-      if(this.carSelectedRow == null){
-          alert('请选择要转移的车辆信息')
-          return 
+      if (this.carSelectedRow == null) {
+        alert("请选择要转移的车辆信息");
+        return;
       }
       this.isChangeCardGroupShow = true;
+    },
+    showAddCarForm: function() {
+      this.isAddCardShow = true;
+    },
+    hideAddCarForm: function() {
+      this.isAddCardShow = false;
     },
     hideChangeCardGroupForm: function() {
       this.isChangeCardGroupShow = false;
     },
-    saveCarInfo:function(){
-        let car = this.carSelectedRow
-        let group = this.group2Move
-        if(group.groupName == undefined){
-            alert('请选择要转移到的组信息')
-            return
-        }
-        let groupId = group.groupId
-        let terminalNo = car.device
-        let params = {}
-        params.groupId = groupId
-        params.terminalNo = terminalNo
-        position.modifyCarGroup(params, 
-        res=>{
-            console.log(JSON.stringify(res.data))
-            if(res.data.flag == 1){
-                alert('转移成功')
-                this.isChangeCardGroupShow = false;
-            }else{
-                alert('转移失败')
-            }
-        }, null)
-
+    saveCarInfo: function() {
+      let car = this.carSelectedRow;
+      let group = this.group2Move;
+      if (group.groupName == undefined) {
+        alert("请选择要转移到的组信息");
+        return;
+      }
+      let groupId = group.groupId;
+      let terminalNo = car.device;
+      let params = {};
+      params.groupId = groupId;
+      params.terminalNo = terminalNo;
+      position.modifyCarGroup(
+        params,
+        res => {
+          console.log(JSON.stringify(res.data));
+          if (res.data.flag == 1) {
+            alert("转移成功");
+            this.isChangeCardGroupShow = false;
+          } else {
+            alert("转移失败");
+          }
+        },
+        null
+      );
+    },
+    checkAddCarData: function() {
+      // this.carData2Add
+      if (this.carData2Add.plate == undefined || this.carData2Add.plate == "") {
+        alert("车牌号不能为空");
+        return false;
+      }
+      if (this.carData2Add.sim == undefined || this.carData2Add.sim == "") {
+        alert("sim号不能为空");
+        return false;
+      }
+      if (
+        this.carData2Add.terminalType == undefined ||
+        this.carData2Add.terminalType == ""
+      ) {
+        alert("设备类型不能为空");
+        return false;
+      }
+      if (
+        this.carData2Add.terminalNo == undefined ||
+        this.carData2Add.terminalNo == ""
+      ) {
+        alert("设备号不能为空");
+        return false;
+      }
+      if (
+        this.carData2Add.groupId == undefined ||
+        this.carData2Add.groupId == ""
+      ) {
+        alert("组信息不能为空");
+        return false;
+      }
+      if (
+        this.carData2Add.serviceCode == undefined ||
+        this.carData2Add.serviceCode == ""
+      ) {
+        alert("服务密码不能为空");
+        return false;
+      }
+      if (
+        this.carData2Add.installDate == undefined ||
+        this.carData2Add.installDate == ""
+      ) {
+        alert("安装时间不能为空");
+        return false;
+      }
+      var a = /^(\d{4})-(\d{2})-(\d{2})$/;
+      if (!a.test(this.carData2Add.installDate)) {
+        alert("日期格式应为XXXX-XX-XX!");
+        return false;
+      }
+      return true;
+    },
+    addCar: function() {
+      if (!this.checkAddCarData()) {
+        return;
+      }
+      let that = this;
+      position.addCar(
+        this.carData2Add,
+        res => {
+          if (res.data.flag == 1) {
+            alert("添加车辆成功");
+            that.hideAddCarForm();
+          } else {
+            alert("添加车辆失败");
+          }
+        },
+        null
+      );
     }
   }
 };
@@ -362,8 +665,11 @@ export default {
           </div>
           <div class="user-right">
             <div class="opt">
-              <div class="addnew" @click="showChangeCardGroupForm">
+              <div class="opt-button" @click="showChangeCardGroupForm">
                 车辆转移
+              </div>
+              <div class="opt-button" @click="showAddCarForm">
+                新增车辆
               </div>
             </div>
             <Table
@@ -373,7 +679,7 @@ export default {
               :filter-key="searchQuery"
               :currentPage="currentPage"
               :showFoot="0"
-              @selectRow = "selectRow"
+              @selectRow="selectRow"
             >
             </Table>
           </div>
@@ -473,30 +779,132 @@ export default {
           <table class="addform">
             <tr>
               <td class="label">转移到</td>
-              <td class="input"><input v-model="group2Move.groupName" readonly></td>
+              <td class="input">
+                <input v-model="group2Move.groupName" readonly />
+              </td>
             </tr>
-            <!-- <tr>
-              <td class="label">转移方式</td>
-              <td class="input"><input /></td>
-            </tr>
-            <tr>
-              <td class="label">车牌号</td>
-              <td class="input"><input /></td>
-            </tr> -->
           </table>
+
           <div class="select-group">
-              <span class="select-group-notice">请选择要转移到的车组</span>
-              <Tree
+            <span class="select-group-notice">请选择要转移到的车组</span>
+            <Tree
               class="item"
               :item="groupTreeData"
               type="forGroup"
               @clickItem="selectGroup"
             ></Tree>
           </div>
-
           <div>
             <div class="button" @click="saveCarInfo">保存</div>
             <div class="button" @click="hideChangeCardGroupForm">取消</div>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <transition name="modal-fade" v-if="isAddCardShow">
+      <div class="pop-container">
+        <div class="pop-display">
+          <div class="pop-head">
+            <span class="pop-title">新增车辆</span>
+            <div class="pop-close" @click="hideAddCarForm">关闭</div>
+          </div>
+          <table class="add-table">
+            <tr>
+              <td class="add-tr">车牌号<span class="add-required">*</span></td>
+              <td class="add-tr"><input v-model="carData2Add.plate" /></td>
+              <td class="add-tr">SIM卡号<span class="add-required">*</span></td>
+              <td class="add-tr"><input v-model="carData2Add.sim" /></td>
+            </tr>
+            <tr>
+              <td class="add-tr">
+                设备类型<span class="add-required">*</span>
+              </td>
+              <td class="add-tr">
+                <select v-model="carData2Add.terminalType">
+                  <option
+                    v-for="(option, index) in terminalTypes"
+                    :key="index"
+                    :value="option.type"
+                    >{{ option.type }}</option
+                  >
+                </select>
+              </td>
+              <td class="add-tr">设备号<span class="add-required">*</span></td>
+              <td class="add-tr"><input v-model="carData2Add.terminalNo" /></td>
+            </tr>
+            <tr>
+              <td class="add-tr">
+                所属车组<span class="add-required">*</span>
+              </td>
+              <td class="add-tr"><input v-model="carData2Add.groupId" /></td>
+              <td class="add-tr">车架号</td>
+              <td class="add-tr"><input /></td>
+            </tr>
+            <tr>
+              <td class="add-tr">发动机号</td>
+              <td class="add-tr"><input /></td>
+              <td class="add-tr">车型</td>
+              <td class="add-tr"><input /></td>
+            </tr>
+            <tr>
+              <td class="add-tr">ICCID</td>
+              <td class="add-tr"><input /></td>
+              <td class="add-tr">
+                服务密码<span class="add-required">*</span>
+              </td>
+              <td class="add-tr">
+                <input v-model="carData2Add.serviceCode" />
+              </td>
+            </tr>
+            <tr>
+              <td class="add-tr">激活时间</td>
+              <td class="add-tr"><input /></td>
+              <td class="add-tr">
+                安装时间<span class="add-required">*</span>
+              </td>
+              <td class="add-tr">
+                <input v-model="carData2Add.installDate" />
+              </td>
+            </tr>
+            <tr>
+              <td class="add-tr">车主</td>
+              <td class="add-tr"><input /></td>
+              <td class="add-tr">备注</td>
+              <td class="add-tr"><input /></td>
+            </tr>
+            <tr>
+              <td class="add-tr">证件号</td>
+              <td class="add-tr"><input /></td>
+              <td class="add-tr">联系方式</td>
+              <td class="add-tr"><input /></td>
+            </tr>
+            <tr>
+              <td class="add-tr">车主地址</td>
+              <td class="add-tr"><input /></td>
+              <td class="add-tr">安装人员</td>
+              <td class="add-tr"><input /></td>
+            </tr>
+            <tr>
+              <td class="add-tr">安装地点</td>
+              <td class="add-tr"><input /></td>
+              <td class="add-tr">安装备注</td>
+              <td class="add-tr"><input /></td>
+            </tr>
+          </table>
+
+          <!-- <div class="select-group">
+              <span class="select-group-notice">请选择车辆所属的车组</span>
+              <Tree
+              class="item"
+              :item="groupTreeData"
+              type="forGroup"
+              @clickItem="selectGroup"
+            ></Tree>
+          </div> -->
+          <div>
+            <div class="button" @click="addCar">保存</div>
+            <div class="button" @click="hideAddCarForm">取消</div>
           </div>
         </div>
       </div>
@@ -562,16 +970,18 @@ export default {
 }
 .opt{
     margin-bottom 10px
+    display flex
+    width 30%
 }
 .search{
     margin-bottom 10px
     display inline-block
 }
-.addnew{
+.opt-button{
+    flex 1
     margin-left 10px
     border 1px solid #ddd
     display inline-block
-    width 100px
     height 28px
     line-height  28px
     text-align center
@@ -700,5 +1110,18 @@ input{
     height 80px
     line-height  80px
 
+}
+.add-table{
+    margin 30px
+}
+.add-tr{
+    padding-top 15px
+    padding-bottom 15px
+}
+select{
+    width 100%
+}
+.add-required{
+    color red
 }
 </style>

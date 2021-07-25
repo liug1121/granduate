@@ -15,7 +15,7 @@ import Travel from "../views/position/Travel.vue";
 import Login from "../views/position/Login.vue";
 
 // import { Const } from "@/common"
-// import store from '../store'
+import store from '../store'
 Vue.use(VueRouter);
 
 const routes = [
@@ -129,3 +129,15 @@ export default router;
 //     }
 //   }
 // })
+
+router.beforeEach((to,from,next)=>{
+  console.log(to.path)
+  if(store.state.positionUser.token != '' || to.path === '/position/Login'){
+    console.log('ssdsd')
+    next()
+  }else{
+    next({
+      path:'/position/Login'
+    })
+  }
+})

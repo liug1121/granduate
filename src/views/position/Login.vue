@@ -3,14 +3,26 @@ export default {
   name: "posionLogin",
   components: {},
   data() {
-    return {};
+    return {
+      loginInfo:{}
+    };
   },
   methods: {
     login: function() {
-      this.$router.push({ name: "Position" });
+      let loginInfo = this.loginInfo
+      // console.log(JSON.stringify(loginInfo))
+      this.$store.dispatch("positionUser/login", loginInfo).then(resp =>{
+        if(resp ==1){
+          this.$router.push({ name: "Position" });
+        }else{
+          alert('用户名或者密码不正确')
+        }
+      });
+      
     }
   }
 };
+// this.$store.dispatch("buyRecords/getBuyRecords", queryParams);
 </script>
 <template>
   <div class="container">
@@ -31,11 +43,11 @@ export default {
         <table>
           <tr>
             <td>用户名：</td>
-            <td><input /></td>
+            <td><input v-model="loginInfo.userName"></td>
           </tr>
           <tr>
             <td>密码：</td>
-            <td><input /></td>
+            <td><input v-model="loginInfo.pwd"></td>
           </tr>
         </table>
 

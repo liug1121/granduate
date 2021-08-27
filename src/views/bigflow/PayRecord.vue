@@ -22,20 +22,20 @@ export default {
     }
   },
   methods: {
-    getBuyRecords: function(iccid) {
-      let queryParams = {};
-      queryParams.iccid = iccid;
-      this.$store.dispatch("buyRecords/getBuyRecords", queryParams);
+    getBuyRecords: function() {
+      // let queryParams = {};
+      // queryParams.iccid = iccid;
+      this.$store.dispatch("buyRecords/getBuyRecords");
     }
   }
 };
 </script>
 <template>
   <div class="page">
-    <div class="cardinfo">
+    <!-- <div class="cardinfo">
       <div class="phone">号码：{{ phone }}</div>
       <div class="iccid">iccid：{{ iccid }}</div>
-    </div>
+    </div> -->
     <div class="orderinfo" v-for="(record, index) in getRecords" :key="index">
       <table>
         <tr>

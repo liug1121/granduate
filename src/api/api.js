@@ -112,13 +112,12 @@ export default {
     get("GET", "/api/parttime/random", mSetStudents);
   },
 
-  getBuyRecords(mSuccess, mError, queryParams) {
+  getBuyRecords(mSuccess, mError) {
     let token = store.state.user.token;
-    postWithToken(
+    getWithToken(
       "/bigflow/boss/v1.0/wechat/card/buy/products",
       mSuccess,
       mError,
-      queryParams,
       token
     );
   },

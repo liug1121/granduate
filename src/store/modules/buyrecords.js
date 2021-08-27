@@ -12,13 +12,12 @@ const getters = {
 };
 
 const actions = {
-  getBuyRecords({ commit }, queryParams) {
+  getBuyRecords({ commit }) {
     api.getBuyRecords(
       resp => {
         commit("setBuyRecords", resp);
       },
-      null,
-      queryParams
+      null
     );
   },
   buy({ commit }, buyParams) {

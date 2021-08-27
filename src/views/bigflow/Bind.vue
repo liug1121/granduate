@@ -96,6 +96,11 @@ export default {
         }
       });
     },
+    toUsageInfo:function(){
+        this.$router.push({
+          name: "UsageInfo"
+        });
+    },
     toNext: function() {
       if (this.toNextType == 0) {
         this.$router.push({
@@ -161,8 +166,9 @@ export default {
                 this.toNextShow = 1;
                 this.iccid2Bind = "";
               } else if (authStatus == "authedSuccess") {
-                this.showComfirmDlg = 1;
-                this.msg = "卡绑定成功!";
+                // this.showComfirmDlg = 1;
+                // this.msg = "卡绑定成功!";
+                this.toUsageInfo()
                 this.iccid2Bind = "";
               } else {
                 this.showComfirmDlg = 1;

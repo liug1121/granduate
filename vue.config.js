@@ -15,6 +15,10 @@ module.exports = {
       .options({
         remUnit: 75
       });
+      config.plugin('html').tap(args => {
+        args[0].title = "5G流量王";
+        return args;
+      });
   },
 
   css: {

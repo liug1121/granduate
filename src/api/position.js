@@ -93,5 +93,16 @@ export default {
       params,
       token
     );
+  },
+  getAlartInfos(params, mSuccess, mError){
+    console.log('getAlartInfos')
+    let token = store.state.positionUser.key;  
+    postWithToken(
+        "/car/v1/open/report/pageAlarm.json",
+        mSuccess,
+        mError,
+        params,
+        token
+    );
   }
 };
